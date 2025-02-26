@@ -5,7 +5,7 @@ export interface IToken {
 	ca: string;
 	name: string;
 	ticker: string;
-	icon: StaticImageData;
+	icon: string;
 	decimals: number;
 }
 

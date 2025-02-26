@@ -1,16 +1,17 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import { motion } from "framer-motion";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import { BiSearch } from "react-icons/bi";
 import { IoClose } from "react-icons/io5";
 import { TokenList } from "@/lib/TokenList";
-import { fadeIn } from "@/utils/anim";
+import { fadeIn, zoomIn } from "@/utils/anim";
 import { useChainId, useAccount } from "wagmi";
-import useFetchBalance from "@/hooks/useFetchBalance";
-import { formatUnits } from "viem";
+
+import BottomSearchSection from "./BottomSearchSection";
+import getWalletTokens from "../porfolio/walletTokens";
 
 type tokenData = {
-	icon: StaticImageData;
+	icon: string;
 	name: string;
 	ca: string;
 	ticker: string;
@@ -38,27 +39,28 @@ const TokensModal = ({
 	setQuoteToken,
 }: IProps) => {
 	const chainId = useChainId();
-	const tokenList = TokenList[chainId];
 	const modalRef = useRef<any | null>();
+	const { address } = useAccount();
 
 	const [searchText, setSearchText] = useState<string>("");
+	const [tokenList, setTokenList] = useState(TokenList[chainId]);
+	const [balLoading, setBalLoading] = useState<boolean>(true);
 
 	const newTokenList = useMemo(() => {
-		if (searchText === "") return TokenList[chainId];
+		if (searchText === "") return tokenList;
+
 		return tokenList?.filter(
 			(_tokens) =>
 				_tokens.name.toLowerCase().includes(searchText.toLowerCase()) ||
 				_tokens.ticker.toLowerCase().includes(searchText.toLowerCase()) ||
 				_tokens.ca.toLowerCase() === searchText.toLowerCase()
 		);
-	}, [searchText]);
+	}, [searchText, tokenList]);
 
 	// close the modal
 	const closeModal = () => {
 		setToggleModal({ ...ToggleModal, mainToggle: false });
 	};
-
-	// -------------------------------------------------------------------
 
 	useEffect(() => {
 		const handleClickOutside = (event: any) => {
@@ -73,6 +75,17 @@ const TokensModal = ({
 			removeEventListener("mousedown", handleClickOutside);
 		};
 	}, []);
+
+	// get token list...
+	useEffect(() => {
+		const getTokens = async () => {
+			const tokensWithBal = await getWalletTokens(chainId, address);
+			setTokenList(tokensWithBal);
+			setBalLoading(false);
+		};
+
+		getTokens();
+	}, [chainId, address]);
 
 	// handle selection of tokens, makes sure that the user does not click the same token that has been selected already either as base or quote tokens.
 	const handleTokenSelect = (selectedToken: tokenData) => {
@@ -104,12 +117,13 @@ const TokensModal = ({
 			animate={fadeIn.animate}
 			transition={fadeIn.transition}
 			exit={fadeIn.initial}
-			className=" w-dvw h-dvh bg-black bg-opacity-50 md:p-6 fixed top-0 z-50 "
-		>
-			<section
+			className=" w-dvw h-dvh bg-black bg-opacity-50 md:p-6 fixed top-0 z-50 ">
+			<motion.section
+				initial={zoomIn.initial}
+				animate={zoomIn.animate}
+				transition={zoomIn.transition}
 				ref={modalRef}
-				className=" w-dvw h-dvh  md:mt-[75px] md:h-[500px] md:w-[500px] md:border-[0.5px] md:border-mainFG bg-mainDark md:rounded-[30px] flex flex-col mx-auto"
-			>
+				className=" w-dvw h-dvh  md:mt-[75px] md:h-[500px] md:w-[500px] md:border-[0.5px] md:border-mainFG bg-mainDark md:rounded-[30px] flex flex-col mx-auto">
 				<TopSearchSection
 					closeModal={closeModal}
 					setSearchText={setSearchText}
@@ -121,8 +135,11 @@ const TokensModal = ({
 					baseToken={baseToken}
 					quoteToken={quoteToken}
 					newTokenList={newTokenList}
+					chainID={chainId}
+					address={address}
+					balLoading={balLoading}
 				/>
-			</section>
+			</motion.section>
 		</motion.main>
 	);
 };
@@ -154,8 +171,7 @@ const TopSearchSection = ({
 				</div>
 				<button
 					onClick={closeModal}
-					className=" bg-mainLight w-[40px] hover:bg-mainFG transition-colors duration-200 ease-linear h-[40px] rounded-md "
-				>
+					className=" bg-mainLight w-[40px] hover:bg-mainFG transition-colors duration-200 ease-linear h-[40px] rounded-md ">
 					<IoClose className=" mx-auto" />
 				</button>
 			</div>
@@ -168,9 +184,14 @@ const TopSearchSection = ({
 							_tokens.ticker === baseToken.tokenName
 								? "bg-mainFG"
 								: "lg:hover:bg-mainLight"
-						} flex items-center justify-center gap-1  transition-colors ease-linear duration-200 w-fit px-2 py-1 shadow-lg h-full rounded-3xl `}
-					>
-						<Image src={_tokens.icon} alt="" className=" h-5 w-5 " />
+						} flex items-center justify-center gap-1  transition-colors ease-linear duration-200 w-fit px-2 py-1 shadow-lg h-full rounded-3xl `}>
+						<Image
+							src={_tokens.icon}
+							alt="icons"
+							height={20}
+							width={20}
+							className="rounded-full"
+						/>
 						<div className=" flex items-center gap-2 ">
 							<h2 className=" ">{_tokens.ticker}</h2>
 						</div>
@@ -178,74 +199,5 @@ const TopSearchSection = ({
 				))}
 			</div>
 		</div>
-	);
-};
-
-// -----------------------------------------------------------THE BOTTOM SECTION -----------------------------
-
-const BottomSearchSection = ({
-	handleTokenSelect,
-	quoteToken,
-	baseToken,
-	newTokenList,
-}: any) => {
-	return (
-		<ul className="flex-1 overflow-auto rounded-b-[30px] py-4 ">
-			{newTokenList?.map((_tokens: any, index: any) => {
-				return (
-					<li
-						key={index}
-						onClick={() => handleTokenSelect(_tokens)}
-						className={` ${
-							baseToken.ticker === _tokens.ticker ||
-							quoteToken.ticker === _tokens.ticker
-								? "opacity-40"
-								: "lg:hover:bg-mainLight"
-						} h-[60px] px-6 cursor-pointer  grid grid-cols-[10%_60%_30%] items-center overflow-hidden`}
-					>
-						{_tokens.icon ? (
-							<Image src={_tokens.icon} alt="" className=" h-8 w-8" />
-						) : (
-							<div className=" h-8 w-8 rounded-full bg-mainLight border-[0.5px] border-secFG "></div>
-						)}
-						<div className="ml-2 md:ml-0">
-							<h1 className="">{_tokens.ticker}</h1>
-							<p className=" text-[12px] text-slate-400 font-semibold">
-								{_tokens.name}
-							</p>
-						</div>
-						<Bal _token={_tokens} />
-						{!newTokenList.length && (
-							<p className=" my-2 text-center font-semibold">
-								Token not available!
-							</p>
-						)}
-					</li>
-				);
-			})}
-		</ul>
-	);
-};
-
-const Bal = ({ _token }: any) => {
-	const { address } = useAccount();
-
-	const { data: bal, isLoading: balLoading } = useFetchBalance(
-		address!,
-		`${_token?.ca}-${_token?.name}`,
-		_token?.ca
-	);
-	return (
-		<>
-			{balLoading ? (
-				<div className=" bg-mainFG w-full h-[20px] animate-pulse "></div>
-			) : (
-				<div className="text-right truncate">
-					{bal
-						? Number(formatUnits(BigInt(bal), _token?.decimals))?.toFixed(3)
-						: ""}
-				</div>
-			)}
-		</>
 	);
 };

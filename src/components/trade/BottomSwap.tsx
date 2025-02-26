@@ -1,12 +1,11 @@
 import { StaticImageData } from "next/image";
 import TokenButton from "./TokenButton";
-import usdcLogo from "/public/Images/testnet-token-icons-main/usdcLogo.png";
 import { formatEther, formatUnits } from "viem";
 import { useCallback } from "react";
 import { useAccount } from "wagmi";
 
 type tokenData = {
-	icon: StaticImageData;
+	icon: string;
 	name: string;
 	ticker: string;
 	ca: string;
@@ -49,7 +48,7 @@ const BottomSwap = ({
 	);
 
 	return (
-		<div className=" h-[104px] py-4 px-[14px] border border-[#8F199B] rounded-[10px] shadow-sm  bg-mainBG">
+		<div className=" h-[104px] py-4 px-[14px] backdrop-blur-xl bg-white/[0.07] border border-white/[0.1] rounded-2xl shadow-[0_8px_32px_0_rgba(0,0,0,0.36)] p-8">
 			<div className=" flex justify-between items-center h-[40px]">
 				{" "}
 				{/* this is the bottom input */}
@@ -58,7 +57,6 @@ const BottomSwap = ({
 					placeholder="0"
 					disabled
 					value={quoteToken?.inputValue ?? ""}
-					//   value={quoteInput ? quoteInput : ""}
 					onChange={hanldeQuoteInput}
 					className=" bg-inherit h-full text-3xl w-[70%] focus:outline-none web "
 				/>
@@ -70,12 +68,10 @@ const BottomSwap = ({
 			</div>
 
 			<div className="mt-3 text-[13px] flex justify-between items-center text-textFaint">
+				{/* this shows the dollar value of the bottom token */}
+				{quoteToken?.inputValue ? <p></p> : <p></p>}
+
 				{/* this shows the balances of the bottom token */}
-				{quoteToken?.inputValue ? (
-					<p>{"$" + quoteToken?.inputValue}</p>
-				) : (
-					<p></p>
-				)}
 				<div className=" flex gap-2 items-center">
 					{isConnected && quoteToken?.name ? (
 						<>

@@ -1,13 +1,10 @@
-import { Dispatch, SetStateAction, useCallback } from "react";
+import { useCallback } from "react";
 import TokenButton from "./TokenButton";
-
-import ethLogo from "/public/Images/testnet-token-icons-main/ethLogo.png";
-import { StaticImageData } from "next/image";
-import { formatEther, formatUnits, parseEther, parseUnits } from "viem";
+import { formatUnits } from "viem";
 import { useAccount } from "wagmi";
 
 type tokenData = {
-	icon: StaticImageData;
+	icon: string;
 	name: string;
 	ca: string;
 	ticker: string;
@@ -38,15 +35,11 @@ IProps) => {
 				if (prev) {
 					console.log({
 						...prev,
-						inputValue: Number(
-							(((+balanceInEther || 0) * percent) / 100).toFixed(3)
-						),
+						inputValue: Number(((+balanceInEther || 0) * percent) / 100),
 					});
 					return {
 						...prev,
-						inputValue: Number(
-							(((+balanceInEther || 0) * percent) / 100).toFixed(3)
-						),
+						inputValue: Number(((+balanceInEther || 0) * percent) / 100),
 					};
 				}
 				return prev;
@@ -78,7 +71,7 @@ IProps) => {
 	);
 
 	return (
-		<div className=" py-4 px-[14px] rounded-[10px] border-1-[#000000] shadow-sm border border-[#7a1b84] bg-mainBG cursor-default ">
+		<div className=" py-4 px-[14px] border-1-[#000000] bg-mainBG cursor-default backdrop-blur-xl bg-white/[0.07] border border-white/[0.1] rounded-2xl shadow-[0_8px_32px_0_rgba(0,0,0,0.36)] p-8 ">
 			<div className=" flex justify-between items-center h-[40px]">
 				<input
 					//   ref={baseInputRef}
@@ -96,15 +89,17 @@ IProps) => {
 			</div>
 
 			<div className=" my-3 text-[13px] flex justify-between items-center text-textFaint">
-				{/* this shows the balances of the top token */}
-				{baseToken?.inputValue ? <p>{"$" + baseToken?.inputValue}</p> : <p></p>}
+				{/* this renders dollar value  */}
+				{baseToken?.inputValue ? <p></p> : <p></p>}
+
+				{/* this renders balance */}
 				<div className=" flex gap-2 items-center">
 					{isConnected && baseToken?.name ? (
 						<>
 							<p>Balance</p>
 							<p>
 								{isLoading
-									? "loading"
+									? "loading ... "
 									: baseToken?.tokenBalance
 									? Number(
 											formatUnits(
@@ -135,8 +130,7 @@ const PercentSection = ({ setPercentage }: any) => {
 				<button
 					key={_percent}
 					onClick={() => setPercentage(_percent)}
-					className="w-[75px] border-[0.8px] border-slate-400 rounded-lg border-darkBG px-[9px] py-[3px] md:w-[97px] text-slate-400 hover:text-white hover:border-white transition-colors ease-linear duration-200 "
-				>
+					className="w-[75px] border-darkBG px-[9px] py-[3px] md:w-[97px] text-slate-400 hover:text-white hover:border-white  ease-linear group flex items-center justify-between p-4 rounded-lg backdrop-blur-md bg-white/[0.03] border border-white/[0.05] hover:bg-white/[0.05] transition-all duration-300 ">
 					{_percent + "%"}
 				</button>
 			))}

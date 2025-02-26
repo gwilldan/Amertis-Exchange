@@ -130,8 +130,10 @@ const WalletToken = ({ _token }: any) => {
 						{_token.icon ? (
 							<Image
 								src={_token.icon}
-								alt=""
-								className=" h-8 w-8"
+								alt="token icon"
+								width={32}
+								height={32}
+								className="rounded-full "
 							/>
 						) : (
 							<div className=" h-8 w-8 rounded-full border-[0.5px] border-mainFG"></div>
