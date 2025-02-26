@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import Image from "next/image";
 import { BiSearch } from "react-icons/bi";
 import { IoClose } from "react-icons/io5";
@@ -112,12 +112,12 @@ const TokensModal = ({
 	};
 
 	return (
-		<motion.main
-			initial={fadeIn.initial}
-			animate={fadeIn.animate}
-			transition={fadeIn.transition}
-			exit={fadeIn.initial}
-			className=" w-dvw h-dvh bg-black bg-opacity-50 md:p-6 fixed top-0 z-50 ">
+		<main
+			// initial={fadeIn.initial}
+			// animate={fadeIn.animate}
+			// transition={fadeIn.transition}
+			// exit={fadeIn.initial}
+			className=" w-dvw h-dvh  md:p-6 fixed top-0 z-50 ">
 			<motion.section
 				initial={zoomIn.initial}
 				animate={zoomIn.animate}
@@ -140,7 +140,7 @@ const TokensModal = ({
 					balLoading={balLoading}
 				/>
 			</motion.section>
-		</motion.main>
+		</main>
 	);
 };
 

@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import WalletConnectSection from "./WalletConnectSection";
+import { motion } from "motion/react";
 
 // icons
 import { FiMenu } from "react-icons/fi";
@@ -12,6 +13,7 @@ import { HiArrowPath } from "react-icons/hi2";
 import { MdDataUsage } from "react-icons/md";
 import { FiChevronDown } from "react-icons/fi";
 import { SiGitbook } from "react-icons/si";
+import { fadeIn, slideIn_variant, slideInChild_variant } from "@/utils/anim";
 
 function Nav({}) {
 	const path = usePathname();
@@ -69,28 +71,32 @@ function Nav({}) {
 				</button>
 			</div>
 
-			{/* THE MOBILE NAV BAR */}
-			<MobileNav
-				toggle={toggle}
-				toggleOff={toggleOff}
-			/>
+			{toggle && <MobileNav toggleOff={toggleOff} />}
 		</div>
 	);
 }
 
 export default Nav;
 
-const MobileNav = ({ toggle, toggleOff }: any) => {
+const MobileNav = ({ toggleOff }: any) => {
 	const path = usePathname();
 
 	return (
-		<div
-			className={`transition-all ease-linear duration-200 overflow-hidden h-screen w-[224px] left-0 bg-mainBG absolute top-0 md:hidden ${
-				toggle ? "left-0" : "left-[-224px]"
-			}`}>
-			<div className="h-full w-full flex flex-col justify-between pt-12 pb-8 pl-8 pr-4 drop-shadow-2xl">
-				{/* Top Section and Links */}
-				<div className=" flex flex-col gap-5 font-medium text-darkBG">
+		<div className=" h-dvh w-dvw fixed inset-0 z-50 overflow-hidden ">
+			<div
+				onClick={toggleOff}
+				className=" h-dvh w-dvw inset-0 absolute "></div>
+
+			<motion.div
+				initial="hidden"
+				animate="show"
+				variants={slideIn_variant}
+				className="bg-background h-full w-[50%] flex flex-col justify-between pt-12 pb-8 pl-8 pr-4 drop-shadow-2xl ">
+				<motion.div
+					initial="hidden"
+					animate="show"
+					variants={slideInChild_variant}
+					className=" flex flex-col gap-5 font-medium text-darkBG">
 					{links.map((_link: any) => (
 						<Link
 							key={_link.name}
@@ -105,24 +111,24 @@ const MobileNav = ({ toggle, toggleOff }: any) => {
 							<h1 className=" font-normal">{_link.name}</h1>
 						</Link>
 					))}
-				</div>
+				</motion.div>
 
-				{/* Bottom section */}
-				<div className=" h-[123.5px] flex flex-col gap-4 justify-end">
+				{/* <motion.div className=" h-[123.5px] flex flex-col gap-4 justify-end">
 					<button className=" flex justify-center items-center gap-2 text-white bg-darkBG rounded-lg h-9 w-[176px] shadow-md">
 						<Image
-							src={"/Images/mon.avif"}
+							src={"/icons/mon.avif"}
 							alt="mon"
 							width={24}
 							height={24}
+							className="rounded-full"
 						/>
 						<h1>MON</h1>
 						<div className=" text-white">
 							<FiChevronDown />
 						</div>
 					</button>
-				</div>
-			</div>
+				</motion.div> */}
+			</motion.div>
 		</div>
 	);
 };

@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useCallback, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import {
 	TopSwap,
 	BottomSwap,
@@ -176,7 +176,7 @@ export default function Home() {
 
 	return (
 		<>
-			<motion.main className=" min-h-[calc(100dvh-90px)] md:min-h-[calc(100dvh-70px)] mb-80px px-4 py-4 pt-[70px] mt-5 md:w-[462.41px] md:pt-[136px] md:m-auto md:px-0  ">
+			<motion.main className=" min-h-[calc(100dvh-90px)] md:min-h-[calc(100dvh-70px)] mb-80px px-4 py-4 pt-[150px] mt-5 md:w-[462.41px] md:pt-[136px] md:m-auto md:px-0  ">
 				<TopIconSection setSettingToggle={setSettingToggle} />
 				<TopSwap
 					setToggleModal={setToggleModal}

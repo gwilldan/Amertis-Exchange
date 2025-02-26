@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { fadeIn } from "@/utils/anim";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";

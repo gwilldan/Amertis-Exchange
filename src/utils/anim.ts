@@ -6,8 +6,8 @@ export const fadeIn = {
 		opacity: 1,
 	},
 	transition: {
-		ease: "linear",
-		duration: 0.3,
+		ease: "easeInOut",
+		duration: 0.15,
 	},
 };
 
@@ -22,6 +22,25 @@ export const zoomIn = {
 	},
 	transition: {
 		ease: "easeInOut",
-		duration: 0.15,
+		duratio: 0.15,
 	},
+};
+
+export const slideIn_variant = {
+	hidden: {
+		width: 0,
+	},
+	show: {
+		width: "60%",
+		transition: {
+			ease: "linear",
+			duration: 0.15,
+			delayChildren: 1,
+		},
+	},
+};
+
+export const slideInChild_variant = {
+	hidden: { y: 0, opacity: 0 },
+	show: { y: -10, opacity: 1 },
 };

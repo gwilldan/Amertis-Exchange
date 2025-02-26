@@ -21,7 +21,7 @@
 }
 
 body {
-	/* background-color: ; */
+	background-color: var(--background);
 
 	color: var(--foreground-rgb);
 	scroll-behavior: smooth;
@@ -48,7 +48,7 @@ body {
 }
 
 @layer utilities {
-	.bg-gradient {
-		@apply bg-gradient-to-br from-[#8F199B]/30 via-transparent to-transparent blur-3xl -z-30;
+	.bg-glass {
+		@apply backdrop-blur-xl bg-white/[0.07] border border-white/[0.1] shadow-[0_8px_32px_0_rgba(0,0,0,0.36)];
 	}
 }

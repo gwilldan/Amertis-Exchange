@@ -1,6 +1,6 @@
 "use client";
 import { fadeIn } from "@/utils/anim";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 
 import Image from "next/image";
 import axelar from "../../../public/Images/bridges/axelar.svg";
@@ -22,7 +22,7 @@ const Bridge = () => {
 				enhancing efficiency.
 			</p>
 
-			<ul className=" flex justify-center gap-5 my-10 md:my-16 ">
+			<ul className=" flex flex-col lg:flex-row justify-center gap-5 my-10 md:my-16 ">
 				{bridgesData.map((_bridge) => (
 					<BridgeCard
 						_bridge={_bridge}

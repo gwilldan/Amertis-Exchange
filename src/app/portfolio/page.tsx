@@ -1,5 +1,5 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { fadeIn } from "@/utils/anim";
 import PortfolioData from "@/components/porfolio/PortfolioData";
 import { useAccount } from "wagmi";

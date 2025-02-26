@@ -1,5 +1,5 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { fadeIn } from "@/utils/anim";
 import Link from "next/link";
 
@@ -11,8 +11,7 @@ const Pool = () => {
 			initial={fadeIn.initial}
 			animate={fadeIn.animate}
 			transition={fadeIn.transition}
-			className="px-6 min-h-[calc(100dvh-90px)] md:min-h-[calc(100dvh-70px)] "
-		>
+			className="px-6 min-h-[calc(100dvh-90px)] md:min-h-[calc(100dvh-70px)] ">
 			{connected && <Welcome />}
 		</motion.main>
 	);
@@ -34,8 +33,7 @@ const Welcome = () => {
 
 				<Link
 					href={"/"}
-					className=" bg-mainFG lg:hover:bg-secFG w-fit px-8 py-2 mx-auto rounded-md "
-				>
+					className=" bg-mainFG lg:hover:bg-secFG w-fit px-8 py-2 mx-auto rounded-md ">
 					Go to Swap
 				</Link>
 			</div>
