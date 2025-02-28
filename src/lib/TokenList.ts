@@ -28,7 +28,7 @@ export const TokenList: ITokenList = {
 			name: "Tether USD",
 			ticker: "USDT",
 			icon: "/icons/usdt.png",
-			decimals: 18,
+			decimals: 6,
 		},
 		{
 			ca: "0xB5a30b0FDc5EA94A52fDc42e3E9760Cb8449Fb37",

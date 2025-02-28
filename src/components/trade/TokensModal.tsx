@@ -88,7 +88,7 @@ const TokensModal = ({
 	}, [chainId, address]);
 
 	// handle selection of tokens, makes sure that the user does not click the same token that has been selected already either as base or quote tokens.
-	const handleTokenSelect = (selectedToken: tokenData) => {
+	const handleTokenSelect = (selectedToken: any) => {
 		if (
 			selectedToken.ticker === quoteToken?.ticker ||
 			selectedToken.ticker === baseToken?.ticker
@@ -101,7 +101,7 @@ const TokensModal = ({
 				ticker: selectedToken.ticker,
 				icon: selectedToken.icon,
 				inputValue: "",
-				tokenBalance: 0,
+				tokenBalance: selectedToken.bal,
 				ca: selectedToken.ca,
 				price: selectedToken?.price,
 				decimals: selectedToken.decimals,

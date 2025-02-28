@@ -1,6 +1,6 @@
 import { StaticImageData } from "next/image";
 import TokenButton from "./TokenButton";
-import { formatEther, formatUnits } from "viem";
+import { formatEther, formatUnits, parseUnits } from "viem";
 import { useCallback } from "react";
 import { useAccount } from "wagmi";
 
@@ -78,15 +78,18 @@ const BottomSwap = ({
 							<p>Balance</p>
 							<p>
 								{isLoading
-									? ""
-									: quoteToken?.tokenBalance
+									? "loading ..."
+									: !quoteToken.tokenBalance
+									? "0.000"
+									: quoteToken.tokenBalance >
+									  parseUnits("0.001", quoteToken.decimals)
 									? Number(
 											formatUnits(
 												BigInt(quoteToken?.tokenBalance),
 												quoteToken.decimals
 											)
-									  )?.toFixed(3)
-									: "0.000"}
+									  ).toFixed(3)
+									: " < 0.001"}
 							</p>
 						</>
 					) : (

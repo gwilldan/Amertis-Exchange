@@ -1,7 +1,6 @@
 import { config } from "@/config";
 import { abi as routerAbi } from "@/config/monagRouterAbi";
 import { abi as tokenAbi } from "@/config/basicTokenAbi";
-import { StaticImageData } from "next/image";
 import { useEffect, useState } from "react";
 import { formatUnits, maxUint256, parseUnits } from "viem";
 import { useAccount, useReadContracts, useWriteContract } from "wagmi";
@@ -68,9 +67,8 @@ const UseSwap = (
 	// Fetch swap details and allowance
 	const {
 		data: swapData,
-		error: swapError,
-		isError: swapIsError,
-		isLoading: isSwapLoading,
+		isSuccess: isGottenSwapData,
+		fetchStatus,
 	} = useReadContracts({
 		contracts: [
 			{
@@ -105,10 +103,16 @@ const UseSwap = (
 	});
 
 	// Check allowance and perform swap if necessary
-	const checkAllowanceAndSwap = async (swapData: any, approval: boolean) => {
+	const checkAllowanceAndSwap = async (
+		swapData: any,
+		approval: boolean,
+		refetchAll: () => void
+	) => {
 		try {
 			const data = await performSwap(swapData, approval);
 			setSwapTxHarsh(data);
+			refetchAll();
+			console.log("refetching all....", data);
 		} catch (error: any) {
 			setTxErr(error?.details);
 			console.warn("ERROR FROM THE USE SWAP....", error?.details);
@@ -216,6 +220,8 @@ const UseSwap = (
 
 	const baseTokenForQuoteToken = swapData?.[2].result as SwapData;
 	return {
+		fetchStatus,
+		isGottenSwapData,
 		swapData: {
 			...foundSwapInfo,
 			amountOut:

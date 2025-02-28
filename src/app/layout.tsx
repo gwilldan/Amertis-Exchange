@@ -7,9 +7,8 @@ import { config } from "@/config";
 import Web3ModalProvider from "@/context/wallet-provider";
 import "./globals.css";
 import { Nav, Footer } from "@/components/reusableComp";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Toaster } from "@/components/toasters/toaster";
 import Wrapper from "@/components/Wrapper";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -45,7 +44,6 @@ export default function RootLayout({
 						pauseOnHover
 						theme="dark"
 					/>
-					{/* <Toaster /> */}
 				</Web3ModalProvider>
 			</body>
 		</html>

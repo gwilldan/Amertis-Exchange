@@ -4,7 +4,7 @@ import { useAccount, useChainId } from "wagmi";
 import { FiLogOut } from "react-icons/fi";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { motion } from "motion/react"
+import { motion } from "motion/react";
 import { fadeIn } from "@/utils/anim";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { formatUnits, parseUnits } from "viem";
@@ -150,7 +150,9 @@ const WalletToken = ({ _token }: any) => {
 				<p className="text-right truncate">
 					{`
 							${
-								_token.bal > parseUnits("0.001", _token.decimals)
+								_token.bal == 0
+									? "0.00"
+									: _token.bal > parseUnits("0.001", _token.decimals)
 									? Number(formatUnits(_token.bal, _token?.decimals))?.toFixed(
 											3
 									  )

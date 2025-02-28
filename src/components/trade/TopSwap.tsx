@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import TokenButton from "./TokenButton";
-import { formatUnits } from "viem";
+import { formatUnits, parseUnits } from "viem";
 import { useAccount } from "wagmi";
 
 type tokenData = {
@@ -99,15 +99,18 @@ IProps) => {
 							<p>Balance</p>
 							<p>
 								{isLoading
-									? "loading ... "
-									: baseToken?.tokenBalance
+									? "loading ..."
+									: !baseToken.tokenBalance
+									? "0.000"
+									: baseToken.tokenBalance >
+									  parseUnits("0.001", baseToken.decimals)
 									? Number(
 											formatUnits(
 												BigInt(baseToken?.tokenBalance),
-												baseToken?.decimals
+												baseToken.decimals
 											)
-									  )?.toFixed(3)
-									: "0.000"}
+									  ).toFixed(3)
+									: " < 0.001"}
 							</p>
 						</>
 					) : (

@@ -20,7 +20,6 @@ import { RiArrowUpDownFill } from "react-icons/ri";
 import useFetchBalance from "@/hooks/useFetchBalance";
 import { useAccount, useTransactionConfirmations, useChainId } from "wagmi";
 import { formatUnits } from "viem";
-import { StaticImageData } from "next/image";
 import UseSwap from "@/hooks/useSwap";
 import { getTokensByChainId } from "@/lib/utils";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
@@ -56,25 +55,33 @@ export default function Home() {
 		price: "",
 		decimals: 0,
 	});
-	const { swapData, approval, checkAllowanceAndSwap, swapTxHarsh } = UseSwap(
-		baseToken,
-		quoteToken,
-		setTxModal,
-		setTxErr
-	);
+	const {
+		swapData,
+		approval,
+		checkAllowanceAndSwap,
+		swapTxHarsh,
+		isGottenSwapData,
+	} = UseSwap(baseToken, quoteToken, setTxModal, setTxErr);
 
-	const { data: baseTokenBalance, isLoading: baseIsLoading } = useFetchBalance(
+	const {
+		data: baseTokenBalance,
+		isLoading: baseIsLoading,
+		refetch: refetchBase,
+	} = useFetchBalance(
 		address!,
-		`${baseToken.ca}-${baseToken.name}`,
+		`${baseToken.ca}-${baseToken.ticker}`,
 		baseToken.ca
 	);
 
-	const { data: quoteTokenBalance, isLoading: quoteIsLoading } =
-		useFetchBalance(
-			address!,
-			`${quoteToken.ca}-${quoteToken.name}`,
-			quoteToken.ca
-		);
+	const {
+		data: quoteTokenBalance,
+		isLoading: quoteIsLoading,
+		refetch: refetchQuote,
+	} = useFetchBalance(
+		address!,
+		`${quoteToken.ca}-${quoteToken.ticker}`,
+		quoteToken.ca
+	);
 
 	const { status } = useTransactionConfirmations({
 		chainId: chainId,
@@ -125,13 +132,15 @@ export default function Home() {
 				tokenBalance: Number(quoteTokenBalance),
 			}));
 		}
+
+		// console.log("quoteTokenChange....", quoteTokenBalance);
 	}, [quoteTokenBalance]);
 
 	useEffect(() => {
 		if (swapData?.amountOut && quoteToken.ca)
 			setQuoteToken((prevQuoteToken) => ({
 				...prevQuoteToken,
-				inputValue: Number(swapData?.amountOut).toFixed(3) || "0.0",
+				inputValue: swapData?.amountOut || "0.0",
 			}));
 
 		if (baseToken.inputValue.length === 0)
@@ -152,6 +161,11 @@ export default function Home() {
 		);
 	}, [baseToken.inputValue, baseToken.tokenBalance]);
 
+	const refetchAll = () => {
+		refetchBase();
+		refetchQuote();
+	};
+
 	const handleSwap = () => {
 		const toastOptions = {
 			pauseOnHover: false,
@@ -170,7 +184,7 @@ export default function Home() {
 		}
 
 		if (quoteToken?.inputValue) {
-			checkAllowanceAndSwap(swapData, approval);
+			checkAllowanceAndSwap(swapData, approval, refetchAll);
 		}
 	};
 
@@ -193,7 +207,7 @@ export default function Home() {
 					setQuoteToken={setQuoteToken}
 					isLoading={quoteIsLoading}
 				/>
-				{swapData.baseForQuote && (
+				{isGottenSwapData && (
 					<Info
 						swapData={swapData}
 						baseToken={baseToken}

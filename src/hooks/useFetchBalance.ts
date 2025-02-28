@@ -9,28 +9,35 @@ const useFetchBalance = (
 ) => {
 	const { chainId } = useAccount();
 	const chain = useChainId();
-	const tokenName = scopeKey.split("-")[1];
+	const tokenTicker = scopeKey.split("-")[1];
 	const isChainCorrect = chainId === chain;
 
-	const result = useBalance({
+	const {
+		data: result,
+		refetch,
+		status,
+		isLoading,
+		isError,
+		error,
+	} = useBalance({
 		address:
 			isChainCorrect && tokenAddress
 				? (walletAddress as `0x${string}`)
 				: undefined,
 		blockTag: "latest",
-		// scopeKey: scopeKey ?? undefined,
 		token:
-			tokenName?.toLowerCase() === "ethereum"
+			tokenTicker?.toUpperCase() === "MON"
 				? undefined
 				: (tokenAddress as `0x${string}`),
 	});
 
 	return {
-		data: result.data?.value,
-		status: result.status,
-		isLoading: result.isLoading,
-		isError: result.isError,
-		error: result.error,
+		data: result?.value,
+		refetch: refetch,
+		status: status,
+		isLoading: isLoading,
+		isError: isError,
+		error: error,
 	};
 };
 

@@ -44,19 +44,13 @@ const BottomSearchSection = ({
 								</p>
 							</div>
 
-							{_tokens.bal && (
-								<p className="text-right truncate">
-									{Number(formatUnits(_tokens.bal, _tokens?.decimals))?.toFixed(
-										3
-									)}
-								</p>
-							)}
-
-							{!newTokenList.length && (
-								<p className=" my-2 text-center font-semibold">
-									Token not available!
-								</p>
-							)}
+							<p className="text-right truncate">
+								{_tokens.bal
+									? Number(
+											formatUnits(_tokens.bal, _tokens?.decimals)
+									  )?.toFixed(3)
+									: "0.00"}
+							</p>
 						</li>
 					);
 				})

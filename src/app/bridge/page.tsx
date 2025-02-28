@@ -41,7 +41,7 @@ const BridgeCard = ({ _bridge }: any) => {
 		<a
 			href={_bridge.url}
 			target="_blank"
-			className=" cursor-pointer border-[0.5px] border-[rgba(255,255,255,0.2)] rounded-[10px] md:rounded-[20px] bg-mainLight h-[200px] md:h-[250px] max-w-[600px] lg:hover:outline outline-mainFG duration-200 ease-linear transition-all flex flex-col items-start p-4 md:py-6">
+			className=" cursor-pointer border-[0.5px] border-[rgba(255,255,255,0.2)] rounded-[10px] md:rounded-[20px] bg-glass h-[200px] md:h-[250px] max-w-[600px] lg:hover:outline outline-mainFG duration-200 ease-linear transition-all flex flex-col items-start p-4 md:py-6">
 			<Image
 				src={_bridge.icon}
 				alt=""

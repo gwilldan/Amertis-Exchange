@@ -29,11 +29,21 @@ type IInfo = {
 const Info = ({ swapData, baseToken, quoteToken }: IInfo) => {
 	const [showRoutes, setShowRoutes] = useState<boolean>(false);
 
+	console.log("swap data...", swapData);
+
+	if (!swapData.adapters.length) {
+		return (
+			<div className=" h-[50px] rounded-xl border border-white/20 bg-[#f1c1311a] backdrop-blur-xl my-4 flex justify-center items-center px-2 cursor-pointer text-[14px] text-red-500  ">
+				🚫 No routes found
+			</div>
+		);
+	}
+
 	return (
 		<>
 			<section
 				onClick={() => setShowRoutes(!showRoutes)}
-				className=" h-[50px] rounded-xl border border-mainFG my-4 flex justify-between items-center px-2 cursor-pointer lg:hover:border-secFG text-[14px]">
+				className=" h-[50px] rounded-xl border bg-glass my-4 flex justify-between items-center px-2 cursor-pointer lg:hover:border-mainFG text-[14px]">
 				<div className=" flex items-center gap-2 ">
 					<span className=" flex items-center gap-1">
 						<Image
@@ -55,11 +65,7 @@ const Info = ({ swapData, baseToken, quoteToken }: IInfo) => {
 							className="rounded-full"
 						/>
 
-						<p>
-							{Number(swapData.baseForQuote).toFixed(4) +
-								" " +
-								quoteToken.ticker}
-						</p>
+						<p>{Number(swapData.baseForQuote) + " " + quoteToken.ticker}</p>
 					</span>
 				</div>
 				<div className=" flex items-center gap-1 font-light ">
@@ -86,7 +92,7 @@ const SwapRoutes = ({ swapData }: IInfo) => {
 	const tokenList = TokenList[chainId];
 
 	return (
-		<div className=" border border-mainFG rounded-xl p-2 md:p-4 text-[14px] ">
+		<div className=" border bg-glass rounded-xl p-2 md:p-4 text-[14px] ">
 			<span className="flex items-center ease-linear gap-2 mb-6">
 				<div className=" p-2 bg-mainFG rounded-full text-center w-fit gap-2 animate-spin duration-1000 ">
 					<MdRoute />
