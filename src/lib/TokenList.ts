@@ -1,144 +1,78 @@
-import usdc from "/public/icons/usdc.png";
-import eth from "/public/icons/eth.png";
-import usdt from "/public/icons/usdt.png";
-import weth from "/public/icons/weth.png";
-import { StaticImageData } from "next/image";
-import { ITokenList, IToken } from "./interface";
+import { ITokenList } from "./interface";
 
 export const TokenList: ITokenList = {
-	8453: [
+	10143: [
 		{
-			ca: "0x4200000000000000000000000000000000000006",
-			name: "Ethereum",
-			ticker: "ETH",
-			icon: eth,
+			ca: "0x760AfE86e5de5fa0Ee542fc7B7B713e1c5425701",
+			name: "Monad",
+			ticker: "MON",
+			icon: "/icons/mon.avif",
 			decimals: 18,
 		},
 		{
-			ca: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+			ca: "0x760AfE86e5de5fa0Ee542fc7B7B713e1c5425701",
+			name: "Wrapped MON",
+			ticker: "WMON",
+			icon: "/icons/wmon.avif",
+			decimals: 18,
+		},
+		{
+			ca: "0xf817257fed379853cDe0fa4F97AB987181B1E5Ea",
 			name: "USD Coin",
 			ticker: "USDC",
-			icon: usdc,
+			icon: "/icons/usdc.png",
 			decimals: 6,
 		},
 		{
-			ca: "0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
-			name: "Dai Stablecoin",
-			ticker: "DAI",
-			icon: usdt,
-			decimals: 18,
+			ca: "0x88b8E2161DEDC77EF4ab7585569D2415a1C1055D",
+			name: "Tether USD",
+			ticker: "USDT",
+			icon: "/icons/usdt.png",
+			decimals: 6,
 		},
 		{
-			ca: "0x4200000000000000000000000000000000000006",
+			ca: "0xB5a30b0FDc5EA94A52fDc42e3E9760Cb8449Fb37",
 			name: "Wrapped ETH",
 			ticker: "WETH",
-			icon: weth,
+			icon: "/icons/weth.png",
 			decimals: 18,
 		},
 		{
-			ca: "0x22e6966B799c4D5B13BE962E1D117b56327FDa66",
-			name: "Synthetix Network Token",
-			ticker: "SNX",
-			icon: "" as unknown as StaticImageData,
+			ca: "0xcf5a6076cfa32686c0Df13aBaDa2b40dec133F1d",
+			name: "Wrapped BTC",
+			ticker: "WBTC",
+			icon: "/icons/wbtc.png",
 			decimals: 18,
 		},
 		{
-			ca: "0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed",
-			name: "Degen",
-			ticker: "DEGEN",
-			icon: "" as unknown as StaticImageData,
+			ca: "0x0F0BDEbF0F83cD1EE3974779Bcb7315f9808c714",
+			name: "DAK",
+			ticker: "DAK",
+			icon: "/icons/dak.avif",
 			decimals: 18,
 		},
-		{
-			ca: "0xA7d68d155d17cB30e311367c2Ef1E82aB6022b67",
-			name: "BTRST",
-			ticker: "BTRST",
-			icon: "" as unknown as StaticImageData,
-			decimals: 18,
-		},
-		{
-			ca: "0x24fcFC492C1393274B6bcd568ac9e225BEc93584",
-			name: "Heros of Mavia",
-			ticker: "MAVIA",
-			icon: "" as unknown as StaticImageData,
-			decimals: 18,
-		},
-		{
-			ca: "0x78a087d713Be963Bf307b18F2Ff8122EF9A63ae9",
-			name: "Baseswap Token",
-			ticker: "BSWAP",
-			icon: "" as unknown as StaticImageData,
-			decimals: 18,
-		},
-		{
-			ca: "0xFF0C532FDB8Cd566Ae169C1CB157ff2Bdc83E105",
-			name: "Fren Pet",
-			ticker: "FrenPet",
-			icon: "" as unknown as StaticImageData,
-			decimals: 18,
-		},
-		{
-			ca: "0xb8D98a102b0079B69FFbc760C8d857A31653e56e",
-			name: "Token Toby",
-			ticker: "Toby",
-			icon: "" as unknown as StaticImageData,
-			decimals: 18,
-		},
-
-		{
-			ca: "0x60Cbb875D3c6314280Dd90a4Fe6cAFC1d7Ce5DfD",
-			name: "EBase",
-			ticker: "EBASE",
-			icon: "" as unknown as StaticImageData,
-			decimals: 9,
-		},
+		// {
+		// 	ca: "0xA7d68d155d17cB30e311367c2Ef1E82aB6022b67",
+		// 	name: "BTRST",
+		// 	ticker: "BTRST",
+		// 	icon: "/icons/token.svg",
+		// 	decimals: 18,
+		// },
+		// {
+		// 	ca: "0x24fcFC492C1393274B6bcd568ac9e225BEc93584",
+		// 	name: "Heros of Mavia",
+		// 	ticker: "MAVIA",
+		// 	icon: "/icons/token.svg",
+		// 	decimals: 18,
+		// },
+		// {
+		// 	ca: "0x78a087d713Be963Bf307b18F2Ff8122EF9A63ae9",
+		// 	name: "Baseswap Token",
+		// 	ticker: "BSWAP",
+		// 	icon: "/icons/token.svg",
+		// 	decimals: 18,
+		// },
 
 		// Add more tokens for chain ID 1 (Ethereum) if needed
 	],
-
-	11155111: [
-		{
-			ca: "0x4200000000000000000000000000000000000006",
-			name: "Ethereum",
-			ticker: "ETH",
-			icon: eth,
-			decimals: 18,
-		},
-		{
-			ca: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-			name: "USD Coin",
-			ticker: "USDC",
-			icon: usdc,
-			decimals: 6,
-		},
-		{
-			ca: "0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
-			name: "Dai Stablecoin",
-			ticker: "DAI",
-			icon: usdt,
-			decimals: 18,
-		},
-		{
-			ca: "0x4200000000000000000000000000000000000006",
-			name: "Wrapped ETH",
-			ticker: "WETH",
-			icon: weth,
-			decimals: 18,
-		},
-		{
-			ca: "0x01fa8dEEdDEA8E4e465f158d93e162438d61c9eB",
-			name: "Dop Ape",
-			ticker: "DOP_Ape",
-			icon: "" as unknown as StaticImageData,
-			decimals: 18,
-		},
-		{
-			ca: "0x4873528341D33Ec918c7465F244491aCB75Bc95F",
-			name: "DOP",
-			ticker: "DOP",
-			icon: "" as unknown as StaticImageData,
-			decimals: 18,
-		},
-	],
-	// Add tokens for other chain IDs as needed
 };

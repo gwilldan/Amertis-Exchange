@@ -5,6 +5,7 @@
 :root {
 	/* background: #140123; */
 	--foreground-rgb: rgb(255, 255, 255);
+	--background: 240 10% 3.9%;
 	--background-start-rgb: 20, 1, 35;
 	--background-end-rgb: 20, 1, 35;
 	--toastify-color-light: #fff;
@@ -20,11 +21,8 @@
 }
 
 body {
-	background-image: radial-gradient(
-		ellipse at 50% 40%,
-		rgba(35, 7, 43, 0.95) 0%,
-		#140123 50%
-	);
+	background-color: var(--background);
+
 	color: var(--foreground-rgb);
 	scroll-behavior: smooth;
 
@@ -46,5 +44,11 @@ body {
 		-webkit-appearance: none;
 		margin: 0;
 		-moz-appearance: textfield !important;
+	}
+}
+
+@layer utilities {
+	.bg-glass {
+		@apply backdrop-blur-xl bg-white/[0.07] border border-white/[0.1] shadow-[0_8px_32px_0_rgba(0,0,0,0.36)];
 	}
 }
