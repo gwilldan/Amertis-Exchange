@@ -3,7 +3,7 @@ import { ITokenList } from "./interface";
 export const TokenList: ITokenList = {
 	10143: [
 		{
-			ca: "0x0000000000000000000000000000000000000000",
+			ca: "0x760AfE86e5de5fa0Ee542fc7B7B713e1c5425701",
 			name: "Monad",
 			ticker: "MON",
 			icon: "/icons/mon.avif",

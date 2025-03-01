@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { formatUnits } from "viem";
+import { formatUnits, parseUnits } from "viem";
 
 const BottomSearchSection = ({
 	handleTokenSelect,
@@ -45,11 +45,20 @@ const BottomSearchSection = ({
 							</div>
 
 							<p className="text-right truncate">
-								{_tokens.bal
-									? Number(
-											formatUnits(_tokens.bal, _tokens?.decimals)
-									  )?.toFixed(3)
-									: "0.00"}
+								{`
+															${
+																_tokens.balance == 0
+																	? "0.00"
+																	: _tokens.balance >
+																	  parseUnits("0.001", _tokens.decimals)
+																	? Number(
+																			formatUnits(
+																				_tokens.balance,
+																				_tokens?.decimals
+																			)
+																	  )?.toFixed(3)
+																	: " < 0.001 "
+															}`}{" "}
 							</p>
 						</li>
 					);

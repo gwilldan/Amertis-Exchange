@@ -1,6 +1,12 @@
 "use client";
 import { Fragment, useState } from "react";
-import { fadeIn } from "@/utils/anim";
+import {
+	fadeIn,
+	slideDown_big,
+	slideDown_small,
+	slideDownChildren,
+} from "@/utils/anim";
+import { AnimatePresence, motion } from "motion/react";
 
 // icons
 import { FaGasPump } from "react-icons/fa6";
@@ -33,54 +39,60 @@ const Info = ({ swapData, baseToken, quoteToken }: IInfo) => {
 
 	if (!swapData.adapters.length) {
 		return (
-			<div className=" h-[50px] rounded-xl border border-white/20 bg-[#f1c1311a] backdrop-blur-xl my-4 flex justify-center items-center px-2 cursor-pointer text-[14px] text-red-500  ">
-				🚫 No routes found
-			</div>
+			<MotionWrapper>
+				<div className=" h-[50px] rounded-xl border border-white/20 bg-[#f1c1311a] backdrop-blur-xl my-4 flex justify-center items-center px-2 cursor-pointer text-[14px] text-red-500  ">
+					🚫 No routes found, check other pairs
+				</div>
+			</MotionWrapper>
 		);
 	}
 
 	return (
 		<>
-			<section
-				onClick={() => setShowRoutes(!showRoutes)}
-				className=" h-[50px] rounded-xl border bg-glass my-4 flex justify-between items-center px-2 cursor-pointer lg:hover:border-mainFG text-[14px]">
-				<div className=" flex items-center gap-2 ">
-					<span className=" flex items-center gap-1">
-						<Image
-							src={baseToken.icon}
-							alt="base"
-							width={20}
-							height={20}
-							className="rounded-full"
-						/>
-						<p>{"1 " + baseToken.ticker}</p>
-					</span>
-					<span>=</span>
-					<span className=" flex items-center gap-1">
-						<Image
-							src={quoteToken.icon}
-							alt="base"
-							width={20}
-							height={20}
-							className="rounded-full"
-						/>
+			<MotionWrapper>
+				<section
+					onClick={() => setShowRoutes(!showRoutes)}
+					className=" h-[50px] rounded-xl border bg-glass my-4 flex justify-between items-center px-2 cursor-pointer lg:hover:border-mainFG text-[14px]">
+					<div className=" flex items-center gap-2 ">
+						<span className=" flex items-center gap-1">
+							<Image
+								src={baseToken.icon}
+								alt="base"
+								width={20}
+								height={20}
+								className="rounded-full"
+							/>
+							<p>{"1 " + baseToken.ticker}</p>
+						</span>
+						<span>=</span>
+						<span className=" flex items-center gap-1">
+							<Image
+								src={quoteToken.icon}
+								alt="base"
+								width={20}
+								height={20}
+								className="rounded-full"
+							/>
 
-						<p>{Number(swapData.baseForQuote) + " " + quoteToken.ticker}</p>
-					</span>
-				</div>
-				<div className=" flex items-center gap-1 font-light ">
-					<FaGasPump />
-					<p>$0.06</p>
-					<FaChevronDown className={` ${showRoutes ? "" : ""}  ml-2`} />
-				</div>
-			</section>
-			{showRoutes && (
-				<SwapRoutes
-					swapData={swapData}
-					baseToken={baseToken}
-					quoteToken={quoteToken}
-				/>
-			)}
+							<p>{Number(swapData.baseForQuote) + " " + quoteToken.ticker}</p>
+						</span>
+					</div>
+					<div className=" flex items-center gap-1 font-light ">
+						<FaGasPump />
+						<p>$0.06</p>
+						<FaChevronDown className={` ${showRoutes ? "" : ""}  ml-2`} />
+					</div>
+				</section>
+			</MotionWrapper>
+			<AnimatePresence>
+				{showRoutes && (
+					<SwapRoutes
+						swapData={swapData}
+						baseToken={baseToken}
+						quoteToken={quoteToken}
+					/>
+				)}
+			</AnimatePresence>
 		</>
 	);
 };
@@ -92,42 +104,61 @@ const SwapRoutes = ({ swapData }: IInfo) => {
 	const tokenList = TokenList[chainId];
 
 	return (
-		<div className=" border bg-glass rounded-xl p-2 md:p-4 text-[14px] ">
-			<span className="flex items-center ease-linear gap-2 mb-6">
-				<div className=" p-2 bg-mainFG rounded-full text-center w-fit gap-2 animate-spin duration-1000 ">
-					<MdRoute />
-				</div>{" "}
-				<p>Best Route</p>
-			</span>
+		<MotionWrapper isBig>
+			<div className="  border bg-glass rounded-xl p-2 md:p-4 text-[14px] ">
+				<span className="flex items-center ease-linear gap-2 mb-6">
+					<div className=" p-2 bg-mainFG rounded-full text-center w-fit gap-2 animate-spin duration-1000 ">
+						<MdRoute />
+					</div>{" "}
+					<p>Best Route</p>
+				</span>
 
-			<section className=" flex items-center justify-between my-2 ">
-				{swapData.path?.map((path, index) => (
-					<>
-						<div
-							key={path}
-							style={{
-								backgroundImage: `url('${
-									tokenList.find(
-										(p, i) => p.ca.toLowerCase() === path.toLowerCase()
-									)?.icon ??
-									"https://via.placeholder.com/100x100/8F199B/FFFFFF?text=?"
-								}')`,
-							}}
-							// style={{
-							//   backgroundImage: `url('${
-							//     tokenList.find(
-							//       (p, i) => p.ca.toLowerCase() === path.toLowerCase()
-							//     )?.icon.src ??
-							//     "https://via.placeholder.com/100x100/8F199B/FFFFFF?text=?"
-							//   }')`,
-							// }}
-							className=" h-6 w-6 rounded-full bg-contain bg-center "></div>
-						{index < swapData.path.length - 1 && (
-							<hr className=" border border-dashed self-center flex-1 mx-1 md:mx-2 " />
-						)}
-					</>
-				))}
-			</section>
-		</div>
+				<section className=" flex items-center justify-between my-2 border-2 rounded-full ">
+					{swapData.path?.map((path, index) => (
+						<div key={path}>
+							<div
+								style={{
+									backgroundImage: `url('${
+										tokenList.find(
+											(p, i) => p.ca.toLowerCase() === path.toLowerCase()
+										)?.icon ??
+										"https://via.placeholder.com/100x100/8F199B/FFFFFF?text=?"
+									}')`,
+								}}
+								className=" h-6 w-6 rounded-full bg-contain bg-center b">
+								{" "}
+							</div>
+							{index < swapData.path.length - 1 && (
+								<hr className=" border border-dashed self-center flex-1 mx-1 md:mx-2 " />
+							)}
+						</div>
+					))}
+				</section>
+			</div>
+		</MotionWrapper>
+	);
+};
+
+const MotionWrapper = ({
+	children,
+	isBig,
+}: {
+	children: React.ReactNode;
+	isBig?: boolean;
+}) => {
+	return (
+		<motion.div
+			variants={isBig ? slideDown_big : slideDown_small}
+			initial="hidden"
+			exit="exit"
+			animate="show">
+			<motion.div
+				variants={slideDownChildren}
+				initial="hidden"
+				animate="show"
+				exit="hidden">
+				{children}
+			</motion.div>
+		</motion.div>
 	);
 };

@@ -17,14 +17,13 @@ interface IProps {
 	ToggleModal: boolean;
 	baseToken?: tokenData;
 	setBaseToken?: any;
-	isLoading: boolean;
-	// baseInputRef: any;
+	isloading: boolean;
 }
 const TopSwap = ({
 	setToggleModal,
 	baseToken,
 	setBaseToken,
-	isLoading,
+	isloading,
 }: //   baseInputRef,
 IProps) => {
 	const { isConnected } = useAccount();
@@ -98,7 +97,7 @@ IProps) => {
 						<>
 							<p>Balance</p>
 							<p>
-								{isLoading
+								{isloading
 									? "loading ..."
 									: !baseToken.tokenBalance
 									? "0.000"

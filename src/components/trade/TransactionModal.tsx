@@ -98,7 +98,7 @@ any) => {
 						<p className=" text-[20px] font-semibold my-2 text-foreground ">
 							Successfully swapped{" "}
 						</p>
-						<div className=" flex items-center gap-2 ">
+						<div className=" flex flex-col items-center gap-2 ">
 							<div className=" flex items-center gap-1">
 								<Image
 									src={baseTokenVar.icon}

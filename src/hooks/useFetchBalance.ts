@@ -16,7 +16,7 @@ const useFetchBalance = (
 		data: result,
 		refetch,
 		status,
-		isLoading,
+		isloading,
 		isError,
 		error,
 	} = useBalance({
@@ -35,7 +35,7 @@ const useFetchBalance = (
 		data: result?.value,
 		refetch: refetch,
 		status: status,
-		isLoading: isLoading,
+		isloading: isloading,
 		isError: isError,
 		error: error,
 	};

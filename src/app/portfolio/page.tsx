@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "motion/react";
-import { fadeIn } from "@/utils/anim";
+import { pageIn } from "@/utils/anim";
 import PortfolioData from "@/components/porfolio/PortfolioData";
 import { useAccount } from "wagmi";
 import { IoWalletOutline } from "react-icons/io5";
@@ -11,9 +11,9 @@ const Portfolio = () => {
 
 	return (
 		<motion.main
-			initial={fadeIn.initial}
-			animate={fadeIn.animate}
-			transition={fadeIn.transition}
+			initial="hidden"
+			variants={pageIn}
+			animate="show"
 			className="px-6 min-h-[calc(100dvh-90px)] md:min-h-[calc(100dvh-90px)] ">
 			{_connect.isConnected ? <PortfolioData /> : <Welcome />}
 		</motion.main>

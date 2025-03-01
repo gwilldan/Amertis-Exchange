@@ -34,9 +34,22 @@ export const config = createConfig({
 	}),
 });
 
-export const configObj = {
-	chains: [base, blast, sepolia],
-	transports: {
-		[monad.id]: http(),
-	},
-};
+// export const configObj = {
+// 	chains: [base, blast, sepolia],
+// 	transports: {
+// 		[monad.id]: http(),
+// 	},
+// };
+
+// export function getConfig() {
+// 	return createConfig({
+// 		chains: [monad],
+// 		ssr: true,
+// 		storage: createStorage({
+// 			storage: cookieStorage,
+// 		}),
+// 		transports: {
+// 			[monad.id]: http(),
+// 		},
+// 	});
+// }

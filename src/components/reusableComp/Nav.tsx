@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import WalletConnectSection from "./WalletConnectSection";
-import { motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 
 // icons
 import { FiMenu } from "react-icons/fi";
@@ -70,8 +70,9 @@ function Nav({}) {
 					<FiMenu className=" text-2xl text-darkBG font-extrabold " />
 				</button>
 			</div>
-
-			{toggle && <MobileNav toggleOff={toggleOff} />}
+			<AnimatePresence>
+				{toggle && <MobileNav toggleOff={toggleOff} />}
+			</AnimatePresence>
 		</div>
 	);
 }
@@ -91,10 +92,8 @@ const MobileNav = ({ toggleOff }: any) => {
 				initial="hidden"
 				animate="show"
 				variants={slideIn_variant}
-				className="bg-background h-full w-[50%] flex flex-col justify-between pt-12 pb-8 pl-8 pr-4 drop-shadow-2xl ">
+				className="bg-background h-full flex flex-col justify-between pt-12 pb-8 pl-8 pr-4 drop-shadow-2xl ">
 				<motion.div
-					initial="hidden"
-					animate="show"
 					variants={slideInChild_variant}
 					className=" flex flex-col gap-5 font-medium text-darkBG">
 					{links.map((_link: any) => (

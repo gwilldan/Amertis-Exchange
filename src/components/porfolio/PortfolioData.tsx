@@ -6,39 +6,22 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
 import { fadeIn } from "@/utils/anim";
-import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { formatUnits, parseUnits } from "viem";
-import getWalletTokens from "./walletTokens";
 import { TokenBalances } from "@/lib/interface";
+import { BalProvider } from "@/context/provideBal";
+import { useContext } from "react";
 
 const PortfolioData = () => {
-	const { open } = useWeb3Modal();
 	const chainId = useChainId();
 	const { address } = useAccount();
 	const [toggleHistory, setToggleHistory] = useState<boolean>(false);
-	const [tokenBalances, setTokenBalances] = useState<TokenBalances[] | []>([]);
+
+	const { tokenBalances, refetch }: any = useContext(BalProvider);
 
 	// for clipboard
 	const copyAddr = () => {
 		navigator.clipboard.writeText(address as string);
 	};
-
-	console.log("tokenBalances ...  ", tokenBalances);
-
-	useEffect(() => {
-		console.log("trying... ");
-
-		const fechtBals = async () => {
-			if (address || chainId) {
-				const tokenBalances = await getWalletTokens(chainId, address);
-				setTokenBalances(tokenBalances);
-			} else {
-				console.error("There's no address or chainID");
-			}
-		};
-
-		fechtBals();
-	}, [chainId, address]);
 
 	return (
 		<motion.section
@@ -102,7 +85,7 @@ const WalletTokens = ({ tokenBalances }: any) => {
 		<main className=" bg-glass mb-[50px] rounded-[16px] md:rounded-[20px] p-4 md:p-8 ">
 			<header className="flex items-center justify-between border-b pb-3 mb-3 md:mb-5 ">
 				<p>Assets</p>
-				<p className=" hidden md:block ">Price</p>
+				{/* <p className=" hidden md:block ">Price</p> */}
 				<p>Balance</p>
 			</header>
 
@@ -145,17 +128,17 @@ const WalletToken = ({ _token }: any) => {
 					</div>
 				</span>
 				<p className="hidden md:block text-center ">
-					{_token.price ? _token.price : "-"}
+					{/* {_token.price ? _token.price : "-"} */}
 				</p>
 				<p className="text-right truncate">
 					{`
 							${
-								_token.bal == 0
+								_token.balance == 0
 									? "0.00"
-									: _token.bal > parseUnits("0.001", _token.decimals)
-									? Number(formatUnits(_token.bal, _token?.decimals))?.toFixed(
-											3
-									  )
+									: _token.balance > parseUnits("0.001", _token.decimals)
+									? Number(
+											formatUnits(_token.balance, _token?.decimals)
+									  )?.toFixed(3)
 									: " < 0.001 "
 							} ${_token.ticker}`}{" "}
 				</p>

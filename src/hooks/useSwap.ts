@@ -7,6 +7,7 @@ import { useAccount, useReadContracts, useWriteContract } from "wagmi";
 import { toast } from "react-toastify";
 import { calculateSlippageAdjustedOutput } from "@/utils/helper";
 import { AiFillWarning } from "react-icons/ai";
+import { waitForTransactionReceipt } from "@wagmi/core";
 
 type TokenData = {
 	icon: string;
@@ -110,7 +111,7 @@ const UseSwap = (
 	) => {
 		try {
 			const data = await performSwap(swapData, approval);
-			setSwapTxHarsh(data);
+			setSwapTxHarsh(data.transactionHash);
 			refetchAll();
 			console.log("refetching all....", data);
 		} catch (error: any) {
@@ -152,7 +153,7 @@ const UseSwap = (
 			approvalResult = await toast.promise(approvalRes, {
 				pending: {
 					render() {
-						return "Sending swap transaction to the blockchain, please wait...";
+						return `Approving ${baseToken.ticker} for swap ...`;
 					},
 					icon: false,
 					pauseOnHover: false,
@@ -171,8 +172,6 @@ const UseSwap = (
 					pauseOnHover: false,
 				},
 			});
-
-			return approvalResult;
 		}
 
 		setTxModal(true);
@@ -180,16 +179,41 @@ const UseSwap = (
 		// console.log(amounts, amountOut, "compare to see fee out");
 		// console.log(args, "args for swap");
 
-		const swapRes = writeContractAsync({
-			abi: routerAbi,
-			address: routerAddress as `0x${string}`,
-			functionName,
-			args: args as any,
-			value: functionName === "swapNoSplitFromNative" ? (amounts[0] as any) : 0,
-			gas: BigInt(1600000),
-		});
+		const swapPromise = () =>
+			new Promise(async (res, rej) => {
+				try {
+					const swapRes = await writeContractAsync({
+						abi: routerAbi,
+						address: routerAddress as `0x${string}`,
+						functionName,
+						args: args as any,
+						value:
+							functionName === "swapNoSplitFromNative"
+								? (amounts[0] as any)
+								: 0,
+						gas: BigInt(1600000),
+					});
+					console.log("tx pending....");
+					const txRes = await waitForTransactionReceipt(config, {
+						hash: swapRes,
+					});
+					console.log("tx completed! ");
+					res(txRes.transactionHash);
+				} catch (error) {
+					rej(error);
+				}
+			});
 
-		const swapResult = await toast.promise(swapRes, {
+		// const swapRes = writeContractAsync({
+		// 	abi: routerAbi,
+		// 	address: routerAddress as `0x${string}`,
+		// 	functionName,
+		// 	args: args as any,
+		// 	value: functionName === "swapNoSplitFromNative" ? (amounts[0] as any) : 0,
+		// 	gas: BigInt(1600000),
+		// });
+
+		const swapResult = await toast.promise(swapPromise, {
 			pending: {
 				render() {
 					return "Approve transaction in your wallet...";
@@ -199,6 +223,7 @@ const UseSwap = (
 			},
 			success: {
 				render({ data }) {
+					console.log("swap successful...", data);
 					return `Swap Successfull ${data}`;
 				},
 				pauseOnHover: false,
@@ -243,7 +268,9 @@ const UseSwap = (
 		},
 		checkAllowanceAndSwap,
 		approval:
-			baseToken.name === "Ethereum" ? false : (approval as number) < inputValue,
+			baseToken.ticker.toUpperCase() === "MON"
+				? false
+				: (approval as number) < inputValue,
 		swapTxHarsh: swapTxHarsh,
 	};
 };

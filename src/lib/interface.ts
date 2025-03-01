@@ -1,5 +1,4 @@
 import { StaticImageData } from "next/image";
-import { GetBalanceReturnType } from "viem";
 
 export interface IToken {
 	ca: string;
@@ -14,7 +13,7 @@ export interface ITokenList {
 }
 
 interface BalType {
-	bal: GetBalanceReturnType;
+	balance: BigInt;
 }
 
 export type TokenBalances = IToken & BalType;

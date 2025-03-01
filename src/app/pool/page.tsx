@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "motion/react";
-import { fadeIn } from "@/utils/anim";
+import { pageIn } from "@/utils/anim";
 import Link from "next/link";
 
 const Pool = () => {
@@ -8,9 +8,9 @@ const Pool = () => {
 
 	return (
 		<motion.main
-			initial={fadeIn.initial}
-			animate={fadeIn.animate}
-			transition={fadeIn.transition}
+			initial="hidden"
+			variants={pageIn}
+			animate="show"
 			className="px-6 min-h-[calc(100dvh-90px)] md:min-h-[calc(100dvh-70px)] ">
 			{connected && <Welcome />}
 		</motion.main>

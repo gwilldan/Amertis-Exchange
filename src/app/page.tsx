@@ -24,6 +24,7 @@ import UseSwap from "@/hooks/useSwap";
 import { getTokensByChainId } from "@/lib/utils";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { toast } from "react-toastify";
+import { fadeIn, pageIn } from "@/utils/anim";
 
 export default function Home() {
 	const chainId = useChainId();
@@ -65,7 +66,7 @@ export default function Home() {
 
 	const {
 		data: baseTokenBalance,
-		isLoading: baseIsLoading,
+		isloading: baseisloading,
 		refetch: refetchBase,
 	} = useFetchBalance(
 		address!,
@@ -75,7 +76,7 @@ export default function Home() {
 
 	const {
 		data: quoteTokenBalance,
-		isLoading: quoteIsLoading,
+		isloading: quoteisloading,
 		refetch: refetchQuote,
 	} = useFetchBalance(
 		address!,
@@ -189,15 +190,19 @@ export default function Home() {
 	};
 
 	return (
-		<>
-			<motion.main className=" min-h-[calc(100dvh-90px)] md:min-h-[calc(100dvh-70px)] mb-80px px-4 py-4 pt-[150px] mt-5 md:w-[462.41px] md:pt-[136px] md:m-auto md:px-0  ">
+		<main className="min-h-[calc(100dvh-90px)] md:min-h-[calc(100dvh-70px)] ">
+			<motion.main
+				initial="hidden"
+				variants={pageIn}
+				animate="show"
+				className="  mb-80px px-4 py-4 pt-[150px] mt-5 md:w-[462.41px] md:pt-[136px] md:m-auto md:px-0 ">
 				<TopIconSection setSettingToggle={setSettingToggle} />
 				<TopSwap
 					setToggleModal={setToggleModal}
 					ToggleModal={ToggleModal}
 					baseToken={baseToken}
 					setBaseToken={setBaseToken}
-					isLoading={baseIsLoading}
+					isloading={baseisloading}
 				/>
 				<RotateTokens ReverseTrade={ReverseTrade} />
 				<BottomSwap
@@ -205,20 +210,23 @@ export default function Home() {
 					ToggleModal={ToggleModal}
 					quoteToken={quoteToken}
 					setQuoteToken={setQuoteToken}
-					isLoading={quoteIsLoading}
+					isloading={quoteisloading}
 				/>
-				{isGottenSwapData && (
-					<Info
-						swapData={swapData}
-						baseToken={baseToken}
-						quoteToken={quoteToken}
-					/>
-				)}
+				<AnimatePresence>
+					{isGottenSwapData && (
+						<Info
+							swapData={swapData}
+							baseToken={baseToken}
+							quoteToken={quoteToken}
+						/>
+					)}
+				</AnimatePresence>
+
 				{isConnected && (
 					<button
 						disabled={isInsufficient}
 						onClick={handleSwap}
-						className=" flex items-center justify-center h-[100px] md:h-[54px] w-full mt-3 py-4 px-[18px] bg-[#8F199B] rounded-[10px] shadow- text-darkBG hover:text-darkSlate disabled:opacity-75">
+						className=" flex items-center justify-center h-[54px] w-full mt-3 py-4 px-[18px] bg-[#8F199B] rounded-[10px] shadow- text-darkBG hover:text-darkSlate disabled:opacity-75">
 						{isInsufficient
 							? `Insufficient ${baseToken.ticker} balance`.toUpperCase()
 							: approval
@@ -274,7 +282,7 @@ export default function Home() {
 					/>
 				)}
 			</AnimatePresence>
-		</>
+		</main>
 	);
 }
 

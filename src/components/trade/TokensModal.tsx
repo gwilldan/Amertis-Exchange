@@ -4,11 +4,13 @@ import Image from "next/image";
 import { BiSearch } from "react-icons/bi";
 import { IoClose } from "react-icons/io5";
 import { TokenList } from "@/lib/TokenList";
-import { fadeIn, zoomIn } from "@/utils/anim";
+import { zoomIn } from "@/utils/anim";
 import { useChainId, useAccount } from "wagmi";
 
 import BottomSearchSection from "./BottomSearchSection";
-import getWalletTokens from "../porfolio/walletTokens";
+
+import { BalProvider } from "@/context/provideBal";
+import { useContext } from "react";
 
 type tokenData = {
 	icon: string;
@@ -41,16 +43,26 @@ const TokensModal = ({
 	const chainId = useChainId();
 	const modalRef = useRef<any | null>();
 	const { address } = useAccount();
+	const { tokenBalances }: any = useContext(BalProvider);
 
 	const [searchText, setSearchText] = useState<string>("");
-	const [tokenList, setTokenList] = useState(TokenList[chainId]);
+	const [tokenList, setTokenList] = useState([]);
 	const [balLoading, setBalLoading] = useState<boolean>(true);
+
+	useEffect(() => {
+		if (!tokenBalances.length) {
+			setBalLoading(true);
+		} else {
+			setBalLoading(false);
+			setTokenList(tokenBalances);
+		}
+	}, [tokenBalances]);
 
 	const newTokenList = useMemo(() => {
 		if (searchText === "") return tokenList;
 
 		return tokenList?.filter(
-			(_tokens) =>
+			(_tokens: any) =>
 				_tokens.name.toLowerCase().includes(searchText.toLowerCase()) ||
 				_tokens.ticker.toLowerCase().includes(searchText.toLowerCase()) ||
 				_tokens.ca.toLowerCase() === searchText.toLowerCase()
@@ -76,18 +88,6 @@ const TokensModal = ({
 		};
 	}, []);
 
-	// get token list...
-	useEffect(() => {
-		const getTokens = async () => {
-			const tokensWithBal = await getWalletTokens(chainId, address);
-			setTokenList(tokensWithBal);
-			setBalLoading(false);
-		};
-
-		getTokens();
-	}, [chainId, address]);
-
-	// handle selection of tokens, makes sure that the user does not click the same token that has been selected already either as base or quote tokens.
 	const handleTokenSelect = (selectedToken: any) => {
 		if (
 			selectedToken.ticker === quoteToken?.ticker ||
@@ -101,7 +101,7 @@ const TokensModal = ({
 				ticker: selectedToken.ticker,
 				icon: selectedToken.icon,
 				inputValue: "",
-				tokenBalance: selectedToken.bal,
+				tokenBalance: selectedToken.balance,
 				ca: selectedToken.ca,
 				price: selectedToken?.price,
 				decimals: selectedToken.decimals,
@@ -109,15 +109,12 @@ const TokensModal = ({
 		}
 
 		closeModal();
+
+		console.log("token...", selectedToken);
 	};
 
 	return (
-		<main
-			// initial={fadeIn.initial}
-			// animate={fadeIn.animate}
-			// transition={fadeIn.transition}
-			// exit={fadeIn.initial}
-			className=" w-dvw h-dvh  md:p-6 fixed top-0 z-50 ">
+		<main className=" w-dvw h-dvh  md:p-6 fixed top-0 z-50 ">
 			<motion.section
 				initial={zoomIn.initial}
 				animate={zoomIn.animate}
