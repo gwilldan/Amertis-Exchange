@@ -111,7 +111,7 @@ const UseSwap = (
 	) => {
 		try {
 			const data = await performSwap(swapData, approval);
-			setSwapTxHarsh(data.transactionHash);
+			setSwapTxHarsh(data as `0x${string}`);
 			refetchAll();
 			console.log("refetching all....", data);
 		} catch (error: any) {
@@ -176,8 +176,6 @@ const UseSwap = (
 
 		setTxModal(true);
 		const args = [[amounts[0], amountOut, path, adapters], userAddress, fee];
-		// console.log(amounts, amountOut, "compare to see fee out");
-		// console.log(args, "args for swap");
 
 		const swapPromise = () =>
 			new Promise(async (res, rej) => {
@@ -191,7 +189,6 @@ const UseSwap = (
 							functionName === "swapNoSplitFromNative"
 								? (amounts[0] as any)
 								: 0,
-						gas: BigInt(1600000),
 					});
 					console.log("tx pending....");
 					const txRes = await waitForTransactionReceipt(config, {
@@ -204,15 +201,6 @@ const UseSwap = (
 				}
 			});
 
-		// const swapRes = writeContractAsync({
-		// 	abi: routerAbi,
-		// 	address: routerAddress as `0x${string}`,
-		// 	functionName,
-		// 	args: args as any,
-		// 	value: functionName === "swapNoSplitFromNative" ? (amounts[0] as any) : 0,
-		// 	gas: BigInt(1600000),
-		// });
-
 		const swapResult = await toast.promise(swapPromise, {
 			pending: {
 				render() {
@@ -223,7 +211,7 @@ const UseSwap = (
 			},
 			success: {
 				render({ data }) {
-					console.log("swap successful...", data);
+					console.log("swap successful from toast!!...", data);
 					return `Swap Successfull ${data}`;
 				},
 				pauseOnHover: false,
