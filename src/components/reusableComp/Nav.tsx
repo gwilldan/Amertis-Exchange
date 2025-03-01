@@ -11,9 +11,8 @@ import { FiMenu } from "react-icons/fi";
 import { BiWater } from "react-icons/bi";
 import { HiArrowPath } from "react-icons/hi2";
 import { MdDataUsage } from "react-icons/md";
-import { FiChevronDown } from "react-icons/fi";
 import { SiGitbook } from "react-icons/si";
-import { fadeIn, slideIn_variant, slideInChild_variant } from "@/utils/anim";
+import { slideIn_variant, slideInChild_variant } from "@/utils/anim";
 
 function Nav({}) {
 	const path = usePathname();
@@ -111,22 +110,6 @@ const MobileNav = ({ toggleOff }: any) => {
 						</Link>
 					))}
 				</motion.div>
-
-				{/* <motion.div className=" h-[123.5px] flex flex-col gap-4 justify-end">
-					<button className=" flex justify-center items-center gap-2 text-white bg-darkBG rounded-lg h-9 w-[176px] shadow-md">
-						<Image
-							src={"/icons/mon.avif"}
-							alt="mon"
-							width={24}
-							height={24}
-							className="rounded-full"
-						/>
-						<h1>MON</h1>
-						<div className=" text-white">
-							<FiChevronDown />
-						</div>
-					</button>
-				</motion.div> */}
 			</motion.div>
 		</div>
 	);
