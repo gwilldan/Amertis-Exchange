@@ -159,7 +159,7 @@ const UseSwap = (
 				},
 				success: {
 					render({ data }) {
-						return `Hello ${data}`;
+						return `${baseToken.ticker} Approval successful.`;
 					},
 					pauseOnHover: false,
 				},
@@ -212,7 +212,7 @@ const UseSwap = (
 			success: {
 				render({ data }) {
 					console.log("swap successful from toast!!...", data);
-					return `Swap Successfull ${data}`;
+					return ` ✅ Swap Successfull `;
 				},
 				pauseOnHover: false,
 			},

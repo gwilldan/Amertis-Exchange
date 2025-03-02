@@ -30,16 +30,17 @@ IProps) => {
 	const setPercentage = useCallback(
 		(percent: number) => {
 			setBaseToken((prev: { tokenBalance: any; decimals: number }) => {
-				const balanceInEther = formatUnits(prev.tokenBalance, prev.decimals);
+				const balanceInEther =
+					prev.tokenBalance > parseUnits("0.000000001", prev.decimals)
+						? formatUnits(prev.tokenBalance, prev.decimals)
+						: 0;
 				if (prev) {
-					console.log("prev....", prev);
-
 					return {
 						...prev,
 						inputValue:
 							percent === 100
 								? Number(+balanceInEther || 0)
-								: +balanceInEther > parseEther("0.00000001")
+								: Number(+balanceInEther) > 0.00000001
 								? Number(((+balanceInEther || 0) * percent) / 100).toFixed(8)
 								: Number(((+balanceInEther || 0) * percent) / 100),
 					};
