@@ -15,14 +15,12 @@ const TransactionModal = ({
 	quoteToken,
 	txState,
 	txErr,
+	swapTxHarsh,
 }: // status,
 any) => {
 	const [baseTokenVar] = useState(baseToken);
 	const [quoteTokenVar] = useState(quoteToken);
 	const modalRef = useRef<any | null>();
-
-	console.log("base token var...", baseTokenVar);
-	console.log("quoteTokenVa token var...", quoteTokenVar);
 
 	useEffect(() => {
 		const handleClickOutside = (event: any) => {
@@ -148,6 +146,15 @@ any) => {
 										  quoteTokenVar?.ticker}
 								</p>
 							</div>
+						</div>
+						<div className="mt-2">
+							<a
+								href={`https://testnet.monadexplorer.com/tx/${swapTxHarsh}`}
+								target="_blank"
+								rel="noopener noreferrer"
+								className=" underline  hover:text-mainFG ">
+								View TX
+							</a>
 						</div>
 					</section>
 				)}

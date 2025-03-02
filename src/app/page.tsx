@@ -280,6 +280,7 @@ export default function Home() {
 						txState={txState}
 						txModal={txModal}
 						txErr={txErr}
+						swapTxHarsh={swapTxHarsh}
 					/>
 				)}
 			</AnimatePresence>
