@@ -83,8 +83,8 @@ export const slideDown_big: Variants = {
 		opacity: 0,
 		transition: {
 			when: "afterChildren",
-			duration: 0.01,
-			ease: "easeInOut",
+			duration: 0.05,
+			ease: "linear",
 		},
 	},
 };

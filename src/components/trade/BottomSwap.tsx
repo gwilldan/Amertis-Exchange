@@ -49,7 +49,7 @@ const BottomSwap = ({
 
 	return (
 		<div className=" h-[104px] py-4 px-[14px] rounded-2xl p-8 bg-glass ">
-			<div className=" flex justify-between items-center h-[40px]">
+			<div className=" flex justify-between gap-2 items-center h-[40px]">
 				{" "}
 				{/* this is the bottom input */}
 				<input

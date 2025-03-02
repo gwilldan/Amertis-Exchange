@@ -133,7 +133,7 @@ const WalletToken = ({ _token }: any) => {
 				<p className="text-right truncate">
 					{`
 							${
-								_token.balance == 0
+								_token.balance == 0 || !_token.balance
 									? "0.00"
 									: _token.balance > parseUnits("0.001", _token.decimals)
 									? Number(

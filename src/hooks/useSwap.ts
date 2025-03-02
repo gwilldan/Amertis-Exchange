@@ -45,11 +45,10 @@ const UseSwap = (
 		baseToken.inputValue.toString(),
 		baseToken.decimals
 	);
-	const inputValueAfterFee =
-		(inputValue * (FEE_DENOMINATOR - fee)) / FEE_DENOMINATOR;
+	// const inputValueAfterFee =
+	// 	(inputValue * (FEE_DENOMINATOR - fee)) / FEE_DENOMINATOR;
 	const baseTokenCA = baseToken.ca as `0x${string}`;
 	const quoteTokenCA = quoteToken.ca as `0x${string}`;
-	const gasLimit = 1000000;
 	const [swapTxHarsh, setSwapTxHarsh] = useState("" as `0x${string}`);
 
 	const contractAddress =
@@ -189,6 +188,7 @@ const UseSwap = (
 							functionName === "swapNoSplitFromNative"
 								? (amounts[0] as any)
 								: 0,
+						// gas: BigInt(1600000),
 					});
 					console.log("tx pending....");
 					const txRes = await waitForTransactionReceipt(config, {

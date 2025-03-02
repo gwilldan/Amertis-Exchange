@@ -1,5 +1,5 @@
 "use client";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import {
 	fadeIn,
 	slideDown_big,
@@ -15,6 +15,7 @@ import { MdRoute } from "react-icons/md";
 import { useChainId } from "wagmi";
 import { TokenList } from "@/lib/TokenList";
 import Image from "next/image";
+import { parseEther } from "viem";
 
 type SwapData = {
 	adapters: string[];
@@ -34,8 +35,6 @@ type IInfo = {
 
 const Info = ({ swapData, baseToken, quoteToken }: IInfo) => {
 	const [showRoutes, setShowRoutes] = useState<boolean>(false);
-
-	console.log("swap data...", swapData);
 
 	if (!swapData.adapters.length) {
 		return (
@@ -74,7 +73,13 @@ const Info = ({ swapData, baseToken, quoteToken }: IInfo) => {
 								className="rounded-full"
 							/>
 
-							<p>{Number(swapData.baseForQuote) + " " + quoteToken.ticker}</p>
+							<p>
+								{Number(swapData.baseForQuote) < 0.00000001
+									? ` < 0.00000001 ${quoteToken.ticker} `
+									: Number(swapData.baseForQuote).toFixed(8) +
+									  " " +
+									  quoteToken.ticker}
+							</p>
 						</span>
 					</div>
 					<div className=" flex items-center gap-1 font-light ">
@@ -100,8 +105,24 @@ const Info = ({ swapData, baseToken, quoteToken }: IInfo) => {
 export default Info;
 
 const SwapRoutes = ({ swapData }: IInfo) => {
+	const [adapter, setAdapter] = useState<{
+		name: string;
+		image: string;
+	} | null>();
+
 	const chainId = useChainId();
 	const tokenList = TokenList[chainId];
+
+	useEffect(() => {
+		if (swapData.adapters[0] === "0x83520cA482a1C3bC1CcF73Ceb58F6fEE8a590Da7") {
+			setAdapter({
+				name: "Uniswap",
+				image: "/icons/uniswap.svg",
+			});
+		} else {
+			setAdapter(null);
+		}
+	}, [swapData]);
 
 	return (
 		<MotionWrapper isBig>
@@ -113,26 +134,49 @@ const SwapRoutes = ({ swapData }: IInfo) => {
 					<p>Best Route</p>
 				</span>
 
-				<section className=" flex items-center justify-between my-2 border-2 rounded-full ">
-					{swapData.path?.map((path, index) => (
-						<div key={path}>
-							<div
-								style={{
-									backgroundImage: `url('${
-										tokenList.find(
-											(p, i) => p.ca.toLowerCase() === path.toLowerCase()
-										)?.icon ??
-										"https://via.placeholder.com/100x100/8F199B/FFFFFF?text=?"
-									}')`,
-								}}
-								className=" h-6 w-6 rounded-full bg-contain bg-center b">
-								{" "}
-							</div>
-							{index < swapData.path.length - 1 && (
-								<hr className=" border border-dashed self-center flex-1 mx-1 md:mx-2 " />
+				<section className=" flex items-center justify-between my-2 rounded-full gap-2 ">
+					<div
+						style={{
+							backgroundImage: `url('${
+								tokenList.find(
+									(p, i) =>
+										p.ca.toLowerCase() === swapData.path[0].toLowerCase()
+								)?.icon ??
+								"https://via.placeholder.com/100x100/8F199B/FFFFFF?text=?"
+							}')`,
+						}}
+						className=" h-6 w-6 rounded-full bg-contain bg-center b"></div>
+
+					<div className=" flex-1 relative ">
+						<div className="relative w-full h-1 bg-white/10 rounded-full overflow-hidden">
+							<div className="line-shine-effect"></div>
+						</div>
+						<div className="absolute inset-0 grid place-content-center ">
+							{adapter && (
+								<div className=" bg-slate-100 text-black px-5 py-2 rounded-xl flex items-center gap-2">
+									<Image
+										src={adapter.image}
+										alt="adt"
+										width={16}
+										height={16}
+										className="rounded-full"
+									/>
+									<p>{adapter?.name}</p>
+								</div>
 							)}
 						</div>
-					))}
+					</div>
+					<div
+						style={{
+							backgroundImage: `url('${
+								tokenList.find(
+									(p, i) =>
+										p.ca.toLowerCase() === swapData.path[1].toLowerCase()
+								)?.icon ??
+								"https://via.placeholder.com/100x100/8F199B/FFFFFF?text=?"
+							}')`,
+						}}
+						className=" h-6 w-6 rounded-full bg-contain bg-center b"></div>
 				</section>
 			</div>
 		</MotionWrapper>

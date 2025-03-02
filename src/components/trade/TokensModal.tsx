@@ -69,6 +69,8 @@ const TokensModal = ({
 		);
 	}, [searchText, tokenList]);
 
+	console.log("tokenlis... ", tokenList);
+
 	// close the modal
 	const closeModal = () => {
 		setToggleModal({ ...ToggleModal, mainToggle: false });
@@ -101,7 +103,7 @@ const TokensModal = ({
 				ticker: selectedToken.ticker,
 				icon: selectedToken.icon,
 				inputValue: "",
-				tokenBalance: selectedToken.balance,
+				tokenBalance: selectedToken.balance ? selectedToken.balance : 0,
 				ca: selectedToken.ca,
 				price: selectedToken?.price,
 				decimals: selectedToken.decimals,

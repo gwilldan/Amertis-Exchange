@@ -115,6 +115,9 @@ export default function Home() {
 			...baseToken,
 			inputValue: prevQuoteToken.inputValue,
 		}));
+
+		console.log("base token---", baseToken);
+		console.log("quote token---", quoteToken);
 	}, [baseToken.ca, quoteToken.ca]);
 
 	useEffect(() => {
@@ -133,8 +136,6 @@ export default function Home() {
 				tokenBalance: Number(quoteTokenBalance),
 			}));
 		}
-
-		// console.log("quoteTokenChange....", quoteTokenBalance);
 	}, [quoteTokenBalance]);
 
 	useEffect(() => {
