@@ -7,6 +7,7 @@ import { GiCheckMark } from "react-icons/gi";
 import { AiFillWarning } from "react-icons/ai";
 import Image from "next/image";
 import { FaArrowDown } from "react-icons/fa";
+import { parseEther } from "viem";
 
 const TransactionModal = ({
 	setTxModal,
@@ -19,6 +20,9 @@ any) => {
 	const [baseTokenVar] = useState(baseToken);
 	const [quoteTokenVar] = useState(quoteToken);
 	const modalRef = useRef<any | null>();
+
+	console.log("base token var...", baseTokenVar);
+	console.log("quoteTokenVa token var...", quoteTokenVar);
 
 	useEffect(() => {
 		const handleClickOutside = (event: any) => {
@@ -58,7 +62,13 @@ any) => {
 									width={20}
 									className="rounded-full"
 								/>
-								<p>{baseTokenVar?.inputValue + " " + baseTokenVar?.ticker}</p>
+								<p>
+									{Number(baseTokenVar?.inputValue) < 0.00000001
+										? " < 0.00000001"
+										: Number(baseTokenVar?.inputValue).toFixed(8) +
+										  " " +
+										  baseTokenVar?.ticker}
+								</p>
 							</div>
 							<FaArrowDown className="" />
 							<div className=" flex items-center gap-1">
@@ -69,7 +79,13 @@ any) => {
 									width={20}
 									className="rounded-full"
 								/>
-								<p>{quoteTokenVar?.inputValue + " " + quoteTokenVar?.ticker}</p>
+								<p>
+									{Number(quoteTokenVar?.inputValue) < 0.00000001
+										? " < 0.00000001"
+										: Number(quoteTokenVar?.inputValue).toFixed(8) +
+										  " " +
+										  quoteTokenVar?.ticker}
+								</p>
 							</div>
 						</div>
 
@@ -107,7 +123,13 @@ any) => {
 									width={20}
 									className="rounded-full"
 								/>
-								<p>{baseTokenVar?.inputValue + " " + baseTokenVar?.ticker}</p>
+								<p>
+									{Number(baseTokenVar?.inputValue) < 0.00000001
+										? " < 0.00000001"
+										: Number(baseTokenVar?.inputValue).toFixed(8) +
+										  " " +
+										  baseTokenVar?.ticker}
+								</p>
 							</div>
 							<p>to</p>
 							<div className=" flex items-center gap-1">
@@ -118,7 +140,13 @@ any) => {
 									width={20}
 									className="rounded-full"
 								/>
-								<p>{quoteTokenVar?.inputValue + " " + quoteTokenVar?.ticker}</p>
+								<p>
+									{Number(quoteTokenVar?.inputValue) < 0.00000001
+										? " < 0.00000001"
+										: Number(quoteTokenVar?.inputValue).toFixed(8) +
+										  " " +
+										  quoteTokenVar?.ticker}
+								</p>
 							</div>
 						</div>
 					</section>

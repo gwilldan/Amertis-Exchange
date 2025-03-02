@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import TokenButton from "./TokenButton";
-import { formatUnits, parseUnits } from "viem";
+import { formatUnits, parseEther, parseUnits } from "viem";
 import { useAccount } from "wagmi";
 
 type tokenData = {
@@ -32,13 +32,16 @@ IProps) => {
 			setBaseToken((prev: { tokenBalance: any; decimals: number }) => {
 				const balanceInEther = formatUnits(prev.tokenBalance, prev.decimals);
 				if (prev) {
-					console.log({
-						...prev,
-						inputValue: Number(((+balanceInEther || 0) * percent) / 100),
-					});
+					console.log("prev....", prev);
+
 					return {
 						...prev,
-						inputValue: Number(((+balanceInEther || 0) * percent) / 100),
+						inputValue:
+							percent === 100
+								? Number(+balanceInEther || 0)
+								: +balanceInEther > parseEther("0.00000001")
+								? Number(((+balanceInEther || 0) * percent) / 100).toFixed(8)
+								: Number(((+balanceInEther || 0) * percent) / 100),
 					};
 				}
 				return prev;

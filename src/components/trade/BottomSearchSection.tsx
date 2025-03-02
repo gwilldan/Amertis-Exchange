@@ -44,22 +44,22 @@ const BottomSearchSection = ({
 								</p>
 							</div>
 
-							<p className="text-right truncate">
-								{`
-															${
-																_tokens.balance == 0
-																	? "0.00"
-																	: _tokens.balance >
-																	  parseUnits("0.001", _tokens.decimals)
-																	? Number(
-																			formatUnits(
-																				_tokens.balance,
-																				_tokens?.decimals
-																			)
-																	  )?.toFixed(3)
-																	: " < 0.001 "
-															}`}{" "}
-							</p>
+							{_tokens.balance ? (
+								<p className="text-right truncate">
+									{`
+									${
+										_tokens.balance == 0 || !_tokens.balance
+											? "0.00"
+											: _tokens.balance > parseUnits("0.001", _tokens.decimals)
+											? Number(
+													formatUnits(_tokens.balance, _tokens?.decimals)
+											  )?.toFixed(3)
+											: " < 0.001 "
+									}`}{" "}
+								</p>
+							) : (
+								<p className="text-right truncate"></p>
+							)}
 						</li>
 					);
 				})

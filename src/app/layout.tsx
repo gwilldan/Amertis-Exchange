@@ -11,6 +11,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Wrapper from "@/components/Wrapper";
 import ProvideBal from "@/context/provideBal";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -37,6 +38,7 @@ export default async function RootLayout({
 						<Nav />
 						<Wrapper>{children}</Wrapper>
 						<Footer />
+						<Analytics />
 						<ToastContainer
 							position="top-right"
 							autoClose={5000}
