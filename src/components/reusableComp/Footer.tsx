@@ -35,19 +35,19 @@ const footerLinks = [
 		linkIcon: <BsTwitterX />,
 		linkHref: "https://x.com/AmertisExchange",
 	},
-	{
-		linkName: "Telegram",
-		linkIcon: <FaTelegramPlane />,
-		linkHref: "#",
-	},
+	// {
+	// 	linkName: "Telegram",
+	// 	linkIcon: <FaTelegramPlane />,
+	// 	linkHref: "#",
+	// },
 	{
 		linkName: "GitHub",
 		linkIcon: <BsGithub />,
-		linkHref: "https://github.com/AetherForge-Labs/Amertis-Exchange",
+		linkHref: "https://github.com/AetherForge-Labs",
 	},
 	{
 		linkName: "Discord",
 		linkIcon: <BsDiscord />,
-		linkHref: "#",
+		linkHref: "https://discord.gg/6gysN8TkBU",
 	},
 ];

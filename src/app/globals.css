@@ -46,6 +46,15 @@ body {
 	}
 }
 
+.no-scrollbar::-webkit-scrollbar {
+	display: none;
+}
+
+.no-scrollbar {
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+}
+
 .line-shine-effect {
 	position: absolute;
 	top: 0;
