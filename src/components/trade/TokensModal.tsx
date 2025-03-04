@@ -17,7 +17,7 @@ type tokenData = {
 	name: string;
 	ca: string;
 	ticker: string;
-	tokenBalance: number | undefined;
+	tokenBalance: bigint | undefined;
 	inputValue: string;
 	price: string;
 	decimals: number;

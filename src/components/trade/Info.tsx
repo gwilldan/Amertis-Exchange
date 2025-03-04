@@ -36,7 +36,7 @@ type IInfo = {
 const Info = ({ swapData, baseToken, quoteToken }: IInfo) => {
 	const [showRoutes, setShowRoutes] = useState<boolean>(false);
 
-	if (!swapData.adapters.length) {
+	if (!swapData || !swapData?.adapters?.length) {
 		return (
 			<MotionWrapper>
 				<div className=" h-[50px] rounded-xl border border-white/20 bg-[#f1c1311a] backdrop-blur-xl my-4 flex justify-center items-center px-2 cursor-pointer text-[14px] text-red-500  ">

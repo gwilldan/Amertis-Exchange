@@ -42,12 +42,12 @@ export default function Home() {
 	const [settingToggle, setSettingToggle] = useState<boolean>(false);
 	const [baseToken, setBaseToken] = useState({
 		...tokenList[0],
-		tokenBalance: 0,
+		tokenBalance: BigInt(0),
 		inputValue: "",
 		price: "",
 	});
 	const [quoteToken, setQuoteToken] = useState({
-		tokenBalance: 0,
+		tokenBalance: BigInt(0),
 		inputValue: "",
 		ca: "",
 		name: "",
@@ -96,12 +96,12 @@ export default function Home() {
 			setBaseToken({
 				...baseToken,
 				inputValue: "",
-				tokenBalance: Number(baseTokenBalance),
+				tokenBalance: baseTokenBalance as bigint,
 			});
 			setQuoteToken({
 				...quoteToken,
 				inputValue: "",
-				tokenBalance: Number(quoteTokenBalance),
+				tokenBalance: quoteTokenBalance as bigint,
 			});
 		}
 	}, [status, swapTxHarsh]);
@@ -116,15 +116,15 @@ export default function Home() {
 			inputValue: prevQuoteToken.inputValue,
 		}));
 
-		console.log("base token---", baseToken);
-		console.log("quote token---", quoteToken);
+		// console.log("base token---", baseToken);
+		// console.log("quote token---", quoteToken);
 	}, [baseToken.ca, quoteToken.ca]);
 
 	useEffect(() => {
 		if (baseTokenBalance !== undefined) {
 			setBaseToken((prevBaseToken) => ({
 				...prevBaseToken,
-				tokenBalance: Number(baseTokenBalance),
+				tokenBalance: baseTokenBalance,
 			}));
 		}
 	}, [baseTokenBalance]);
@@ -133,7 +133,7 @@ export default function Home() {
 		if (quoteTokenBalance !== undefined) {
 			setQuoteToken((prevQuoteToken) => ({
 				...prevQuoteToken,
-				tokenBalance: Number(quoteTokenBalance),
+				tokenBalance: quoteTokenBalance,
 			}));
 		}
 	}, [quoteTokenBalance]);

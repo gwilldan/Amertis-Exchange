@@ -9,7 +9,7 @@ type tokenData = {
 	name: string;
 	ticker: string;
 	ca: string;
-	tokenBalance: number | undefined;
+	tokenBalance: bigint | undefined;
 	inputValue: string;
 	decimals: number;
 };
