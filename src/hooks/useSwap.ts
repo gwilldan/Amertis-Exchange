@@ -14,7 +14,7 @@ type TokenData = {
 	name: string;
 	ca: string;
 	ticker: string;
-	tokenBalance: number | undefined;
+	tokenBalance: bigint | undefined;
 	inputValue: string;
 	price: string;
 	decimals: number;
@@ -142,14 +142,27 @@ const UseSwap = (
 
 		let approvalResult: any;
 		if (allowanceEnough) {
-			const approvalRes = writeContractAsync({
-				abi: tokenAbi,
-				address: baseTokenCA as `0x${string}`,
-				functionName: "approve",
-				args: [routerAddress, maxUint256],
-			});
+			const approvalPromise = () =>
+				new Promise(async (res, rej) => {
+					try {
+						const approvalRes = await writeContractAsync({
+							abi: tokenAbi,
+							address: baseTokenCA as `0x${string}`,
+							functionName: "approve",
+							args: [routerAddress, maxUint256],
+						});
+						console.log("tx pending....");
+						const txRes = await waitForTransactionReceipt(config, {
+							hash: approvalRes as `0x${string}`,
+						});
+						console.log("tx completed! ");
+						res(txRes.transactionHash);
+					} catch (error) {
+						rej(error);
+					}
+				});
 
-			approvalResult = await toast.promise(approvalRes, {
+			await toast.promise(approvalPromise, {
 				pending: {
 					render() {
 						return `Approving ${baseToken.ticker} for swap ...`;
