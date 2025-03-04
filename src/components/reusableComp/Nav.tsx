@@ -30,7 +30,7 @@ function Nav({}) {
 			</div>
 
 			<div className=" flex items-center gap-4 py-2 pr-3 pl-4 h-[58px] justify-between md:justify-start">
-				<button>
+				<a href="https://amertis.exchange">
 					<Image
 						src={"/Images/Logo.svg"}
 						alt="Logo"
@@ -40,7 +40,7 @@ function Nav({}) {
 						priority
 						height={32}
 					/>
-				</button>
+				</a>
 
 				{/* Tab and PC Links */}
 				<div className=" md:text-darkSlate md:flex flex-1 md:items-center md:gap-8 md:text-sm md:ml-8 hidden">

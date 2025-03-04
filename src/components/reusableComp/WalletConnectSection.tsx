@@ -1,6 +1,5 @@
 import { BsEggFill } from "react-icons/bs";
 import { IoWalletOutline } from "react-icons/io5";
-import { fadeIn } from "@/utils/anim";
 import { useAccount } from "wagmi";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { Fragment } from "react";
@@ -46,11 +45,6 @@ export const ConnectButton = () => {
 					</>
 				</button>
 			)}
-			{/* {isConnecting ||
-        isReconnecting ||
-        (isDisconnected && (
-         
-        ))} */}
 		</Fragment>
 	);
 };

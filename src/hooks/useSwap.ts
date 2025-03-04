@@ -7,7 +7,7 @@ import { useAccount, useReadContracts, useWriteContract } from "wagmi";
 import { toast } from "react-toastify";
 import { calculateSlippageAdjustedOutput } from "@/utils/helper";
 import { AiFillWarning } from "react-icons/ai";
-import { waitForTransactionReceipt } from "@wagmi/core";
+import { switchChain, waitForTransactionReceipt } from "@wagmi/core";
 
 type TokenData = {
 	icon: string;
@@ -38,18 +38,22 @@ const UseSwap = (
 ) => {
 	const fee = BigInt(3); // Fee represented in 1e4 format
 	const FEE_DENOMINATOR = BigInt(1e4);
-	const { address: userAddress } = useAccount();
+	const { address: userAddress, chainId } = useAccount();
 	const [debouncedInputValue, setDebouncedInputValue] = useState("");
 	const routerAddress = "0xA89aa6a1f0347f38d75918E07E8A321Eb3C8fC09";
 	const inputValue = parseUnits(
 		baseToken.inputValue.toString(),
 		baseToken.decimals
 	);
-	// const inputValueAfterFee =
-	// 	(inputValue * (FEE_DENOMINATOR - fee)) / FEE_DENOMINATOR;
 	const baseTokenCA = baseToken.ca as `0x${string}`;
 	const quoteTokenCA = quoteToken.ca as `0x${string}`;
 	const [swapTxHarsh, setSwapTxHarsh] = useState("" as `0x${string}`);
+
+	useEffect(() => {
+		if (chainId !== config.chains[0].id) {
+			switchChain(config, { chainId: config.chains[0].id });
+		}
+	}, [chainId]);
 
 	const contractAddress =
 		quoteTokenCA && +debouncedInputValue > 0 ? routerAddress : undefined;
@@ -198,7 +202,6 @@ const UseSwap = (
 							functionName === "swapNoSplitFromNative"
 								? (amounts[0] as any)
 								: 0,
-						// gas: BigInt(1600000),
 					});
 					const txRes = await waitForTransactionReceipt(config, {
 						hash: swapRes,
