@@ -69,9 +69,6 @@ const TokensModal = ({
 		);
 	}, [searchText, tokenList]);
 
-	console.log("tokenlis... ", tokenList);
-
-	// close the modal
 	const closeModal = () => {
 		setToggleModal({ ...ToggleModal, mainToggle: false });
 	};
