@@ -28,7 +28,7 @@ const Welcome = () => {
 					Hold on <span className=" text-mainFG "> buddy!!!</span>
 				</h1>
 				<p className=" font-light text-[14px] mb-5 my-2">
-					We are still building our pool interface ...
+					We are still building the pool interface ...
 				</p>
 
 				<Link
