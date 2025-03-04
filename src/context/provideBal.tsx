@@ -65,9 +65,7 @@ const ProvideBal = ({ children }: { children: React.ReactNode }) => {
 		}
 	}, [address]);
 
-	const refetch = () => {
-		console.log("refetch...");
-	};
+	const refetch = () => {};
 
 	return (
 		<BalProvider.Provider value={{ tokenBalances, refetch }}>

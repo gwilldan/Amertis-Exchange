@@ -28,8 +28,6 @@ const TopSwap = ({
 IProps) => {
 	const { isConnected } = useAccount();
 
-	console.log("baseToken...", baseToken);
-
 	const setPercentage = useCallback(
 		(percent: number) => {
 			setBaseToken((prev: { tokenBalance: any; decimals: number }) => {

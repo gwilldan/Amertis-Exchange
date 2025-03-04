@@ -148,5 +148,10 @@ const WalletToken = ({ _token }: any) => {
 };
 
 const History = () => {
-	return <main className="  ">HISTORY SECTION</main>;
+	return (
+		<main className="h-[100px] grid place-content-center">
+			{" "}
+			coming soon ...{" "}
+		</main>
+	);
 };

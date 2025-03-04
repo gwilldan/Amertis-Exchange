@@ -112,7 +112,6 @@ const UseSwap = (
 			const data = await performSwap(swapData, approval);
 			setSwapTxHarsh(data as `0x${string}`);
 			refetchAll();
-			console.log("refetching all....", data);
 		} catch (error: any) {
 			setTxErr(error?.details);
 			console.warn("ERROR FROM THE USE SWAP....", error?.details);
@@ -151,11 +150,9 @@ const UseSwap = (
 							functionName: "approve",
 							args: [routerAddress, maxUint256],
 						});
-						console.log("tx pending....");
 						const txRes = await waitForTransactionReceipt(config, {
 							hash: approvalRes as `0x${string}`,
 						});
-						console.log("tx completed! ");
 						res(txRes.transactionHash);
 					} catch (error) {
 						rej(error);
@@ -203,11 +200,10 @@ const UseSwap = (
 								: 0,
 						// gas: BigInt(1600000),
 					});
-					console.log("tx pending....");
 					const txRes = await waitForTransactionReceipt(config, {
 						hash: swapRes,
 					});
-					console.log("tx completed! ");
+					("tx completed! ");
 					res(txRes.transactionHash);
 				} catch (error) {
 					rej(error);
@@ -224,7 +220,6 @@ const UseSwap = (
 			},
 			success: {
 				render({ data }) {
-					console.log("swap successful from toast!!...", data);
 					return ` ✅ Swap Successfull `;
 				},
 				pauseOnHover: false,

@@ -108,8 +108,6 @@ const TokensModal = ({
 		}
 
 		closeModal();
-
-		console.log("token...", selectedToken);
 	};
 
 	return (

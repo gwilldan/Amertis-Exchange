@@ -25,7 +25,6 @@ const SettingModal = ({ setSettingToggle }: any) => {
 		if (arg <= 0 || arg > 50) {
 			inputRef.current?.focus();
 		} else {
-			console.log("slippage", arg);
 			setSettingToggle(false);
 		}
 	};

@@ -20,7 +20,6 @@ const useFetchData = (url: string) => {
 				setData(result);
 			} catch (error: any) {
 				if (error.name === "AbortError") {
-					console.log("Request was cancelled");
 				} else {
 					setError(error.message);
 				}
