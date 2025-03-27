@@ -7,7 +7,7 @@ import { useAccount, useReadContracts, useWriteContract } from "wagmi";
 import { toast } from "react-toastify";
 import { calculateSlippageAdjustedOutput } from "@/utils/helper";
 import { AiFillWarning } from "react-icons/ai";
-import { switchChain, waitForTransactionReceipt } from "@wagmi/core";
+import { Config, switchChain, waitForTransactionReceipt } from "@wagmi/core";
 
 type TokenData = {
 	icon: string;
@@ -51,7 +51,7 @@ const UseSwap = (
 
 	useEffect(() => {
 		if (chainId !== config.chains[0].id) {
-			switchChain(config, { chainId: config.chains[0].id });
+			switchChain(config as Config, { chainId: config.chains[0].id });
 		}
 	}, [chainId]);
 
@@ -100,6 +100,7 @@ const UseSwap = (
 				],
 			},
 		],
+		multicallAddress: "0xcA11bde05977b3631167028862bE2a173976CA11" as `0x${string}`,
 	});
 
 	const { writeContractAsync, status: writeContractStatus } = useWriteContract({
@@ -154,7 +155,7 @@ const UseSwap = (
 							functionName: "approve",
 							args: [routerAddress, maxUint256],
 						});
-						const txRes = await waitForTransactionReceipt(config, {
+						const txRes = await waitForTransactionReceipt(config as Config, {
 							hash: approvalRes as `0x${string}`,
 						});
 						res(txRes.transactionHash);
@@ -203,7 +204,7 @@ const UseSwap = (
 								? (amounts[0] as any)
 								: 0,
 					});
-					const txRes = await waitForTransactionReceipt(config, {
+					const txRes = await waitForTransactionReceipt(config as Config, {
 						hash: swapRes,
 					});
 					("tx completed! ");
@@ -251,18 +252,18 @@ const UseSwap = (
 			amountOut:
 				foundSwapInfo && foundSwapInfo.amounts.length > 0
 					? formatUnits(
-							foundSwapInfo?.amounts[foundSwapInfo.amounts.length - 1],
-							quoteToken?.decimals as number
-					  )
+						foundSwapInfo?.amounts[foundSwapInfo.amounts.length - 1],
+						quoteToken?.decimals as number
+					)
 					: "",
 			baseForQuote:
 				baseTokenForQuoteToken && baseTokenForQuoteToken.amounts.length > 0
 					? formatUnits(
-							baseTokenForQuoteToken?.amounts[
-								baseTokenForQuoteToken.amounts.length - 1
-							],
-							quoteToken?.decimals as number
-					  )
+						baseTokenForQuoteToken?.amounts[
+						baseTokenForQuoteToken.amounts.length - 1
+						],
+						quoteToken?.decimals as number
+					)
 					: "",
 		},
 		checkAllowanceAndSwap,

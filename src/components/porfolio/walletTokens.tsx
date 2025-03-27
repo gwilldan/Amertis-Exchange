@@ -4,7 +4,7 @@ import { config } from "@/config";
 import { abi } from "@/config/basicTokenAbi";
 import { TokenList } from "@/lib/TokenList";
 import { TokenBalances } from "@/lib/interface";
-
+import { Config } from "wagmi";
 const getWalletTokens = async (
 	_chainId: number,
 	address: `0x${string}` | undefined
@@ -14,14 +14,14 @@ const getWalletTokens = async (
 			new Promise<any>(async (res, rej) => {
 				try {
 					if (_token.ticker.toUpperCase() === "MON") {
-						const bal = await getBalance(config, {
+						const bal = await getBalance(config as Config, {
 							address: `0x${address?.replace("0x", "")}`,
 						});
 						const newToken = { ..._token, bal: bal.value };
 						return res(newToken);
 					}
 
-					const bal = await readContract(config, {
+					const bal = await readContract(config as Config, {
 						abi: abi,
 						address: `0x${_token.ca.replace("0x", "")}`,
 						functionName: "balanceOf",
