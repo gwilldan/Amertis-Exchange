@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { BsTwitterX, BsGithub, BsDiscord } from "react-icons/bs";
-import { FaTelegramPlane } from "react-icons/fa";
+// import { FaTelegramPlane } from "react-icons/fa";
 
 function Footer() {
 	return (
@@ -48,6 +48,6 @@ const footerLinks = [
 	{
 		linkName: "Discord",
 		linkIcon: <BsDiscord />,
-		linkHref: "https://discord.gg/6gysN8TkBU",
+		linkHref: "https://discord.gg/AEwRjGT3T8",
 	},
 ];

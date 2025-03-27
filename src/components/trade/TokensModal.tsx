@@ -49,6 +49,9 @@ const TokensModal = ({
 	const [tokenList, setTokenList] = useState([]);
 	const [balLoading, setBalLoading] = useState<boolean>(true);
 
+
+
+
 	useEffect(() => {
 		if (!tokenBalances.length) {
 			setBalLoading(true);
@@ -174,11 +177,10 @@ const TopSearchSection = ({
 					<button
 						key={_tokens.ticker}
 						onClick={(e: any) => handleTokenSelect(_tokens)}
-						className={` ${
-							_tokens.ticker === baseToken.tokenName
-								? "bg-mainFG"
-								: "lg:hover:bg-mainLight"
-						} flex items-center justify-center gap-1  transition-colors ease-linear duration-200 w-fit px-2 py-1 shadow-lg h-full rounded-3xl `}>
+						className={` ${_tokens.ticker === baseToken.tokenName
+							? "bg-mainFG"
+							: "lg:hover:bg-mainLight"
+							} flex items-center justify-center gap-1  transition-colors ease-linear duration-200 w-fit px-2 py-1 shadow-lg h-full rounded-3xl `}>
 						<Image
 							src={_tokens.icon}
 							alt="icons"

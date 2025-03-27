@@ -24,22 +24,24 @@ const ProvideBal = ({ children }: { children: React.ReactNode }) => {
 		args: [address],
 	}));
 
-	const { data: tokenBals, refetch: refetchAll } = useReadContracts({
+	const { data: tokenBals } = useReadContracts({
 		config: config,
+		batchSize: 0,
 		contracts: calls,
+		multicallAddress: "0xcA11bde05977b3631167028862bE2a173976CA11" as `0x${string}`,
 		query: {
-			staleTime: 5000,
-			refetchInterval: 5000,
+			staleTime: 10_000,
+			refetchInterval: 10_000,
 			enabled: !!address,
 		},
 	});
 
-	const { data: monBal, refetch: refetchMonBal } = useBalance({
+	const { data: monBal } = useBalance({
 		config: config,
 		address: address as `0x${string}`,
 		query: {
-			staleTime: 5000,
-			refetchInterval: 5000,
+			staleTime: 10_000,
+			refetchInterval: 10_000,
 			enabled: !!address,
 		},
 	});
@@ -58,14 +60,7 @@ const ProvideBal = ({ children }: { children: React.ReactNode }) => {
 		);
 	}, [monBal, tokenBals]);
 
-	useEffect(() => {
-		if (address) {
-			refetchAll();
-			refetchMonBal();
-		}
-	}, [address]);
-
-	const refetch = () => {};
+	const refetch = () => { };
 
 	return (
 		<BalProvider.Provider value={{ tokenBalances, refetch }}>
