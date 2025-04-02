@@ -18,6 +18,58 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
 	title: "Amertis",
 	description: "The Next Generation Aggregator on Monad",
+	keywords: ["Amertis Exchange", "Amertis", "Exchange", "Monad", "DeFi", "DEX aggregator", "cryptocurrency", "blockchain", "trading", "Aggregator"],
+	publisher: "Amertis Team",
+	alternates: {
+		canonical: "https://amertis.exchange",
+	},
+	robots: {
+		index: true,
+		follow: true,
+		googleBot: {
+			index: true,
+			follow: true,
+			"max-video-preview": -1,
+			"max-image-preview": "large",
+			"max-snippet": -1,
+		},
+	},
+	openGraph: {
+		title: "Amertis",
+		description: "The Next Generation Aggregator on Monad",
+		type: "website",
+		locale: "en_US",
+		url: "https://amertis.exchange",
+		siteName: "Amertis",
+		images: [
+			{
+				url: "/icons/amertisLogo.jpg",
+				host: "https://amertis.exchange",
+				hostname: "Amertis",
+				width: 1200,
+				height: 630,
+				alt: "Amertis Logo",
+			},
+		],
+	},
+	twitter: {
+		card: "summary_large_image",
+		title: "Amertis",
+		description: "The Next Generation Aggregator on Monad",
+		images: [
+			{
+				url: "/icons/amertisLogo.jpg",
+				host: "https://amertis.exchange",
+				hostname: "Amertis",
+			},
+		],
+	},
+	icons: {
+		icon: "/icons/amertisLogo.jpg",
+		host: "https://amertis.exchange",
+		hostname: "Amertis",
+	},
+
 };
 
 export default async function RootLayout({

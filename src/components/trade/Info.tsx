@@ -36,6 +36,8 @@ type IInfo = {
 const Info = ({ swapData, baseToken, quoteToken }: IInfo) => {
 	const [showRoutes, setShowRoutes] = useState<boolean>(false);
 
+	console.log("swapData", swapData);
+
 	if (!swapData || !swapData?.adapters?.length) {
 		return (
 			<MotionWrapper>
@@ -77,8 +79,8 @@ const Info = ({ swapData, baseToken, quoteToken }: IInfo) => {
 								{Number(swapData.baseForQuote) < 0.00000001
 									? ` < 0.00000001 ${quoteToken.ticker} `
 									: Number(swapData.baseForQuote).toFixed(8) +
-									  " " +
-									  quoteToken.ticker}
+									" " +
+									quoteToken.ticker}
 							</p>
 						</span>
 					</div>
@@ -137,13 +139,12 @@ const SwapRoutes = ({ swapData }: IInfo) => {
 				<section className=" flex items-center justify-between my-2 rounded-full gap-2 ">
 					<div
 						style={{
-							backgroundImage: `url('${
-								tokenList.find(
-									(p, i) =>
-										p.ca.toLowerCase() === swapData.path[0].toLowerCase()
-								)?.icon ??
+							backgroundImage: `url('${tokenList.find(
+								(p, i) =>
+									p.ca.toLowerCase() === swapData.path[0].toLowerCase()
+							)?.icon ??
 								"https://via.placeholder.com/100x100/8F199B/FFFFFF?text=?"
-							}')`,
+								}')`,
 						}}
 						className=" h-6 w-6 rounded-full bg-contain bg-center b"></div>
 
@@ -168,13 +169,12 @@ const SwapRoutes = ({ swapData }: IInfo) => {
 					</div>
 					<div
 						style={{
-							backgroundImage: `url('${
-								tokenList.find(
-									(p, i) =>
-										p.ca.toLowerCase() === swapData.path[1].toLowerCase()
-								)?.icon ??
+							backgroundImage: `url('${tokenList.find(
+								(p, i) =>
+									p.ca.toLowerCase() === swapData.path[swapData.path.length - 1].toLowerCase()
+							)?.icon ??
 								"https://via.placeholder.com/100x100/8F199B/FFFFFF?text=?"
-							}')`,
+								}')`,
 						}}
 						className=" h-6 w-6 rounded-full bg-contain bg-center b"></div>
 				</section>

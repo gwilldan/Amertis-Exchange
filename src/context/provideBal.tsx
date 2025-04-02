@@ -30,8 +30,8 @@ const ProvideBal = ({ children }: { children: React.ReactNode }) => {
 		contracts: calls,
 		multicallAddress: "0xcA11bde05977b3631167028862bE2a173976CA11" as `0x${string}`,
 		query: {
-			staleTime: 10_000,
-			refetchInterval: 10_000,
+			staleTime: 5_000,
+			refetchInterval: 5_000,
 			enabled: !!address,
 		},
 	});
@@ -40,8 +40,8 @@ const ProvideBal = ({ children }: { children: React.ReactNode }) => {
 		config: config,
 		address: address as `0x${string}`,
 		query: {
-			staleTime: 10_000,
-			refetchInterval: 10_000,
+			staleTime: 5_000,
+			refetchInterval: 5_000,
 			enabled: !!address,
 		},
 	});

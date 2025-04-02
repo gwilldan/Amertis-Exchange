@@ -10,13 +10,6 @@ export const TokenList: ITokenList = {
 			decimals: 18,
 		},
 		{
-			ca: "0x760AfE86e5de5fa0Ee542fc7B7B713e1c5425701",
-			name: "Wrapped MON",
-			ticker: "WMON",
-			icon: "/icons/wmon.avif",
-			decimals: 18,
-		},
-		{
 			ca: "0xf817257fed379853cDe0fa4F97AB987181B1E5Ea",
 			name: "USD Coin",
 			ticker: "USDC",
@@ -84,13 +77,20 @@ export const TokenList: ITokenList = {
 			name: "curvance USDC",
 			ticker: "cUSDC",
 			icon: "/icons/cUSDC.png",
-			decimals: 18,
+			decimals: 6,
 		},
 		{
 			ca: "0x3a98250F98Dd388C211206983453837C8365BDc1",
 			name: "shMonad",
 			ticker: "shMON",
 			icon: "/icons/shMON.webp",
+			decimals: 18,
+		},
+		{
+			ca: "0x760AfE86e5de5fa0Ee542fc7B7B713e1c5425701",
+			name: "Wrapped MON",
+			ticker: "WMON",
+			icon: "/icons/wmon.avif",
 			decimals: 18,
 		},
 		{

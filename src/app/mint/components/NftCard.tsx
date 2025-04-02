@@ -29,7 +29,7 @@ const NftCard = () => {
                 onMouseLeave={handleMouseLeave}
             >
                 <img
-                    src="https://ipfs.io/ipfs/bafybeiawhfgty6f7b3pdqh23vtfo5usav6px3kblmna2fsqrvskhywu34q/mertnft.jpg"
+                    src="https://ipfs.io/ipfs/bafybeidnkn7mnsdt3bbal52b4iu6b6kttgmbpjxdxrql2vtouanbpu5vgi/letterFromOlympus.png"
                     alt="NFT"
                     className="w-full h-full object-cover rounded-2xl"
                 />

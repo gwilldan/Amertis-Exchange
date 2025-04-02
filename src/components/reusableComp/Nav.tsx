@@ -14,7 +14,7 @@ import { MdDataUsage } from "react-icons/md";
 import { SiGitbook } from "react-icons/si";
 import { slideIn_variant, slideInChild_variant } from "@/utils/anim";
 
-function Nav({}) {
+function Nav({ }) {
 	const path = usePathname();
 
 	const [toggle, setToggle] = useState<boolean>(false);
@@ -25,8 +25,8 @@ function Nav({}) {
 
 	return (
 		<div className=" backdrop-blur-md fixed top-0 w-full z-50">
-			<div className=" bg-mainFG text-white h-[22px] text-xs flex items-center justify-center ">
-				<p>Amertis on Monad testnet...</p>
+			<div className=" bg-mainFG text-white h-[26px] text-xs flex items-center justify-center ">
+				<p>Mint our <Link href="/mint" className="underline"> special NFT</Link> on Monad testnet...</p>
 			</div>
 
 			<div className=" flex items-center gap-4 py-2 pr-3 pl-4 h-[58px] justify-between md:justify-start">
@@ -49,11 +49,10 @@ function Nav({}) {
 							key={_link.name}
 							href={_link.href}
 							onClick={toggleOff}
-							className={` ${
-								_link.href === path
+							className={` ${_link.href === path
 									? "text-mainFG font-semibold "
 									: "hover:text-slate-400"
-							} flex items-center w-fit h-10 gap-4`}>
+								} flex items-center w-fit h-10 gap-4`}>
 							{_link.name}
 						</Link>
 					))}
@@ -100,11 +99,10 @@ const MobileNav = ({ toggleOff }: any) => {
 							key={_link.name}
 							href={_link.href}
 							onClick={toggleOff}
-							className={` ${
-								_link.href === path
+							className={` ${_link.href === path
 									? "text-mainFG font-bold "
 									: "hover:text-slate-400"
-							} flex items-center w-fit h-10 gap-4`}>
+								} flex items-center w-fit h-10 gap-4`}>
 							{_link.icon}
 							<h1 className=" font-normal">{_link.name}</h1>
 						</Link>

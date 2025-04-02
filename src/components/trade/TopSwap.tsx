@@ -25,7 +25,7 @@ const TopSwap = ({
 	setBaseToken,
 	isloading,
 }: //   baseInputRef,
-IProps) => {
+	IProps) => {
 	const { isConnected } = useAccount();
 
 	const setPercentage = useCallback(
@@ -40,10 +40,10 @@ IProps) => {
 						...prev,
 						inputValue:
 							percent === 100
-								? Number(+balanceInEther || 0)
+								? Number((+balanceInEther || 0) * 0.99999999999999999)
 								: Number(+balanceInEther) > 0.00000001
-								? Number(((+balanceInEther || 0) * percent) / 100).toFixed(8)
-								: Number(((+balanceInEther || 0) * percent) / 100),
+									? Number(((+balanceInEther || 0) * percent) / 100).toFixed(8)
+									: Number(((+balanceInEther || 0) * percent) / 100),
 					};
 				}
 				return prev;
@@ -105,16 +105,16 @@ IProps) => {
 								{isloading
 									? "loading ..."
 									: !baseToken.tokenBalance
-									? "0.000"
-									: baseToken.tokenBalance >
-									  parseUnits("0.001", baseToken.decimals)
-									? Number(
-											formatUnits(
-												BigInt(baseToken?.tokenBalance),
-												baseToken.decimals
-											)
-									  ).toFixed(3)
-									: " < 0.001"}
+										? "0.000"
+										: baseToken.tokenBalance >
+											parseUnits("0.001", baseToken.decimals)
+											? Number(
+												formatUnits(
+													BigInt(baseToken?.tokenBalance),
+													baseToken.decimals
+												)
+											).toFixed(3)
+											: " < 0.001"}
 							</p>
 						</>
 					) : (

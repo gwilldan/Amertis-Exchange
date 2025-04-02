@@ -11,7 +11,7 @@ import Modal from "./Modal";
 const mekletree = require("./Merkletree.json");
 const abi = require("./abi.json");
 
-const mertNFTAddress = "0x8870Fc3A430a84ef19483958786BC2792c57Ad6b";
+const mertNFTAddress = "0x19B6f6D1df883BF8314Ab6646debCAfbddb83594";
 
 const MintButton = () => {
     const { address } = useAccount();
