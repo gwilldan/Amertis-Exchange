@@ -50,8 +50,8 @@ function Nav({ }) {
 							href={_link.href}
 							onClick={toggleOff}
 							className={` ${_link.href === path
-									? "text-mainFG font-semibold "
-									: "hover:text-slate-400"
+								? "text-mainFG font-semibold "
+								: "hover:text-slate-400"
 								} flex items-center w-fit h-10 gap-4`}>
 							{_link.name}
 						</Link>
@@ -100,8 +100,8 @@ const MobileNav = ({ toggleOff }: any) => {
 							href={_link.href}
 							onClick={toggleOff}
 							className={` ${_link.href === path
-									? "text-mainFG font-bold "
-									: "hover:text-slate-400"
+								? "text-mainFG font-bold "
+								: "hover:text-slate-400"
 								} flex items-center w-fit h-10 gap-4`}>
 							{_link.icon}
 							<h1 className=" font-normal">{_link.name}</h1>

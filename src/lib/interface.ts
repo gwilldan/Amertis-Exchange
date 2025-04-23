@@ -1,6 +1,6 @@
 import { StaticImageData } from "next/image";
 
-export interface IToken {
+export interface Token {
 	ca: string;
 	name: string;
 	ticker: string;
@@ -8,12 +8,17 @@ export interface IToken {
 	decimals: number;
 }
 
+export interface IToken {
+	[i: string]: Token
+
+}
+
 export interface ITokenList {
-	[chainId: number]: IToken[];
+	[chainId: number]: IToken;
 }
 
 interface BalType {
 	balance: BigInt;
 }
 
-export type TokenBalances = IToken & BalType;
+export type TokenBalances = Token & BalType;

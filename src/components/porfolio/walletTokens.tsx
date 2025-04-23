@@ -1,16 +1,17 @@
-import { IToken } from "@/lib/interface";
+import { IToken, Token } from "@/lib/interface";
 import { getBalance, readContract } from "@wagmi/core";
 import { config } from "@/config";
 import { abi } from "@/config/basicTokenAbi";
 import { TokenList } from "@/lib/TokenList";
 import { TokenBalances } from "@/lib/interface";
 import { Config } from "wagmi";
+import { allTokens } from "@/lib/utils";
 const getWalletTokens = async (
 	_chainId: number,
 	address: `0x${string}` | undefined
 ): Promise<TokenBalances[]> => {
 	try {
-		const _promise = (_token: IToken) =>
+		const _promise = (_token: Token) =>
 			new Promise<any>(async (res, rej) => {
 				try {
 					if (_token.ticker.toUpperCase() === "MON") {
@@ -35,7 +36,7 @@ const getWalletTokens = async (
 			});
 
 		const newTokenList = await Promise.all(
-			TokenList[_chainId].map((_token: IToken) => _promise(_token))
+			Object.values(allTokens()).map((_token: any) => _promise(_token))
 		);
 		return newTokenList;
 	} catch (error) {

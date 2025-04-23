@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { calculateSlippageAdjustedOutput } from "@/utils/helper";
 import { AiFillWarning } from "react-icons/ai";
 import { Config, switchChain, waitForTransactionReceipt } from "@wagmi/core";
+import { wMON_CA } from "@/lib/TokenList";
 
 type TokenData = {
 	icon: string;
@@ -45,8 +46,14 @@ const UseSwap = (
 		baseToken.inputValue.toString(),
 		baseToken.decimals
 	);
-	const baseTokenCA = baseToken.ca as `0x${string}`;
-	const quoteTokenCA = quoteToken.ca as `0x${string}`;
+	const baseTokenCA =
+		baseToken.ticker.toUpperCase() === "MON"
+			? wMON_CA
+			: (baseToken.ca as `0x${string}`);
+	const quoteTokenCA =
+		quoteToken.ticker.toUpperCase() === "MON"
+			? wMON_CA
+			: (quoteToken.ca as `0x${string}`);
 	const [swapTxHarsh, setSwapTxHarsh] = useState("" as `0x${string}`);
 
 	useEffect(() => {
@@ -100,7 +107,8 @@ const UseSwap = (
 				],
 			},
 		],
-		multicallAddress: "0xcA11bde05977b3631167028862bE2a173976CA11" as `0x${string}`,
+		multicallAddress:
+			"0xcA11bde05977b3631167028862bE2a173976CA11" as `0x${string}`,
 	});
 
 	const { writeContractAsync, status: writeContractStatus } = useWriteContract({

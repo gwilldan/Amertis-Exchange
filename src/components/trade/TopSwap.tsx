@@ -28,22 +28,23 @@ const TopSwap = ({
 	IProps) => {
 	const { isConnected } = useAccount();
 
+
 	const setPercentage = useCallback(
 		(percent: number) => {
 			setBaseToken((prev: { tokenBalance: any; decimals: number }) => {
 				const balanceInEther =
 					prev.tokenBalance > parseUnits("0.000000001", prev.decimals)
-						? formatUnits(prev.tokenBalance, prev.decimals)
-						: 0;
+						? prev.tokenBalance
+						: BigInt(0);
+
 				if (prev) {
+					const calculatedValue = percent === 100
+						? balanceInEther
+						: ((balanceInEther * BigInt(percent)) / BigInt(100));
+
 					return {
 						...prev,
-						inputValue:
-							percent === 100
-								? Number((+balanceInEther || 0) * 0.99999999999999999)
-								: Number(+balanceInEther) > 0.00000001
-									? Number(((+balanceInEther || 0) * percent) / 100).toFixed(8)
-									: Number(((+balanceInEther || 0) * percent) / 100),
+						inputValue: formatUnits(calculatedValue, prev.decimals)
 					};
 				}
 				return prev;

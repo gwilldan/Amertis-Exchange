@@ -21,14 +21,14 @@ import useFetchBalance from "@/hooks/useFetchBalance";
 import { useAccount, useTransactionConfirmations, useChainId } from "wagmi";
 import { formatUnits } from "viem";
 import UseSwap from "@/hooks/useSwap";
-import { getTokensByChainId } from "@/lib/utils";
+import { allTokens } from "@/lib/utils";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { toast } from "react-toastify";
 import { fadeIn, pageIn } from "@/utils/anim";
 
 export default function Home() {
 	const chainId = useChainId();
-	const tokenList = getTokensByChainId(chainId);
+	const tokenList = allTokens();
 	const { open } = useWeb3Modal();
 
 	const [txModal, setTxModal] = useState<boolean>(false);
@@ -41,7 +41,7 @@ export default function Home() {
 	const { address, isConnected, isDisconnected } = useAccount();
 	const [settingToggle, setSettingToggle] = useState<boolean>(false);
 	const [baseToken, setBaseToken] = useState({
-		...tokenList[0],
+		...(tokenList as Record<string, any>)["0x0000000000000000000000000000000000000000"],
 		tokenBalance: BigInt(0),
 		inputValue: "",
 		price: "",
@@ -107,7 +107,7 @@ export default function Home() {
 	}, [status, swapTxHarsh]);
 
 	const ReverseTrade = useCallback(() => {
-		setBaseToken((prevBaseToken) => ({
+		setBaseToken((prevBaseToken: any) => ({
 			...quoteToken,
 			inputValue: prevBaseToken.inputValue,
 		}));
@@ -119,7 +119,7 @@ export default function Home() {
 
 	useEffect(() => {
 		if (baseTokenBalance !== undefined) {
-			setBaseToken((prevBaseToken) => ({
+			setBaseToken((prevBaseToken: any) => ({
 				...prevBaseToken,
 				tokenBalance: baseTokenBalance,
 			}));

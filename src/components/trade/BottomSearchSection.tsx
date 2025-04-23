@@ -20,12 +20,11 @@ const BottomSearchSection = ({
 						<li
 							key={index}
 							onClick={() => handleTokenSelect(_tokens)}
-							className={` ${
-								baseToken.ticker === _tokens.ticker ||
-								quoteToken.ticker === _tokens.ticker
+							className={` ${baseToken.ticker === _tokens.ticker ||
+									quoteToken.ticker === _tokens.ticker
 									? "opacity-40"
 									: "lg:hover:bg-mainLight"
-							} h-[60px] px-6 cursor-pointer  grid grid-cols-[10%_60%_30%] items-center overflow-hidden `}>
+								} h-[60px] px-6 cursor-pointer  grid grid-cols-[10%_60%_30%] items-center overflow-hidden `}>
 							{_tokens.icon ? (
 								<Image
 									src={_tokens.icon}
@@ -47,15 +46,14 @@ const BottomSearchSection = ({
 							{_tokens.balance ? (
 								<p className="text-right truncate">
 									{`
-									${
-										_tokens.balance == 0 || !_tokens.balance
+									${_tokens.balance == 0 || !_tokens.balance
 											? "0.00"
 											: _tokens.balance > parseUnits("0.001", _tokens.decimals)
-											? Number(
+												? Number(
 													formatUnits(_tokens.balance, _tokens?.decimals)
-											  )?.toFixed(3)
-											: " < 0.001 "
-									}`}{" "}
+												)?.toFixed(3)
+												: " < 0.001 "
+										}`}{" "}
 								</p>
 							) : (
 								<p className="text-right truncate"></p>
@@ -69,3 +67,5 @@ const BottomSearchSection = ({
 };
 
 export default BottomSearchSection;
+
+

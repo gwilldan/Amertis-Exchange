@@ -1,23 +1,24 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { useAccount, useBalance, useReadContracts } from "wagmi";
-import { TokenBalances } from "@/lib/interface";
+import { Token, TokenBalances } from "@/lib/interface";
 import { createContext } from "react";
 import { TokenList } from "@/lib/TokenList";
 import { config } from "@/config";
 import { erc20Abi } from "viem";
+import { allTokens } from "@/lib/utils"
 
 export const BalProvider = createContext<null | object>(null);
 
 const ProvideBal = ({ children }: { children: React.ReactNode }) => {
 	const { address } = useAccount();
-	const intervalRef = useRef<NodeJS.Timeout | null>(null);
 	const [tokenBalances, setTokenBalances] = useState<TokenBalances[] | []>([]);
-	const [tokenList, setTokenList] = useState();
+	const [tokenList, setTokenList] = useState<Token[] | []>([]);
+	const [tokenUpdateCounter, setTokenUpdateCounter] = useState(0);
 
-	const tokens = TokenList[config.chains[0].id];
+	const tokens = useMemo(() => allTokens(), [tokenUpdateCounter]);
 
-	const calls = tokens.map((token) => ({
+	const calls = Object.values(tokens).map((token: any) => ({
 		address: token.ca as `0x${string}`,
 		abi: erc20Abi,
 		functionName: "balanceOf",
@@ -28,10 +29,11 @@ const ProvideBal = ({ children }: { children: React.ReactNode }) => {
 		config: config,
 		batchSize: 0,
 		contracts: calls,
-		multicallAddress: "0xcA11bde05977b3631167028862bE2a173976CA11" as `0x${string}`,
+		multicallAddress:
+			"0xcA11bde05977b3631167028862bE2a173976CA11" as `0x${string}`,
 		query: {
-			staleTime: 5_000,
-			refetchInterval: 5_000,
+			staleTime: 10_000,
+			refetchInterval: 10_000,
 			enabled: !!address,
 		},
 	});
@@ -40,16 +42,16 @@ const ProvideBal = ({ children }: { children: React.ReactNode }) => {
 		config: config,
 		address: address as `0x${string}`,
 		query: {
-			staleTime: 5_000,
-			refetchInterval: 5_000,
+			staleTime: 10_000,
+			refetchInterval: 10_000,
 			enabled: !!address,
 		},
 	});
 
 	useEffect(() => {
 		setTokenBalances(
-			tokens
-				.map((token, index) => ({
+			Object.values(tokens)
+				.map((token: any, index: number) => ({
 					...token,
 					balance:
 						token.ticker.toUpperCase() === "MON"
@@ -58,12 +60,14 @@ const ProvideBal = ({ children }: { children: React.ReactNode }) => {
 				}))
 				.sort((a, b) => Number(b.balance) - Number(a.balance))
 		);
-	}, [monBal, tokenBals]);
+	}, [monBal, tokenBals, tokens]);
 
-	const refetch = () => { };
+	const refreshTokens = () => {
+		setTokenUpdateCounter(prev => prev + 1);
+	};
 
 	return (
-		<BalProvider.Provider value={{ tokenBalances, refetch }}>
+		<BalProvider.Provider value={{ tokenBalances, refreshTokens }}>
 			{children}
 		</BalProvider.Provider>
 	);

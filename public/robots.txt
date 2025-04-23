@@ -1,9 +1,0 @@
-# *
-User-agent: *
-Allow: /
-
-# Host
-Host: https://amertis.exchange
-
-# Sitemaps
-Sitemap: https://amertis.exchange/sitemap.xml

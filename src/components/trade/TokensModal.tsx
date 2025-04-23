@@ -6,6 +6,7 @@ import { IoClose } from "react-icons/io5";
 import { TokenList } from "@/lib/TokenList";
 import { zoomIn } from "@/utils/anim";
 import { useChainId, useAccount } from "wagmi";
+import { CheckAndAddToken } from "./index";
 
 import BottomSearchSection from "./BottomSearchSection";
 
@@ -49,9 +50,6 @@ const TokensModal = ({
 	const [tokenList, setTokenList] = useState([]);
 	const [balLoading, setBalLoading] = useState<boolean>(true);
 
-
-
-
 	useEffect(() => {
 		if (!tokenBalances.length) {
 			setBalLoading(true);
@@ -64,12 +62,18 @@ const TokensModal = ({
 	const newTokenList = useMemo(() => {
 		if (searchText === "") return tokenList;
 
-		return tokenList?.filter(
+		const filteredTokenList = tokenList?.filter(
 			(_tokens: any) =>
 				_tokens.name.toLowerCase().includes(searchText.toLowerCase()) ||
 				_tokens.ticker.toLowerCase().includes(searchText.toLowerCase()) ||
 				_tokens.ca.toLowerCase() === searchText.toLowerCase()
 		);
+
+		if (!filteredTokenList.length) {
+			return []
+		}
+
+		return filteredTokenList;
 	}, [searchText, tokenList]);
 
 	const closeModal = () => {
@@ -88,7 +92,7 @@ const TokensModal = ({
 		return () => {
 			removeEventListener("mousedown", handleClickOutside);
 		};
-	}, []);
+	}, [setToggleModal, ToggleModal]);
 
 	const handleTokenSelect = (selectedToken: any) => {
 		if (
@@ -127,15 +131,24 @@ const TokensModal = ({
 					baseToken={baseToken}
 					handleTokenSelect={handleTokenSelect}
 				/>
-				<BottomSearchSection
-					handleTokenSelect={handleTokenSelect}
-					baseToken={baseToken}
-					quoteToken={quoteToken}
-					newTokenList={newTokenList}
-					chainID={chainId}
-					address={address}
-					balLoading={balLoading}
-				/>
+				{
+					newTokenList.length ?
+						<BottomSearchSection
+							handleTokenSelect={handleTokenSelect}
+							baseToken={baseToken}
+							quoteToken={quoteToken}
+							newTokenList={newTokenList}
+							chainID={chainId}
+							address={address}
+							balLoading={balLoading}
+						/>
+						:
+						<CheckAndAddToken
+							handleTokenSelect={handleTokenSelect}
+							tokenAddress={searchText as `0x${string}`}
+							walletAddress={address as `0x${string}`}
+						/>
+				}
 			</motion.section>
 		</main>
 	);
@@ -152,7 +165,7 @@ const TopSearchSection = ({
 }: any) => {
 	const chainId = useChainId();
 	const tokenList = TokenList[chainId];
-	const HistoryList = tokenList?.slice(0, 4);
+	const HistoryList = Object.values(tokenList).slice(0, 4);
 
 	return (
 		<div className=" border-b-[0.5px] border-mainFG p-5">

@@ -1,113 +1,95 @@
 import { ITokenList } from "./interface";
 
+export const wMON_CA = "0x760AfE86e5de5fa0Ee542fc7B7B713e1c5425701";
+
+// as you update the tokenList, you should also update the TokenRef
 export const TokenList: ITokenList = {
-	10143: [
-		{
-			ca: "0x760AfE86e5de5fa0Ee542fc7B7B713e1c5425701",
+	10143: {
+		"0x0000000000000000000000000000000000000000": {
+			ca: "0x0000000000000000000000000000000000000000",
 			name: "Monad",
 			ticker: "MON",
 			icon: "/icons/mon.avif",
 			decimals: 18,
 		},
-		{
+		"0xf817257fed379853cDe0fa4F97AB987181B1E5Ea": {
 			ca: "0xf817257fed379853cDe0fa4F97AB987181B1E5Ea",
 			name: "USD Coin",
 			ticker: "USDC",
 			icon: "/icons/usdc.png",
 			decimals: 6,
 		},
-		{
-			ca: "0x88b8E2161DEDC77EF4ab7585569D2415a1C1055D",
-			name: "Tether USD",
-			ticker: "USDT",
-			icon: "/icons/usdt.png",
-			decimals: 6,
-		},
-		{
-			ca: "0xB5a30b0FDc5EA94A52fDc42e3E9760Cb8449Fb37",
-			name: "Wrapped ETH",
-			ticker: "WETH",
-			icon: "/icons/weth.png",
-			decimals: 18,
-		},
-		{
-			ca: "0xcf5a6076cfa32686c0Df13aBaDa2b40dec133F1d",
-			name: "Wrapped BTC",
-			ticker: "WBTC",
-			icon: "/icons/wbtc.png",
-			decimals: 8,
-		},
-		{
+		"0x0F0BDEbF0F83cD1EE3974779Bcb7315f9808c714": {
 			ca: "0x0F0BDEbF0F83cD1EE3974779Bcb7315f9808c714",
 			name: "Mondalak",
 			ticker: "DAK",
 			icon: "/icons/dak.avif",
 			decimals: 18,
 		},
-		{
+		[wMON_CA]: {
+			ca: wMON_CA,
+			name: "Wrapped MON",
+			ticker: "WMON",
+			icon: "/icons/wmon.avif",
+			decimals: 18,
+		},
+		"0xfe140e1dCe99Be9F4F15d657CD9b7BF622270C50": {
 			ca: "0xfe140e1dCe99Be9F4F15d657CD9b7BF622270C50",
 			name: "Moyaki",
 			ticker: "YAKI",
 			icon: "/icons/moyaki.avif",
 			decimals: 18,
 		},
-		{
+		"0xE0590015A873bF326bd645c3E1266d4db41C4E6B": {
 			ca: "0xE0590015A873bF326bd645c3E1266d4db41C4E6B",
 			name: "Chog",
 			ticker: "CHOG",
 			icon: "/icons/chog.avif",
 			decimals: 18,
 		},
-		{
+		"0xaEef2f6B429Cb59C9B2D7bB2141ADa993E8571c3": {
 			ca: "0xaEef2f6B429Cb59C9B2D7bB2141ADa993E8571c3",
 			name: "gMON",
 			ticker: "gMON",
 			icon: "/icons/gMON.png",
 			decimals: 18,
 		},
-		{
+		"0x07AabD925866E8353407E67C1D157836f7Ad923e": {
 			ca: "0x07AabD925866E8353407E67C1D157836f7Ad923e",
 			name: "sMON",
 			ticker: "sMON",
 			icon: "/icons/sMON.svg",
 			decimals: 18,
 		},
-		{
+		"0x5D876D73f4441D5f2438B1A3e2A51771B337F27A": {
 			ca: "0x5D876D73f4441D5f2438B1A3e2A51771B337F27A",
 			name: "curvance USDC",
 			ticker: "cUSDC",
 			icon: "/icons/cUSDC.png",
 			decimals: 6,
 		},
-		{
+		"0x3a98250F98Dd388C211206983453837C8365BDc1": {
 			ca: "0x3a98250F98Dd388C211206983453837C8365BDc1",
 			name: "shMonad",
 			ticker: "shMON",
 			icon: "/icons/shMON.webp",
 			decimals: 18,
 		},
-		{
-			ca: "0x760AfE86e5de5fa0Ee542fc7B7B713e1c5425701",
-			name: "Wrapped MON",
-			ticker: "WMON",
-			icon: "/icons/wmon.avif",
-			decimals: 18,
-		},
-		{
+		"0x3B428Df09c3508D884C30266Ac1577f099313CF6": {
 			ca: "0x3B428Df09c3508D884C30266Ac1577f099313CF6",
 			name: "mamaBTC",
 			ticker: "mamBTC",
 			icon: "/icons/mamaBTC.png",
 			decimals: 8,
 		},
-		{
+		"0x5387C85A4965769f6B0Df430638a1388493486F1": {
 			ca: "0x5387C85A4965769f6B0Df430638a1388493486F1",
 			name: "Wrapped SOL",
 			ticker: "WSOL",
 			icon: "/icons/wsol.avif",
 			decimals: 9,
 		},
-		{
+		"0x04a9d9D4AEa93F512A4c7b71993915004325ed38": {
 			ca: "0x04a9d9D4AEa93F512A4c7b71993915004325ed38",
 			name: "Hedemony",
 			ticker: "HEDGE",
@@ -115,6 +97,26 @@ export const TokenList: ITokenList = {
 			decimals: 18,
 		},
 
-		// Add more tokens for chain ID 1 (Ethereum) if needed
-	],
+		"0x88b8E2161DEDC77EF4ab7585569D2415a1C1055D": {
+			ca: "0x88b8E2161DEDC77EF4ab7585569D2415a1C1055D",
+			name: "Tether USD",
+			ticker: "USDT",
+			icon: "/icons/usdt.png",
+			decimals: 6,
+		},
+		"0xB5a30b0FDc5EA94A52fDc42e3E9760Cb8449Fb37": {
+			ca: "0xB5a30b0FDc5EA94A52fDc42e3E9760Cb8449Fb37",
+			name: "Wrapped ETH",
+			ticker: "WETH",
+			icon: "/icons/weth.png",
+			decimals: 18,
+		},
+		"0xcf5a6076cfa32686c0Df13aBaDa2b40dec133F1d": {
+			ca: "0xcf5a6076cfa32686c0Df13aBaDa2b40dec133F1d",
+			name: "Wrapped BTC",
+			ticker: "WBTC",
+			icon: "/icons/wbtc.png",
+			decimals: 8,
+		},
+	},
 };

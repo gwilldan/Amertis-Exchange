@@ -2,10 +2,9 @@
 import { Config, useAccount, useReadContract, useWriteContract } from "wagmi";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { keccak256 } from "viem";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { config } from "@/config";
 import { waitForTransactionReceipt } from "@wagmi/core";
-import dynamic from 'next/dynamic';
 import Modal from "./Modal";
 
 const mekletree = require("./Merkletree.json");
@@ -57,7 +56,6 @@ const Mint = ({ address, proof }: { address: `0x${string}`; proof: any }) => {
             await waitForTransactionReceipt(config as Config, {
                 hash: tx as `0x${string}`,
             });
-            console.log(tx);
             setIsMinting(false);
             setShowModal(true);
         } catch (error) {

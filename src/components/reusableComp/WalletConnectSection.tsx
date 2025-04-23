@@ -1,3 +1,4 @@
+"use client";
 import { BsEggFill } from "react-icons/bs";
 import { IoWalletOutline } from "react-icons/io5";
 import { useAccount } from "wagmi";

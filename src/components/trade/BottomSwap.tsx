@@ -3,7 +3,7 @@ import TokenButton from "./TokenButton";
 import { formatEther, formatUnits, parseUnits } from "viem";
 import { useCallback } from "react";
 import { useAccount } from "wagmi";
-
+import { formatTokenAmount } from "@/lib/utils";
 type tokenData = {
 	icon: string;
 	name: string;
@@ -47,6 +47,8 @@ const BottomSwap = ({
 		[setQuoteToken]
 	);
 
+	const formattedQuoteTokenAmount = formatTokenAmount(parseUnits((quoteToken?.inputValue ?? "0"), (quoteToken?.decimals ?? 18)), (quoteToken?.decimals ?? 18), 8);
+
 	return (
 		<div className=" h-[104px] py-4 px-[14px] rounded-2xl p-8 bg-glass ">
 			<div className=" flex justify-between gap-2 items-center h-[40px]">
@@ -56,7 +58,7 @@ const BottomSwap = ({
 					type="text"
 					placeholder="0"
 					disabled
-					value={quoteToken?.inputValue ?? ""}
+					value={formattedQuoteTokenAmount ?? ""}
 					onChange={hanldeQuoteInput}
 					className=" bg-inherit h-full text-3xl w-[70%] focus:outline-none web "
 				/>
@@ -80,16 +82,16 @@ const BottomSwap = ({
 								{isloading
 									? "loading ..."
 									: !quoteToken.tokenBalance
-									? "0.000"
-									: quoteToken.tokenBalance >
-									  parseUnits("0.001", quoteToken.decimals)
-									? Number(
-											formatUnits(
-												BigInt(quoteToken?.tokenBalance),
-												quoteToken.decimals
-											)
-									  ).toFixed(3)
-									: " < 0.001"}
+										? "0.000"
+										: quoteToken.tokenBalance >
+											parseUnits("0.001", quoteToken.decimals)
+											? Number(
+												formatUnits(
+													BigInt(quoteToken?.tokenBalance),
+													quoteToken.decimals
+												)
+											).toFixed(3)
+											: " < 0.001"}
 							</p>
 						</>
 					) : (

@@ -2,7 +2,7 @@
 import { TbCopy } from "react-icons/tb";
 import { useAccount, useChainId } from "wagmi";
 import { FiLogOut } from "react-icons/fi";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
 import { fadeIn } from "@/utils/anim";
@@ -10,17 +10,23 @@ import { formatUnits, parseUnits } from "viem";
 import { TokenBalances } from "@/lib/interface";
 import { BalProvider } from "@/context/provideBal";
 import { useContext } from "react";
+import { History } from "./index";
 
 const PortfolioData = () => {
-	const chainId = useChainId();
+
 	const { address } = useAccount();
 	const [toggleHistory, setToggleHistory] = useState<boolean>(false);
+	const [isCopied, setIsCopied] = useState<boolean>(false);
 
 	const { tokenBalances, refetch }: any = useContext(BalProvider);
 
 	// for clipboard
 	const copyAddr = () => {
 		navigator.clipboard.writeText(address as string);
+		setIsCopied(true);
+		setTimeout(() => {
+			setIsCopied(false);
+		}, 2000);
 	};
 
 	return (
@@ -38,10 +44,12 @@ const PortfolioData = () => {
 							<p className=" font-bold text-xl ">
 								{address?.slice(0, 4) + "..." + address?.slice(-6)}
 							</p>
-							<TbCopy
-								onClick={copyAddr}
-								className=" active:text-mainFG text-xl cursor-pointer"
-							/>
+							{isCopied ? <p className="text-sm font-light">Copied</p> :
+								<TbCopy
+									onClick={copyAddr}
+									className=" active:text-mainFG text-xl cursor-pointer"
+								/>
+							}
 						</div>
 					</div>
 				</div>
@@ -55,16 +63,14 @@ const PortfolioData = () => {
 				<div className=" flex items-center ">
 					<button
 						onClick={() => setToggleHistory(false)}
-						className={` ${
-							!toggleHistory ? "border-white " : "border-transparent"
-						} px-4 py-1 border-b-2`}>
+						className={` ${!toggleHistory ? "border-white " : "border-transparent"
+							} px-4 py-1 border-b-2`}>
 						Porfolio
 					</button>
 					<button
 						onClick={() => setToggleHistory(true)}
-						className={` px-4 py-1  border-b-2 ${
-							toggleHistory ? "border-white" : "border-transparent"
-						} `}>
+						className={` px-4 py-1  border-b-2 ${toggleHistory ? "border-white" : "border-transparent"
+							} `}>
 						History
 					</button>
 				</div>
@@ -132,26 +138,17 @@ const WalletToken = ({ _token }: any) => {
 				</p>
 				<p className="text-right truncate">
 					{`
-							${
-								_token.balance == 0 || !_token.balance
-									? "0.00"
-									: _token.balance > parseUnits("0.001", _token.decimals)
-									? Number(
-											formatUnits(_token.balance, _token?.decimals)
-									  )?.toFixed(3)
-									: " < 0.001 "
-							} ${_token.ticker}`}{" "}
+							${_token.balance == 0 || !_token.balance
+							? "0.00"
+							: _token.balance > parseUnits("0.001", _token.decimals)
+								? Number(
+									formatUnits(_token.balance, _token?.decimals)
+								)?.toFixed(3)
+								: " < 0.001 "
+						} ${_token.ticker}`}{" "}
 				</p>
 			</li>
 		</>
 	);
 };
 
-const History = () => {
-	return (
-		<main className="h-[100px] grid place-content-center">
-			{" "}
-			coming soon ...{" "}
-		</main>
-	);
-};

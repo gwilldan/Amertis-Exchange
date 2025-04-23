@@ -7,7 +7,8 @@ import { GiCheckMark } from "react-icons/gi";
 import { AiFillWarning } from "react-icons/ai";
 import Image from "next/image";
 import { FaArrowDown } from "react-icons/fa";
-import { parseEther } from "viem";
+import { formatTokenAmount } from "@/lib/utils";
+import { parseUnits } from "viem";
 
 const TransactionModal = ({
 	setTxModal,
@@ -17,7 +18,7 @@ const TransactionModal = ({
 	txErr,
 	swapTxHarsh,
 }: // status,
-any) => {
+	any) => {
 	const [baseTokenVar] = useState(baseToken);
 	const [quoteTokenVar] = useState(quoteToken);
 	const modalRef = useRef<any | null>();
@@ -33,6 +34,10 @@ any) => {
 
 		return () => removeEventListener("mousedown", handleClickOutside);
 	}, []);
+
+
+	const formattedBaseTokenAmount = formatTokenAmount(parseUnits(baseTokenVar?.inputValue, baseTokenVar?.decimals), baseTokenVar?.decimals, 8);
+	const formattedQuoteTokenAmount = formatTokenAmount(parseUnits(quoteTokenVar?.inputValue, quoteTokenVar?.decimals), quoteTokenVar?.decimals, 8);
 
 	return (
 		<motion.main
@@ -61,11 +66,7 @@ any) => {
 									className="rounded-full"
 								/>
 								<p>
-									{Number(baseTokenVar?.inputValue) < 0.00000001
-										? " < 0.00000001"
-										: Number(baseTokenVar?.inputValue).toFixed(8) +
-										  " " +
-										  baseTokenVar?.ticker}
+									{formattedBaseTokenAmount} {baseTokenVar.ticker}
 								</p>
 							</div>
 							<FaArrowDown className="" />
@@ -78,11 +79,7 @@ any) => {
 									className="rounded-full"
 								/>
 								<p>
-									{Number(quoteTokenVar?.inputValue) < 0.00000001
-										? " < 0.00000001"
-										: Number(quoteTokenVar?.inputValue).toFixed(8) +
-										  " " +
-										  quoteTokenVar?.ticker}
+									{formattedQuoteTokenAmount} {quoteToken.ticker}
 								</p>
 							</div>
 						</div>
@@ -122,11 +119,7 @@ any) => {
 									className="rounded-full"
 								/>
 								<p>
-									{Number(baseTokenVar?.inputValue) < 0.00000001
-										? " < 0.00000001"
-										: Number(baseTokenVar?.inputValue).toFixed(8) +
-										  " " +
-										  baseTokenVar?.ticker}
+									{formattedBaseTokenAmount} {baseTokenVar.ticker}
 								</p>
 							</div>
 							<p>to</p>
@@ -139,11 +132,7 @@ any) => {
 									className="rounded-full"
 								/>
 								<p>
-									{Number(quoteTokenVar?.inputValue) < 0.00000001
-										? " < 0.00000001"
-										: Number(quoteTokenVar?.inputValue).toFixed(8) +
-										  " " +
-										  quoteTokenVar?.ticker}
+									{formattedQuoteTokenAmount} {quoteToken.ticker}
 								</p>
 							</div>
 						</div>

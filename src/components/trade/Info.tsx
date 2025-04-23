@@ -1,5 +1,5 @@
 "use client";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
 	fadeIn,
 	slideDown_big,
@@ -15,7 +15,8 @@ import { MdRoute } from "react-icons/md";
 import { useChainId } from "wagmi";
 import { TokenList } from "@/lib/TokenList";
 import Image from "next/image";
-import { parseEther } from "viem";
+import { parseUnits } from "viem";
+import { formatTokenAmount } from "@/lib/utils";
 
 type SwapData = {
 	adapters: string[];
@@ -36,13 +37,21 @@ type IInfo = {
 const Info = ({ swapData, baseToken, quoteToken }: IInfo) => {
 	const [showRoutes, setShowRoutes] = useState<boolean>(false);
 
-	console.log("swapData", swapData);
-
 	if (!swapData || !swapData?.adapters?.length) {
 		return (
 			<MotionWrapper>
 				<div className=" h-[50px] rounded-xl border border-white/20 bg-[#f1c1311a] backdrop-blur-xl my-4 flex justify-center items-center px-2 cursor-pointer text-[14px] text-red-500  ">
 					🚫 No routes found, check other pairs
+				</div>
+			</MotionWrapper>
+		);
+	}
+
+	if (swapData.path.length > 2) {
+		return (
+			<MotionWrapper>
+				<div className=" h-[50px] rounded-xl border border-white/20 bg-[#f1c1311a] backdrop-blur-xl my-4 flex justify-center items-center px-2 cursor-pointer text-[14px] text-red-500  ">
+					🚫 This swap will likely fail. Try a different pair.
 				</div>
 			</MotionWrapper>
 		);
@@ -76,11 +85,7 @@ const Info = ({ swapData, baseToken, quoteToken }: IInfo) => {
 							/>
 
 							<p>
-								{Number(swapData.baseForQuote) < 0.00000001
-									? ` < 0.00000001 ${quoteToken.ticker} `
-									: Number(swapData.baseForQuote).toFixed(8) +
-									" " +
-									quoteToken.ticker}
+								{formatTokenAmount(parseUnits(swapData.baseForQuote, quoteToken.decimals), quoteToken.decimals, 8)}
 							</p>
 						</span>
 					</div>
@@ -121,6 +126,10 @@ const SwapRoutes = ({ swapData }: IInfo) => {
 				name: "Uniswap",
 				image: "/icons/uniswap.svg",
 			});
+
+			const token0 = swapData.path[0];
+			const token1 = swapData.path[swapData.path.length - 1];
+
 		} else {
 			setAdapter(null);
 		}
@@ -139,11 +148,8 @@ const SwapRoutes = ({ swapData }: IInfo) => {
 				<section className=" flex items-center justify-between my-2 rounded-full gap-2 ">
 					<div
 						style={{
-							backgroundImage: `url('${tokenList.find(
-								(p, i) =>
-									p.ca.toLowerCase() === swapData.path[0].toLowerCase()
-							)?.icon ??
-								"https://via.placeholder.com/100x100/8F199B/FFFFFF?text=?"
+							backgroundImage: `url('${tokenList[swapData.path[0]]?.icon ??
+								"/icons/token.svg"
 								}')`,
 						}}
 						className=" h-6 w-6 rounded-full bg-contain bg-center b"></div>
@@ -169,11 +175,9 @@ const SwapRoutes = ({ swapData }: IInfo) => {
 					</div>
 					<div
 						style={{
-							backgroundImage: `url('${tokenList.find(
-								(p, i) =>
-									p.ca.toLowerCase() === swapData.path[swapData.path.length - 1].toLowerCase()
-							)?.icon ??
-								"https://via.placeholder.com/100x100/8F199B/FFFFFF?text=?"
+							backgroundImage: `url('${tokenList[swapData.path[swapData.path.length - 1]]
+								?.icon ??
+								"/icons/token.svg"
 								}')`,
 						}}
 						className=" h-6 w-6 rounded-full bg-contain bg-center b"></div>
