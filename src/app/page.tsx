@@ -291,7 +291,7 @@ const TopIconSection = ({ setSettingToggle }: any) => {
 		<div className=" flex items-center justify-between text-xl text-darkBG h-[34px] pr-1 pl-2 mb-2 ">
 			<div className="font-light cursor-default ">Swap</div>
 			<div className=" flex items-center gap-4 W-[72px] mr-2 ">
-				<RxReload className=" hover:rotate-180 transition-all duration-300 cursor-pointer " />
+				{/* <RxReload className=" hover:rotate-180 transition-all duration-300 cursor-pointer " /> */}
 
 				<FiSettings
 					onClick={() => setSettingToggle((prev: boolean) => !prev)}

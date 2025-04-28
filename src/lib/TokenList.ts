@@ -19,6 +19,13 @@ export const TokenList: ITokenList = {
 			icon: "/icons/usdc.png",
 			decimals: 6,
 		},
+		"0xb2f82D0f38dc453D596Ad40A37799446Cc89274A": {
+			ca: "0xb2f82D0f38dc453D596Ad40A37799446Cc89274A",
+			name: "aPriori Monad LST",
+			ticker: "aprMON",
+			icon: "/icons/aprMON.jpg",
+			decimals: 18,
+		},
 		"0x0F0BDEbF0F83cD1EE3974779Bcb7315f9808c714": {
 			ca: "0x0F0BDEbF0F83cD1EE3974779Bcb7315f9808c714",
 			name: "Mondalak",
