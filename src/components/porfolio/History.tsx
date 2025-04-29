@@ -50,16 +50,16 @@ const History = () => {
                 <p className="text-sm font-light">MON and WMON are both displayed as WMON. This will be corrected in V2 with clear separation.</p>
             </div>
             <main className=" bg-glass mb-[50px] rounded-[16px] md:rounded-[20px] p-4 md:p-8 ">
-                <header className="border-b pb-3 mb-3 md:mb-5 grid grid-cols-4 gap-3">
+                <header className="border-b pb-3 mb-3 md:mb-5 grid grid-cols-2 md:grid-cols-4 gap-3">
                     <p className="">from</p>
-                    <p className="">to</p>
+                    <p className="text-right md:text-center">to</p>
                     <p>tx hash</p>
                     <p className="text-right">timestamp</p>
                 </header>
 
-                <ul className="flex-1 overflow-auto rounded-b-[30px] ">
+                <ul className="text-sm md:text-base flex-1 overflow-auto rounded-b-[30px] ">
                     {history?.map((transaction: any) =>
-                        <div key={transaction.id} className="grid grid-cols-4 gap-3 items-center my-4">
+                        <div key={transaction.id} className="grid border-b border-b-white/10  grid-cols-2 md:grid-cols-4 md:border-none gap-3 items-center py-4">
                             <TokenDisplay tokenDetails={transaction.tokenInDetails} amount={transaction._amountIn} />
                             <TokenDisplay tokenDetails={transaction.tokenOutDetails} amount={transaction._amountOut} />
                             <Hash hash={transaction.id} />
@@ -81,7 +81,7 @@ const Hash = ({ hash }: { hash: string }) => {
     return (
         <div className="flex items-center gap-2">
 
-            <span className="text-center">{shortHash}</span>
+            <span className="md:text-center">{shortHash}</span>
             <Link href={`https://testnet.monadexplorer.com/tx/${hash}`} target="_blank">
                 <ExternalLinkIcon className="w-4 h-4 cursor-pointer" />
             </Link>
