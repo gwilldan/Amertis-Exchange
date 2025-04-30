@@ -6,6 +6,7 @@ import {
 	slideDownChildren,
 } from "@/utils/anim";
 import { AnimatePresence, motion } from "motion/react";
+import { adapterList } from "@/lib/AdapterList"
 
 // icons
 import { FaGasPump } from "react-icons/fa6";
@@ -120,18 +121,8 @@ const SwapRoutes = ({ swapData }: IInfo) => {
 	const tokenList = TokenList[chainId];
 
 	useEffect(() => {
-		if (swapData.adapters[0] === "0x83520cA482a1C3bC1CcF73Ceb58F6fEE8a590Da7") {
-			setAdapter({
-				name: "Uniswap",
-				image: "/icons/uniswap.svg",
-			});
-
-			const token0 = swapData.path[0];
-			const token1 = swapData.path[swapData.path.length - 1];
-
-		} else {
-			setAdapter(null);
-		}
+		const adapter = swapData.adapters[0] as string
+		setAdapter(adapterList[adapter])
 	}, [swapData]);
 
 	return (
@@ -159,12 +150,12 @@ const SwapRoutes = ({ swapData }: IInfo) => {
 						</div>
 						<div className="absolute inset-0 grid place-content-center ">
 							{adapter && (
-								<div className=" bg-slate-100 text-black px-5 py-2 rounded-xl flex items-center gap-2">
+								<div className=" bg-slate-100 text-black px-5 py-1 rounded-xl flex items-center gap-2">
 									<Image
 										src={adapter.image}
 										alt="adt"
-										width={16}
-										height={16}
+										width={24}
+										height={24}
 										className="rounded-full"
 									/>
 									<p>{adapter?.name}</p>

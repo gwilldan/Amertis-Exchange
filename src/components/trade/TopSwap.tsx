@@ -77,7 +77,7 @@ const TopSwap = ({
 
 	return (
 		<div className=" py-4 px-[14px] border-1-[#000000] cursor-default backdrop-blur-xl bg-white/[0.07] border border-white/[0.1] rounded-2xl shadow-[0_8px_32px_0_rgba(0,0,0,0.36)] p-8 ">
-			<div className=" flex justify-between items-center h-[40px]">
+			<div className=" flex gap-2 justify-between items-center h-[40px]">
 				<input
 					type="text"
 					placeholder="0.0"

@@ -20,10 +20,10 @@ const BottomSearchSection = ({
 						<li
 							key={index}
 							onClick={() => handleTokenSelect(_tokens)}
-							className={` ${baseToken.ticker === _tokens.ticker ||
-									quoteToken.ticker === _tokens.ticker
-									? "opacity-40"
-									: "lg:hover:bg-mainLight"
+							className={` ${baseToken.ticker === _tokens.ticker &&
+								quoteToken.ticker === _tokens.ticker
+								? "opacity-40"
+								: "lg:hover:bg-mainLight"
 								} h-[60px] px-6 cursor-pointer  grid grid-cols-[10%_60%_30%] items-center overflow-hidden `}>
 							{_tokens.icon ? (
 								<Image

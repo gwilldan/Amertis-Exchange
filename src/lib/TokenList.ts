@@ -2,7 +2,6 @@ import { ITokenList } from "./interface";
 
 export const wMON_CA = "0x760AfE86e5de5fa0Ee542fc7B7B713e1c5425701";
 
-// as you update the tokenList, you should also update the TokenRef
 export const TokenList: ITokenList = {
 	10143: {
 		"0x0000000000000000000000000000000000000000": {
@@ -38,6 +37,20 @@ export const TokenList: ITokenList = {
 			name: "Wrapped MON",
 			ticker: "WMON",
 			icon: "/icons/wmon.avif",
+			decimals: 18,
+		},
+		"0x268E4E24E0051EC27b3D27A95977E71cE6875a05": {
+			ca: "0x268E4E24E0051EC27b3D27A95977E71cE6875a05",
+			name: "Bean Exchange",
+			ticker: "BEAN",
+			icon: "/icons/bean.jpg",
+			decimals: 18,
+		},
+		"0x4aa50E8208095d9594d18E8e3008ABB811125dCE": {
+			ca: "0x4aa50E8208095d9594d18E8e3008ABB811125dCE",
+			name: "Moon",
+			ticker: "MOON",
+			icon: "/icons/moon.png",
 			decimals: 18,
 		},
 		"0xfe140e1dCe99Be9F4F15d657CD9b7BF622270C50": {
