@@ -12,6 +12,7 @@ import BottomSearchSection from "./BottomSearchSection";
 
 import { BalProvider } from "@/context/provideBal";
 import { useContext } from "react";
+import { Token } from "@/lib/interface";
 
 type tokenData = {
 	icon: string;
@@ -95,9 +96,10 @@ const TokensModal = ({
 	}, [setToggleModal, ToggleModal]);
 
 	const handleTokenSelect = (selectedToken: any) => {
+
 		if (
-			selectedToken.ticker === quoteToken?.ticker ||
-			selectedToken.ticker === baseToken?.ticker
+			selectedToken.ca === quoteToken?.ca ||
+			selectedToken.ca === baseToken?.ca
 		) {
 			ReverseTrade();
 		} else {

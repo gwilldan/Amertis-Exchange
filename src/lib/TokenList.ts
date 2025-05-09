@@ -32,6 +32,13 @@ export const TokenList: ITokenList = {
 			icon: "/icons/dak.avif",
 			decimals: 18,
 		},
+		"0xCa9A4F46Faf5628466583486FD5ACE8AC33ce126": {
+			ca: "0xCa9A4F46Faf5628466583486FD5ACE8AC33ce126",
+			name: "Octoswap",
+			ticker: "Octo",
+			icon: "/icons/octo.svg",
+			decimals: 18,
+		},
 		[wMON_CA]: {
 			ca: wMON_CA,
 			name: "Wrapped MON",

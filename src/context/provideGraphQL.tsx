@@ -2,7 +2,7 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 
 const client = new ApolloClient({
-    uri: "https://indexer.dev.hyperindex.xyz/2f5cbc0/v1/graphql",
+    uri: "https://indexer.hyperindex.xyz/1a85f30/v1/graphql",
     cache: new InMemoryCache(),
 });
 

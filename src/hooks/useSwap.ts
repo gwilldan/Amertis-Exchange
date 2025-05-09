@@ -37,7 +37,7 @@ const UseSwap = (
 	setTxModal: any,
 	setTxErr: any
 ) => {
-	const fee = BigInt(3); // Fee represented in 1e4 format
+	// const fee = BigInt(30); // Fee represented in 1e4 format
 	const FEE_DENOMINATOR = BigInt(1e4);
 	const { address: userAddress, chainId } = useAccount();
 	const [debouncedInputValue, setDebouncedInputValue] = useState("");
@@ -75,7 +75,6 @@ const UseSwap = (
 		};
 	}, [baseToken.inputValue]);
 
-	// Fetch swap details and allowance
 	const {
 		data: swapData,
 		isSuccess: isGottenSwapData,
@@ -111,9 +110,15 @@ const UseSwap = (
 			"0xcA11bde05977b3631167028862bE2a173976CA11" as `0x${string}`,
 	});
 
-	const { writeContractAsync, status: writeContractStatus } = useWriteContract({
+	console.log("basetoken ca", baseTokenCA)
+	console.log("quoteToken ca", quoteTokenCA)
+	console.log("swapData...", swapData)
+
+	const { writeContractAsync } = useWriteContract({
 		config,
 	});
+
+
 
 	// Check allowance and perform swap if necessary
 	const checkAllowanceAndSwap = async (
@@ -133,10 +138,14 @@ const UseSwap = (
 
 	// Perform swap
 	const performSwap = async (swapData: any, allowanceEnough: boolean) => {
+
 		const fee = BigInt(30); // Fee represented in 1e4 format
-		const amounts = swapData.amounts;
 		const adapters = swapData.adapters;
-		const path = swapData.path;
+		const amounts = swapData.amounts;
+		const path = swapData.path
+
+		console.log("theee path....", path)
+		console.log("theee amounts....", amounts)
 
 		const amountOut = calculateSlippageAdjustedOutput(
 			amounts[amounts.length - 1],
@@ -152,7 +161,6 @@ const UseSwap = (
 			functionName = "swapNoSplit";
 		}
 
-		let approvalResult: any;
 		if (allowanceEnough) {
 			const approvalPromise = () =>
 				new Promise(async (res, rej) => {
@@ -215,7 +223,6 @@ const UseSwap = (
 					const txRes = await waitForTransactionReceipt(config as Config, {
 						hash: swapRes,
 					});
-					("tx completed! ");
 					res(txRes.transactionHash);
 				} catch (error) {
 					rej(error);

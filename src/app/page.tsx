@@ -10,6 +10,7 @@ import {
 	TransactionModal,
 } from "../components/trade";
 
+
 // REACT ICONS
 import { FiSettings } from "react-icons/fi";
 import { RxReload } from "react-icons/rx";
@@ -25,6 +26,7 @@ import { allTokens } from "@/lib/utils";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { toast } from "react-toastify";
 import { fadeIn, pageIn } from "@/utils/anim";
+import { abi as routerAbi } from "@/config/monagRouterAbi";
 
 export default function Home() {
 	const chainId = useChainId();
@@ -187,6 +189,7 @@ export default function Home() {
 		}
 	};
 
+
 	return (
 		<main className="min-h-[calc(100dvh-90px)] md:min-h-[calc(100dvh-70px)] ">
 			<motion.main
@@ -304,6 +307,7 @@ const TopIconSection = ({ setSettingToggle }: any) => {
 
 // ------------------------------THIS IS TO ROTATE THE TOKENS -------------
 const RotateTokens = ({ ReverseTrade }: any) => {
+
 	return (
 		<section className=" h-[10px] grid place-content-center">
 			<div
