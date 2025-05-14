@@ -7,3 +7,4 @@ export { default as SettingModal } from "./SettingModal";
 export { default as Info } from "./Info";
 export { default as TransactionModal } from "./TransactionModal";
 export { default as CheckAndAddToken } from "./AddToken";
+export { default as RouteInfo } from "./RouteInfo";

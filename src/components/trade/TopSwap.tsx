@@ -25,9 +25,8 @@ const TopSwap = ({
 	setBaseToken,
 	isloading,
 }: //   baseInputRef,
-	IProps) => {
+IProps) => {
 	const { isConnected } = useAccount();
-
 
 	const setPercentage = useCallback(
 		(percent: number) => {
@@ -38,13 +37,14 @@ const TopSwap = ({
 						: BigInt(0);
 
 				if (prev) {
-					const calculatedValue = percent === 100
-						? balanceInEther
-						: ((balanceInEther * BigInt(percent)) / BigInt(100));
+					const calculatedValue =
+						percent === 100
+							? balanceInEther
+							: (balanceInEther * BigInt(percent)) / BigInt(100);
 
 					return {
 						...prev,
-						inputValue: formatUnits(calculatedValue, prev.decimals)
+						inputValue: formatUnits(calculatedValue, prev.decimals),
 					};
 				}
 				return prev;
@@ -76,7 +76,7 @@ const TopSwap = ({
 	);
 
 	return (
-		<div className=" py-4 px-[14px] border-1-[#000000] cursor-default backdrop-blur-xl bg-white/[0.07] border border-white/[0.1] rounded-2xl shadow-[0_8px_32px_0_rgba(0,0,0,0.36)] p-8 ">
+		<div className=" py-3 px-[14px] border-1-[#000000] cursor-default backdrop-blur-xl bg-white/[0.07] border border-white/[0.1] rounded-2xl shadow-[0_8px_32px_0_rgba(0,0,0,0.36)] p-8 ">
 			<div className=" flex gap-2 justify-between items-center h-[40px]">
 				<input
 					type="text"
@@ -105,16 +105,16 @@ const TopSwap = ({
 								{isloading
 									? "loading ..."
 									: !baseToken.tokenBalance
-										? "0.000"
-										: baseToken.tokenBalance >
-											parseUnits("0.001", baseToken.decimals)
-											? Number(
-												formatUnits(
-													BigInt(baseToken?.tokenBalance),
-													baseToken.decimals
-												)
-											).toFixed(3)
-											: " < 0.001"}
+									? "0.000"
+									: baseToken.tokenBalance >
+									  parseUnits("0.001", baseToken.decimals)
+									? Number(
+											formatUnits(
+												BigInt(baseToken?.tokenBalance),
+												baseToken.decimals
+											)
+									  ).toFixed(3)
+									: " < 0.001"}
 							</p>
 						</>
 					) : (
@@ -137,7 +137,7 @@ const PercentSection = ({ setPercentage }: any) => {
 				<button
 					key={_percent}
 					onClick={() => setPercentage(_percent)}
-					className="w-[75px] border-darkBG px-[9px] py-[3px] md:w-[97px] text-slate-400 hover:text-white hover:border-white  ease-linear group flex items-center justify-between p-4 rounded-lg backdrop-blur-md bg-white/[0.03] border border-white/[0.05] hover:bg-white/[0.05] transition-all duration-300 ">
+					className="w-[75px] border-darkBG px-[9px] py-[2px] md:w-[97px] text-slate-400 hover:text-white hover:border-white text-sm ease-linear group flex items-center justify-between p-4 rounded-lg backdrop-blur-md bg-white/[0.03] border border-white/[0.05] hover:bg-white/[0.05] transition-all duration-300 ">
 					{_percent + "%"}
 				</button>
 			))}

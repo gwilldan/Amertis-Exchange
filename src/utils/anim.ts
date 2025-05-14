@@ -42,64 +42,25 @@ export const slideIn_variant: Variants = {
 	},
 };
 
+export const single_slide: Variants = {
+	hidden: { y: -5, opacity: 0 },
+	show: { y: 0, opacity: 1 },
+	exit: { y: 0, opacity: 0 },
+};
+
 export const slideInChild_variant: Variants = {
 	hidden: { y: 0, opacity: 0 },
 	show: { y: -10, opacity: 1 },
 };
 
-export const slideDown_small: Variants = {
-	hidden: {
-		height: 0,
-		opacity: 0,
-	},
+export const shakeIn: Variants = {
+	hidden: { scale: 0.5, opacity: 0 },
 	show: {
-		height: 60,
-		opacity: 1,
-		transition: {
-			ease: "linear",
-			delayChildren: 0.1,
-			duration: 0.1,
-		},
-	},
-	exit: {},
-};
-
-export const slideDown_big: Variants = {
-	hidden: {
-		height: 0,
-		opacity: 0,
-	},
-	show: {
-		height: 130,
-		opacity: 1,
-		transition: {
-			ease: "linear",
-			delayChildren: 0.1,
-			duration: 0.1,
-		},
-	},
-	exit: {
-		height: 0,
-		opacity: 0,
-		transition: {
-			when: "afterChildren",
-			duration: 0.05,
-			ease: "linear",
-		},
-	},
-};
-
-export const slideDownChildren: Variants = {
-	hidden: {
-		opacity: 0,
-		scale: 0.8,
-	},
-	show: {
-		opacity: 1,
 		scale: 1,
+		opacity: 1,
 		transition: {
-			duration: 0.1,
-			ease: "easeInOut",
+			ease: "easeIn",
+			duration: 0.25,
 		},
 	},
 };

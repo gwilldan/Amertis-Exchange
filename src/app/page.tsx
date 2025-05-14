@@ -10,10 +10,8 @@ import {
 	TransactionModal,
 } from "../components/trade";
 
-
 // REACT ICONS
 import { FiSettings } from "react-icons/fi";
-import { RxReload } from "react-icons/rx";
 import { GrFormNext } from "react-icons/gr";
 import { IoWalletOutline } from "react-icons/io5";
 import { RiArrowUpDownFill } from "react-icons/ri";
@@ -27,6 +25,7 @@ import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { toast } from "react-toastify";
 import { fadeIn, pageIn } from "@/utils/anim";
 import { abi as routerAbi } from "@/config/monagRouterAbi";
+import { BiInfoCircle } from "react-icons/bi";
 
 export default function Home() {
 	const chainId = useChainId();
@@ -43,7 +42,9 @@ export default function Home() {
 	const { address, isConnected, isDisconnected } = useAccount();
 	const [settingToggle, setSettingToggle] = useState<boolean>(false);
 	const [baseToken, setBaseToken] = useState({
-		...(tokenList as Record<string, any>)["0x0000000000000000000000000000000000000000"],
+		...(tokenList as Record<string, any>)[
+			"0x0000000000000000000000000000000000000000"
+		],
 		tokenBalance: BigInt(0),
 		inputValue: "",
 		price: "",
@@ -63,8 +64,12 @@ export default function Home() {
 		approval,
 		checkAllowanceAndSwap,
 		swapTxHarsh,
+		isFetching,
+		fetchStatus,
 		isGottenSwapData,
 	} = UseSwap(baseToken, quoteToken, setTxModal, setTxErr);
+
+	console.log("isGottenSwapData...", isGottenSwapData);
 
 	const {
 		data: baseTokenBalance,
@@ -189,15 +194,20 @@ export default function Home() {
 		}
 	};
 
+	console.log("fetch status...", fetchStatus);
 
 	return (
 		<main className="min-h-[calc(100dvh-90px)] md:min-h-[calc(100dvh-70px)] ">
+			{/* <div className=" w-[200px] fixed bottom-20 left-10 bg-glass-yellow flex items-center gap-2">
+				<p className="text-sm font-light"> <BiInfoCircle className="w-4 h-4 text-red-500" /> MON and WMON are both displayed as WMON. This will be corrected in V2 with clear separation.</p>
+			</div> */}
 			<motion.main
 				initial="hidden"
 				variants={pageIn}
 				animate="show"
 				className="  mb-80px px-4 py-4 pt-[150px] mt-5 md:w-[462.41px] md:pt-[136px] md:m-auto md:px-0 ">
 				<TopIconSection setSettingToggle={setSettingToggle} />
+
 				<TopSwap
 					setToggleModal={setToggleModal}
 					ToggleModal={ToggleModal}
@@ -213,15 +223,13 @@ export default function Home() {
 					setQuoteToken={setQuoteToken}
 					isloading={quoteisloading}
 				/>
-				<AnimatePresence>
-					{isGottenSwapData && (
-						<Info
-							swapData={swapData}
-							baseToken={baseToken}
-							quoteToken={quoteToken}
-						/>
-					)}
-				</AnimatePresence>
+				<Info
+					swapData={swapData}
+					baseToken={baseToken}
+					quoteToken={quoteToken}
+					fetchStatus={fetchStatus}
+					isFetching={isFetching}
+				/>
 
 				{isConnected && (
 					<button
@@ -231,10 +239,10 @@ export default function Home() {
 						{isInsufficient
 							? `Insufficient ${baseToken.ticker} balance`.toUpperCase()
 							: approval
-								? "Approve " + baseToken?.ticker
-								: baseToken.inputValue
-									? "Swap"
-									: "ENTER AMOUNT"}
+							? "Approve " + baseToken?.ticker
+							: baseToken.inputValue
+							? "Swap"
+							: "ENTER AMOUNT"}
 					</button>
 				)}
 				{isDisconnected && (
@@ -307,7 +315,6 @@ const TopIconSection = ({ setSettingToggle }: any) => {
 
 // ------------------------------THIS IS TO ROTATE THE TOKENS -------------
 const RotateTokens = ({ ReverseTrade }: any) => {
-
 	return (
 		<section className=" h-[10px] grid place-content-center">
 			<div

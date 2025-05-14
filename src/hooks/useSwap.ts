@@ -2,7 +2,13 @@ import { config } from "@/config";
 import { abi as routerAbi } from "@/config/monagRouterAbi";
 import { abi as tokenAbi } from "@/config/basicTokenAbi";
 import { useEffect, useState } from "react";
-import { formatUnits, maxUint256, parseUnits } from "viem";
+import {
+	formatUnits,
+	isAddressEqual,
+	maxUint256,
+	parseUnits,
+	zeroAddress,
+} from "viem";
 import { useAccount, useReadContracts, useWriteContract } from "wagmi";
 import { toast } from "react-toastify";
 import { calculateSlippageAdjustedOutput } from "@/utils/helper";
@@ -38,21 +44,24 @@ const UseSwap = (
 	setTxErr: any
 ) => {
 	// const fee = BigInt(30); // Fee represented in 1e4 format
-	const FEE_DENOMINATOR = BigInt(1e4);
+	// const FEE_DENOMINATOR = BigInt(1e4);
 	const { address: userAddress, chainId } = useAccount();
 	const [debouncedInputValue, setDebouncedInputValue] = useState("");
-	const routerAddress = "0xA89aa6a1f0347f38d75918E07E8A321Eb3C8fC09";
+	const routerAddress = "0xD158Cb79C63F4852485E37F05D20da3093d143Ed";
 	const inputValue = parseUnits(
 		baseToken.inputValue.toString(),
 		baseToken.decimals
 	);
 	const baseTokenCA =
-		baseToken.ticker.toUpperCase() === "MON"
-			? wMON_CA
+		baseToken.ca && isAddressEqual(baseToken?.ca as `0x${string}`, zeroAddress)
+			? // baseToken.ticker.toUpperCase() === "MON"
+			  wMON_CA
 			: (baseToken.ca as `0x${string}`);
 	const quoteTokenCA =
-		quoteToken.ticker.toUpperCase() === "MON"
-			? wMON_CA
+		quoteToken.ca &&
+		isAddressEqual(quoteToken?.ca as `0x${string}`, zeroAddress)
+			? // quoteToken.ticker.toUpperCase() === "MON"
+			  wMON_CA
 			: (quoteToken.ca as `0x${string}`);
 	const [swapTxHarsh, setSwapTxHarsh] = useState("" as `0x${string}`);
 
@@ -78,7 +87,8 @@ const UseSwap = (
 	const {
 		data: swapData,
 		isSuccess: isGottenSwapData,
-		fetchStatus,
+		status: fetchStatus,
+		isFetching,
 	} = useReadContracts({
 		contracts: [
 			{
@@ -110,15 +120,9 @@ const UseSwap = (
 			"0xcA11bde05977b3631167028862bE2a173976CA11" as `0x${string}`,
 	});
 
-	console.log("basetoken ca", baseTokenCA)
-	console.log("quoteToken ca", quoteTokenCA)
-	console.log("swapData...", swapData)
-
 	const { writeContractAsync } = useWriteContract({
 		config,
 	});
-
-
 
 	// Check allowance and perform swap if necessary
 	const checkAllowanceAndSwap = async (
@@ -138,14 +142,10 @@ const UseSwap = (
 
 	// Perform swap
 	const performSwap = async (swapData: any, allowanceEnough: boolean) => {
-
 		const fee = BigInt(30); // Fee represented in 1e4 format
 		const adapters = swapData.adapters;
 		const amounts = swapData.amounts;
-		const path = swapData.path
-
-		console.log("theee path....", path)
-		console.log("theee amounts....", amounts)
+		const path = swapData.path;
 
 		const amountOut = calculateSlippageAdjustedOutput(
 			amounts[amounts.length - 1],
@@ -153,9 +153,9 @@ const UseSwap = (
 		);
 
 		let functionName = "";
-		if (baseToken.ticker === "MON") {
+		if (isAddressEqual(baseToken.ca as `0x${string}`, zeroAddress)) {
 			functionName = "swapNoSplitFromNative";
-		} else if (quoteToken.ticker === "MON") {
+		} else if (isAddressEqual(quoteToken.ca as `0x${string}`, zeroAddress)) {
 			functionName = "swapNoSplitToNative";
 		} else {
 			functionName = "swapNoSplit";
@@ -262,28 +262,31 @@ const UseSwap = (
 	return {
 		fetchStatus,
 		isGottenSwapData,
+		isFetching,
 		swapData: {
 			...foundSwapInfo,
 			amountOut:
 				foundSwapInfo && foundSwapInfo.amounts.length > 0
 					? formatUnits(
-						foundSwapInfo?.amounts[foundSwapInfo.amounts.length - 1],
-						quoteToken?.decimals as number
-					)
+							foundSwapInfo?.amounts[foundSwapInfo.amounts.length - 1],
+							quoteToken?.decimals as number
+					  )
 					: "",
 			baseForQuote:
 				baseTokenForQuoteToken && baseTokenForQuoteToken.amounts.length > 0
 					? formatUnits(
-						baseTokenForQuoteToken?.amounts[
-						baseTokenForQuoteToken.amounts.length - 1
-						],
-						quoteToken?.decimals as number
-					)
+							baseTokenForQuoteToken?.amounts[
+								baseTokenForQuoteToken.amounts.length - 1
+							],
+							quoteToken?.decimals as number
+					  )
 					: "",
+			decimal: quoteToken?.decimals as number,
 		},
+
 		checkAllowanceAndSwap,
 		approval:
-			baseToken.ticker.toUpperCase() === "MON"
+			baseToken.ca && isAddressEqual(baseToken.ca as `0x${string}`, zeroAddress)
 				? false
 				: (approval as number) < inputValue,
 		swapTxHarsh: swapTxHarsh,
