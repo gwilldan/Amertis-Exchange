@@ -11,7 +11,7 @@ import { MdRoute } from "react-icons/md";
 import { useChainId } from "wagmi";
 import { TokenList } from "@/lib/TokenList";
 import Image from "next/image";
-import { parseUnits } from "viem";
+import { formatUnits, parseUnits } from "viem";
 import { formatTokenAmount } from "@/lib/utils";
 import { TbLoader2 } from "react-icons/tb";
 
@@ -41,11 +41,9 @@ const Info = ({
 	fetchStatus,
 	isFetching,
 }: IInfo) => {
-	console.log("swapData....", swapData);
-
 	if (isFetching) {
 		return (
-			<Container>
+			<Container classNames="p-4 bg-glass">
 				<div className="w-full h-full grid place-content-center ">
 					<TbLoader2 className="w-10 h-10 animate-spin mx-auto text-yellow-400" />
 					<div className="mx-auto mt-2 text-yellow-400">
@@ -66,35 +64,32 @@ const Info = ({
 
 	if (!swapData || !swapData.amountOut) {
 		return (
-			<Container>
+			<Container classNames="bg-glass p-4">
 				<RouteInfo />
 			</Container>
 		);
 	}
 
-	console.log(
-		"priceImpact...",
-		calculatePriceImpact(
-			swapData.baseForQuote,
-			swapData.amounts[0],
-			swapData.amountOut,
-			swapData.decimal
-		)
+	const priceImpact = calculatePriceImpact(
+		swapData.baseForQuote,
+		formatUnits(swapData.amounts[0], baseToken?.decimals),
+		swapData.amountOut,
+		swapData.decimal
 	);
+
+	console.log("price impact...", priceImpact);
 
 	// if (swapData.path.length > 2) {
 	// 	return (
-	// 		<MotionWrapper>
 	// 			<div className=" h-[50px] rounded-xl border border-white/20 bg-[#f1c1311a] backdrop-blur-xl my-4 flex justify-center items-center px-2 cursor-pointer text-[14px] text-red-500  ">
 	// 				🚫 This swap will likely fail. Try a different pair.
 	// 			</div>
-	// 		</MotionWrapper>
 	// 	);
 	// }
 
 	return (
-		<Container>
-			<div className=" flex justify-between items-center w-full mb-5">
+		<Container classNames="py-3 px-4 bg-glass">
+			<div className=" flex justify-between items-center w-full">
 				<p>{`1 ${baseToken.ticker} = ${formatTokenAmount(
 					parseUnits(swapData.baseForQuote, quoteToken.decimals),
 					quoteToken.decimals,
@@ -107,6 +102,23 @@ const Info = ({
 					<p>Best Route</p>
 				</span>
 			</div>
+			<p
+				className={`text-[12px] -mt-1 mb-3 ${
+					priceImpact === null
+						? "text-[#e832fd]"
+						: priceImpact < 0
+						? "text-green-500"
+						: priceImpact < 15
+						? "text-[#e832fd]"
+						: priceImpact < 40
+						? "text-yellow-400"
+						: "text-red-500"
+				}`}>
+				Price impact: {priceImpact} %
+				{priceImpact === null
+					? ""
+					: priceImpact > 40 && <span className="ml-2">⚠️ ⚠️ ⚠️ </span>}
+			</p>
 
 			<SwapRoutes
 				baseToken={baseToken}
@@ -156,8 +168,8 @@ const SwapRoutes = ({ swapData }: IInfo) => {
 								<Image
 									src={adapter.image}
 									alt="adt"
-									width={24}
-									height={24}
+									width={20}
+									height={20}
 									className="rounded-full"
 								/>
 								<p>{adapter?.name}</p>
@@ -187,7 +199,7 @@ const Container = ({
 }) => {
 	return (
 		<main
-			className={`h-[110px] rounded-xl border my-4 py-3 px-4 text-[14px] overflow-hidden ${classNames} `}>
+			className={`h-[110px] rounded-xl border my-4 text-[14px] overflow-hidden ${classNames} `}>
 			<motion.div
 				variants={shakeIn}
 				initial="hidden"

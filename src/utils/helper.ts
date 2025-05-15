@@ -11,31 +11,29 @@ export function calculateSlippageAdjustedOutput(
 	return adjustedOutput;
 }
 
-// check the calculation of this price impact again, make sure to handle the calculations in bigInt before returning the percentage in number form
-
 export const calculatePriceImpact = (
 	baseForQuote: string,
-	amountIn: bigint,
+	amountIn: string,
 	amountOut: string,
-	decimal: number
+	decimals: number
 ) => {
 	if (!baseForQuote || !amountIn || !amountOut) return null;
 
-	const formattedBaseForQuote = Number(baseForQuote);
-	const formattedAmountIn = Number(formatUnits(amountIn, decimal));
-	const formattedAmountOut = Number(amountOut);
+	const price = parseUnits(baseForQuote, decimals);
+	const formattedAmountIn = parseUnits(amountIn, decimals);
+	const expectedAmountOut =
+		(price * formattedAmountIn) / BigInt(10 ** decimals);
+	const actualAmountOut = parseUnits(amountOut, decimals);
 
-	// console.log(
-	// 	"baseForQuote",
-	// 	formattedBaseForQuote,
-	// 	typeof formattedBaseForQuote
-	// );
-	// console.log("formattedAmountIn", formattedAmountIn, typeof formattedAmountIn);
-	// console.log("amountout", formattedAmountOut, typeof formattedAmountOut);
+	console.log("amount in", amountIn);
+	console.log("formatted amount in", formattedAmountIn);
+	console.log("expected amount out...", expectedAmountOut);
 
-	const expectedAmountOut = formattedBaseForQuote * formattedAmountIn;
+	if (expectedAmountOut === BigInt(0)) return null;
 
-	// console.log("expected amount...", expectedAmountOut);
+	const impact =
+		((expectedAmountOut - actualAmountOut) * BigInt(10_000)) /
+		expectedAmountOut;
 
-	return ((expectedAmountOut - formattedAmountOut) / expectedAmountOut) * 100;
+	return Number(impact) / 100;
 };

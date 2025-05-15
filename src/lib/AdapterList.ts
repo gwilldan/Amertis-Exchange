@@ -31,6 +31,11 @@ export const adapterList: {
 		name: "MonWrapper",
 		image: "/icons/wmon.avif",
 	},
+	"0xaE5B0A0ccB8f52df95484FB0FB20e886c9bcc4C6": {
+		ca: "0xaE5B0A0ccB8f52df95484FB0FB20e886c9bcc4C6",
+		name: "Purps",
+		image: "/icons/purps.jpg",
+	},
 	"0xcC924b526258218bda131f652B2867eB065F95e7": {
 		ca: "0xcC924b526258218bda131f652B2867eB065F95e7",
 		name: "ZkSwap v2",
