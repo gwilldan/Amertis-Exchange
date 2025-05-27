@@ -41,6 +41,7 @@ const Info = ({
 	fetchStatus,
 	isFetching,
 }: IInfo) => {
+
 	if (isFetching) {
 		return (
 			<Container classNames="p-4 bg-glass">
@@ -70,14 +71,13 @@ const Info = ({
 		);
 	}
 
+
 	const priceImpact = calculatePriceImpact(
 		swapData.baseForQuote,
 		formatUnits(swapData.amounts[0], baseToken?.decimals),
 		swapData.amountOut,
 		swapData.decimal
 	);
-
-	console.log("price impact...", priceImpact);
 
 	// if (swapData.path.length > 2) {
 	// 	return (
@@ -103,17 +103,16 @@ const Info = ({
 				</span>
 			</div>
 			<p
-				className={`text-[12px] -mt-1 mb-3 ${
-					priceImpact === null
-						? "text-[#e832fd]"
-						: priceImpact < 0
+				className={`text-[12px] -mt-1 mb-3 ${priceImpact === null
+					? "text-[#e832fd]"
+					: priceImpact < 0
 						? "text-green-500"
 						: priceImpact < 15
-						? "text-[#e832fd]"
-						: priceImpact < 40
-						? "text-yellow-400"
-						: "text-red-500"
-				}`}>
+							? "text-[#e832fd]"
+							: priceImpact < 40
+								? "text-yellow-400"
+								: "text-red-500"
+					}`}>
 				Price impact: {priceImpact} %
 				{priceImpact === null
 					? ""
@@ -145,6 +144,7 @@ const SwapRoutes = ({ swapData }: IInfo) => {
 	useEffect(() => {
 		const adapter = swapData.adapters[0] as string;
 		setAdapter(adapterList[adapter]);
+		console.log("paths...", swapData?.adapters.map((p) => adapterList[p]?.name ))
 	}, [swapData]);
 
 	return (
@@ -152,9 +152,8 @@ const SwapRoutes = ({ swapData }: IInfo) => {
 			<section className=" flex items-center justify-between my-2 rounded-full gap-2 ">
 				<div
 					style={{
-						backgroundImage: `url('${
-							tokenList[swapData.path[0]]?.icon ?? "/icons/token.svg"
-						}')`,
+						backgroundImage: `url('${tokenList[swapData.path[0]]?.icon ?? "/icons/token.svg"
+							}')`,
 					}}
 					className=" h-6 w-6 rounded-full bg-contain bg-center b"></div>
 
@@ -179,10 +178,9 @@ const SwapRoutes = ({ swapData }: IInfo) => {
 				</div>
 				<div
 					style={{
-						backgroundImage: `url('${
-							tokenList[swapData.path[swapData.path.length - 1]]?.icon ??
+						backgroundImage: `url('${tokenList[swapData.path[swapData.path.length - 1]]?.icon ??
 							"/icons/token.svg"
-						}')`,
+							}')`,
 					}}
 					className=" h-6 w-6 rounded-full bg-contain bg-center b"></div>
 			</section>

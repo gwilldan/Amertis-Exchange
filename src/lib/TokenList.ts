@@ -53,6 +53,13 @@ export const TokenList: ITokenList = {
 			icon: "/icons/bean.jpg",
 			decimals: 18,
 		},
+		"0x93E9CaE50424C7a4E3c5eCEb7855B6dab74Bc803": {
+			ca: "0x93E9CaE50424C7a4E3c5eCEb7855B6dab74Bc803",
+			name: "Nad Poker",
+			ticker: "NAP",
+			icon: "/icons/nap.png",
+			decimals: 18,
+		},
 		"0x4aa50E8208095d9594d18E8e3008ABB811125dCE": {
 			ca: "0x4aa50E8208095d9594d18E8e3008ABB811125dCE",
 			name: "Moon",
@@ -85,7 +92,7 @@ export const TokenList: ITokenList = {
 			ca: "0x07AabD925866E8353407E67C1D157836f7Ad923e",
 			name: "sMON",
 			ticker: "sMON",
-			icon: "/icons/sMON.svg",
+			icon: "/icons/sMON.webp",
 			decimals: 18,
 		},
 		"0x5D876D73f4441D5f2438B1A3e2A51771B337F27A": {
@@ -120,7 +127,7 @@ export const TokenList: ITokenList = {
 			ca: "0x04a9d9D4AEa93F512A4c7b71993915004325ed38",
 			name: "Hedemony",
 			ticker: "HEDGE",
-			icon: "/icons/HEDGE.png",
+			icon: "/icons/HEDGE.webp",
 			decimals: 18,
 		},
 

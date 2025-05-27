@@ -65,13 +65,13 @@ const TokensModal = ({
 
 		const filteredTokenList = tokenList?.filter(
 			(_tokens: any) =>
-				_tokens.name.toLowerCase().includes(searchText.toLowerCase()) ||
-				_tokens.ticker.toLowerCase().includes(searchText.toLowerCase()) ||
-				_tokens.ca.toLowerCase() === searchText.toLowerCase()
+				_tokens?.name?.toLowerCase()?.includes(searchText.toLowerCase()) ||
+				_tokens?.ticker?.toLowerCase().includes(searchText.toLowerCase()) ||
+				_tokens?.ca.toLowerCase() === searchText.toLowerCase()
 		);
 
 		if (!filteredTokenList.length) {
-			return []
+			return [];
 		}
 
 		return filteredTokenList;
@@ -96,7 +96,6 @@ const TokensModal = ({
 	}, [setToggleModal, ToggleModal]);
 
 	const handleTokenSelect = (selectedToken: any) => {
-
 		if (
 			selectedToken.ca === quoteToken?.ca ||
 			selectedToken.ca === baseToken?.ca
@@ -133,24 +132,23 @@ const TokensModal = ({
 					baseToken={baseToken}
 					handleTokenSelect={handleTokenSelect}
 				/>
-				{
-					newTokenList.length ?
-						<BottomSearchSection
-							handleTokenSelect={handleTokenSelect}
-							baseToken={baseToken}
-							quoteToken={quoteToken}
-							newTokenList={newTokenList}
-							chainID={chainId}
-							address={address}
-							balLoading={balLoading}
-						/>
-						:
-						<CheckAndAddToken
-							handleTokenSelect={handleTokenSelect}
-							tokenAddress={searchText as `0x${string}`}
-							walletAddress={address as `0x${string}`}
-						/>
-				}
+				{newTokenList.length ? (
+					<BottomSearchSection
+						handleTokenSelect={handleTokenSelect}
+						baseToken={baseToken}
+						quoteToken={quoteToken}
+						newTokenList={newTokenList}
+						chainID={chainId}
+						address={address}
+						balLoading={balLoading}
+					/>
+				) : (
+					<CheckAndAddToken
+						handleTokenSelect={handleTokenSelect}
+						tokenAddress={searchText as `0x${string}`}
+						walletAddress={address as `0x${string}`}
+					/>
+				)}
 			</motion.section>
 		</main>
 	);
@@ -192,10 +190,11 @@ const TopSearchSection = ({
 					<button
 						key={_tokens.ticker}
 						onClick={(e: any) => handleTokenSelect(_tokens)}
-						className={` ${_tokens.ticker === baseToken.tokenName
-							? "bg-mainFG"
-							: "lg:hover:bg-mainLight"
-							} flex items-center justify-center gap-1  transition-colors ease-linear duration-200 w-fit px-2 py-1 shadow-lg h-full rounded-3xl `}>
+						className={` ${
+							_tokens.ticker === baseToken.tokenName
+								? "bg-mainFG"
+								: "lg:hover:bg-mainLight"
+						} flex items-center justify-center gap-1  transition-colors ease-linear duration-200 w-fit px-2 py-1 shadow-lg h-full rounded-3xl `}>
 						<Image
 							src={_tokens.icon}
 							alt="icons"

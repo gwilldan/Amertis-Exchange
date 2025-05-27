@@ -48,6 +48,15 @@ export const single_slide: Variants = {
 	exit: { y: 0, opacity: 0 },
 };
 
+export const single_slide_up: Variants = {
+	hidden: { y: 10, opacity: 0 },
+	show: { y: 0, opacity: 1, transition: {
+		type: "spring",
+		damping: 5,
+	}},
+	exit: { y: 0, opacity: 0 },
+};
+
 export const slideInChild_variant: Variants = {
 	hidden: { y: 0, opacity: 0 },
 	show: { y: -10, opacity: 1 },

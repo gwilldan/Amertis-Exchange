@@ -2,7 +2,7 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { TokenList } from "./TokenList";
-import { IToken, ITokenList } from "./interface";
+import { IToken } from "./interface";
 import { formatUnits } from "viem";
 import { getChainId } from "@wagmi/core";
 import { config } from "@/config";

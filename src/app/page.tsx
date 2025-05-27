@@ -23,9 +23,9 @@ import UseSwap from "@/hooks/useSwap";
 import { allTokens } from "@/lib/utils";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { toast } from "react-toastify";
-import { fadeIn, pageIn } from "@/utils/anim";
-import { abi as routerAbi } from "@/config/monagRouterAbi";
-import { BiInfoCircle } from "react-icons/bi";
+import { pageIn } from "@/utils/anim";
+import { checkTokens } from "@/utils/helper";
+
 
 export default function Home() {
 	const chainId = useChainId();
@@ -33,6 +33,7 @@ export default function Home() {
 	const { open } = useWeb3Modal();
 
 	const [txModal, setTxModal] = useState<boolean>(false);
+	const [showNotif, setShowNotif] = useState<boolean>(false);
 	const [txState, setTxState] = useState<string>("");
 	const [txErr, setTxErr] = useState("");
 	const [ToggleModal, setToggleModal] = useState<any>({
@@ -41,9 +42,10 @@ export default function Home() {
 	});
 	const { address, isConnected, isDisconnected } = useAccount();
 	const [settingToggle, setSettingToggle] = useState<boolean>(false);
+
 	const [baseToken, setBaseToken] = useState({
 		...(tokenList as Record<string, any>)[
-			"0x0000000000000000000000000000000000000000"
+		"0x0000000000000000000000000000000000000000"
 		],
 		tokenBalance: BigInt(0),
 		inputValue: "",
@@ -65,11 +67,9 @@ export default function Home() {
 		checkAllowanceAndSwap,
 		swapTxHarsh,
 		isFetching,
-		fetchStatus,
-		isGottenSwapData,
+		fetchStatus
 	} = UseSwap(baseToken, quoteToken, setTxModal, setTxErr);
 
-	console.log("isGottenSwapData...", isGottenSwapData);
 
 	const {
 		data: baseTokenBalance,
@@ -95,6 +95,26 @@ export default function Home() {
 		chainId: chainId,
 		hash: swapTxHarsh,
 	});
+
+	// initialize search params 
+	useEffect(() => {
+
+		const url = new URLSearchParams(window?.location?.search);
+		const baseTokenParam = url.get("baseToken");
+		const quoteTokenParam = url.get("quoteToken");
+		checkTokens(baseTokenParam as `0x${string}`, quoteTokenParam as `0x${string}`, setBaseToken, setQuoteToken, address as `0x${string}`)
+	}, [])
+
+	// control url search
+	useEffect(() => {
+
+		const url = new URLSearchParams();
+		url.set("baseToken", baseToken.ca)
+		url.set("quoteToken", quoteToken.ca)
+
+		window.history.pushState({}, "", `?${url.toString()}`);
+
+	}, [baseToken, quoteToken])
 
 	useEffect(() => {
 		setTxState(status);
@@ -194,13 +214,9 @@ export default function Home() {
 		}
 	};
 
-	console.log("fetch status...", fetchStatus);
-
 	return (
 		<main className="min-h-[calc(100dvh-90px)] md:min-h-[calc(100dvh-70px)] ">
-			{/* <div className=" w-[200px] fixed bottom-20 left-10 bg-glass-yellow flex items-center gap-2">
-				<p className="text-sm font-light"> <BiInfoCircle className="w-4 h-4 text-red-500" /> MON and WMON are both displayed as WMON. This will be corrected in V2 with clear separation.</p>
-			</div> */}
+
 			<motion.main
 				initial="hidden"
 				variants={pageIn}
@@ -237,12 +253,12 @@ export default function Home() {
 						onClick={handleSwap}
 						className=" flex items-center justify-center h-[54px] w-full mt-3 py-4 px-[18px] bg-[#8F199B] rounded-[10px] shadow- text-darkBG hover:text-darkSlate disabled:opacity-75">
 						{isInsufficient
-							? `Insufficient ${baseToken.ticker} balance`.toUpperCase()
+							? `Insufficient ${baseToken.ticker} balance`?.toUpperCase()
 							: approval
-							? "Approve " + baseToken?.ticker
-							: baseToken.inputValue
-							? "Swap"
-							: "ENTER AMOUNT"}
+								? "Approve " + baseToken?.ticker
+								: baseToken.inputValue
+									? "Swap"
+									: "ENTER AMOUNT"}
 					</button>
 				)}
 				{isDisconnected && (

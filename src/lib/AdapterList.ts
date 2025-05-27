@@ -36,6 +36,11 @@ export const adapterList: {
 		name: "Purps",
 		image: "/icons/purps.jpg",
 	},
+	"0x6F0Dd514b2458E48932267879F6D9ee81A3eD497": {
+		ca: "0x6F0Dd514b2458E48932267879F6D9ee81A3eD497",
+		name: "Bean",
+		image: "/icons/bean.jpg",
+	},
 	"0xcC924b526258218bda131f652B2867eB065F95e7": {
 		ca: "0xcC924b526258218bda131f652B2867eB065F95e7",
 		name: "ZkSwap v2",

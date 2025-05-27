@@ -5,17 +5,15 @@ import { Token, TokenBalances } from "@/lib/interface";
 import { createContext } from "react";
 import { TokenList } from "@/lib/TokenList";
 import { config } from "@/config";
-import { erc20Abi } from "viem";
-import { allTokens } from "@/lib/utils"
+import { erc20Abi, zeroAddress } from "viem";
+import { allTokens } from "@/lib/utils";
 
 export const BalProvider = createContext<null | object>(null);
 
 const ProvideBal = ({ children }: { children: React.ReactNode }) => {
 	const { address } = useAccount();
 	const [tokenBalances, setTokenBalances] = useState<TokenBalances[] | []>([]);
-	const [tokenList, setTokenList] = useState<Token[] | []>([]);
 	const [tokenUpdateCounter, setTokenUpdateCounter] = useState(0);
-
 	const tokens = useMemo(() => allTokens(), [tokenUpdateCounter]);
 
 	const calls = Object.values(tokens).map((token: any) => ({
@@ -54,7 +52,7 @@ const ProvideBal = ({ children }: { children: React.ReactNode }) => {
 				.map((token: any, index: number) => ({
 					...token,
 					balance:
-						token.ticker.toUpperCase() === "MON"
+						token?.ca?.toLowerCase() === zeroAddress.toLowerCase()
 							? (monBal?.value as bigint)
 							: (tokenBals?.[index]?.result as bigint),
 				}))
@@ -63,7 +61,7 @@ const ProvideBal = ({ children }: { children: React.ReactNode }) => {
 	}, [monBal, tokenBals, tokens]);
 
 	const refreshTokens = () => {
-		setTokenUpdateCounter(prev => prev + 1);
+		setTokenUpdateCounter((prev) => prev + 1);
 	};
 
 	return (
