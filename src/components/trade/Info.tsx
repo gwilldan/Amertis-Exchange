@@ -144,7 +144,9 @@ const SwapRoutes = ({ swapData }: IInfo) => {
 	useEffect(() => {
 		const adapter = swapData.adapters[0] as string;
 		setAdapter(adapterList[adapter]);
+		console.log("swap Data...", swapData)
 		console.log("paths...", swapData?.adapters.map((p) => adapterList[p]?.name ))
+
 	}, [swapData]);
 
 	return (

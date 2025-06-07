@@ -94,8 +94,8 @@ const UseSwap = (
 			{
 				address: contractAddress,
 				abi: routerAbi,
-				functionName: "findBestPathWithGas",
-				args: [inputValue, baseTokenCA, quoteTokenCA, 2, 120000],
+				functionName: "findBestPath",
+				args: [inputValue, baseTokenCA, quoteTokenCA, 4]
 			},
 			{
 				address: baseTokenCA,
@@ -106,13 +106,12 @@ const UseSwap = (
 			{
 				address: contractAddress,
 				abi: routerAbi,
-				functionName: "findBestPathWithGas",
+				functionName: "findBestPath",
 				args: [
 					parseUnits("1", baseToken.decimals),
 					baseTokenCA,
 					quoteTokenCA,
-					3,
-					120000,
+					4
 				],
 			},
 		],
