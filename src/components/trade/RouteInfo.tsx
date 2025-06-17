@@ -20,15 +20,20 @@ const RouteInfo = () => {
 			<h2 className={`${lxgw.className}`}>
 				Access any and every token from these Exchanges in a single click.
 			</h2>
-			<div className="flex gap-4 justify-center items-center ">
+			<div className="flex gap-4 justify-center items-center pt-1 ">
 				{adapters.map((adapter: List) => (
-					<Image
+					<div key={adapter.ca} className="relative size-[28px] md:size-[34px]">
+						<Image
 						key={adapter.ca}
 						src={adapter.image}
 						alt={adapter.name}
-						width={32}
-						height={32}
+						fill
+						style={{
+							objectFit: "contain"
+						}}
 					/>
+					</div>
+					
 				))}
 			</div>
 		</div>

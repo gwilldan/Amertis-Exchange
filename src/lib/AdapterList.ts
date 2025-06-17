@@ -51,4 +51,9 @@ export const adapterList: {
 		name: "ZkSwap v3",
 		image: "/icons/zkswap.jpg",
 	},
+	"0x6e39b3e2402A2c48c3E0A192B7E3Ce7Af2E7F5D7": {
+		ca: "0x6e39b3e2402A2c48c3E0A192B7E3Ce7Af2E7F5D7",
+		name: "Madness",
+		image: "/icons/madness.png",
+	},
 };

@@ -74,6 +74,13 @@ export const TokenList: ITokenList = {
 			icon: "/icons/moyaki.avif",
 			decimals: 18,
 		},
+		"0xC8527e96c3CB9522f6E35e95C0A28feAb8144f15": {
+			ca: "0xC8527e96c3CB9522f6E35e95C0A28feAb8144f15",
+			name: "Madness Finance",
+			ticker: "MAD",
+			icon: "/icons/madness.png",
+			decimals: 18,
+		},
 		"0xE0590015A873bF326bd645c3E1266d4db41C4E6B": {
 			ca: "0xE0590015A873bF326bd645c3E1266d4db41C4E6B",
 			name: "Chog",
