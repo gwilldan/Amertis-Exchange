@@ -59,6 +59,6 @@ export const adapterList: {
   "0x0977e060Bb9b3cAc4873F0771E0c71230C8F4F31": {
     ca: "0x0977e060Bb9b3cAc4873F0771E0c71230C8F4F31",
     name: "Stage",
-    image: "/icons/NFT.jpg",
+    image: "/icons/stage.png",
   },
 };
