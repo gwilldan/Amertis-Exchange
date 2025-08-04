@@ -15,7 +15,6 @@ const WalletConnectSection = () => {
 			<div className=" group relative ">
 				<BsEggFill className=" shrink-0 text-2xl  " />
 			</div>
-
 			<ConnectButton />
 		</div>
 	);
