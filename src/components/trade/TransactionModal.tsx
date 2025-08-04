@@ -43,7 +43,7 @@ const TransactionModal = ({
 		<motion.main
 			initial={fadeIn.initial}
 			animate={fadeIn.animate}
-			transition={fadeIn.transition}
+			transition={fadeIn.transition as any}
 			exit={fadeIn.initial}
 			className=" w-dvw h-dvh bg-black bg-opacity-90 md:p-6 fixed top-0 z-50 flex items-center px-4 ">
 			<section

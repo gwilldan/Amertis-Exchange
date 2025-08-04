@@ -123,7 +123,7 @@ const TokensModal = ({
 			<motion.section
 				initial={zoomIn.initial}
 				animate={zoomIn.animate}
-				transition={zoomIn.transition}
+				transition={zoomIn.transition as any}
 				ref={modalRef}
 				className=" w-dvw h-dvh  md:mt-[75px] md:h-[500px] md:w-[500px] md:border-[0.5px] md:border-mainFG bg-mainDark md:rounded-[30px] flex flex-col mx-auto">
 				<TopSearchSection
@@ -190,11 +190,10 @@ const TopSearchSection = ({
 					<button
 						key={_tokens.ticker}
 						onClick={(e: any) => handleTokenSelect(_tokens)}
-						className={` ${
-							_tokens.ticker === baseToken.tokenName
+						className={` ${_tokens.ticker === baseToken.tokenName
 								? "bg-mainFG"
 								: "lg:hover:bg-mainLight"
-						} flex items-center justify-center gap-1  transition-colors ease-linear duration-200 w-fit px-2 py-1 shadow-lg h-full rounded-3xl `}>
+							} flex items-center justify-center gap-1  transition-colors ease-linear duration-200 w-fit px-2 py-1 shadow-lg h-full rounded-3xl `}>
 						<Image
 							src={_tokens.icon}
 							alt="icons"

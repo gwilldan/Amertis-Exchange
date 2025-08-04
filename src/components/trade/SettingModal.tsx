@@ -37,14 +37,14 @@ const SettingModal = ({ setSettingToggle }: any) => {
 			<motion.div
 				initial={fadeIn.initial}
 				animate={fadeIn.animate}
-				transition={fadeIn.transition}
+				transition={fadeIn.transition as any}
 				exit={fadeIn.initial}
 				onClick={() => setSettingToggle(false)}
 				className=" w-dvw h-dvh inset-0 flex items-center px-4 backdrop-blur-md absolute "></motion.div>
 			<motion.section
 				initial={zoomIn.initial}
 				animate={zoomIn.animate}
-				transition={zoomIn.transition}
+				transition={zoomIn.transition as any}
 				exit={zoomIn.initial}
 				className="  w-full  md:w-[500px] border-[0.5px] border-mainFG bg-mainDark rounded-[15px] md:rounded-[30px] flex flex-col mx-auto p-4 relative ">
 				<div className=" flex items-center justify-between border-mainFG ">

@@ -33,7 +33,7 @@ const PortfolioData = () => {
 		<motion.section
 			initial={fadeIn.initial}
 			animate={fadeIn.animate}
-			transition={fadeIn.transition}
+			transition={fadeIn.transition as any}
 			className=" pt-[115px] md:min-w-[300px] max-w-[1000px] mx-auto mb-[50px] ">
 			<div className=" flex items-center justify-between">
 				<div className=" flex items-center gap-2 ">
